@@ -1,47 +1,112 @@
 import './admin-customer-payments.css'
 import DataTable from 'react-data-table-component'
+import dumyRequestPayments from '../../../data/dumyData'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import React, { useState } from 'react'
+import readMore from '../../../assets/images/table-icon/read-more.png'
+// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
+function convertArrayOfObjectsToCSV(array) {
+  let result
 
+  const columnDelimiter = ','
+  const lineDelimiter = '\n'
+  const keys = Object.keys(dumyRequestPayments[0])
+
+  result = ''
+  result += keys.join(columnDelimiter)
+  result += lineDelimiter
+
+  array.forEach((item) => {
+    let ctr = 0
+    keys.forEach((key) => {
+      if (ctr > 0) result += columnDelimiter
+
+      result += item[key]
+
+      ctr++
+    })
+    result += lineDelimiter
+  })
+
+  return result
+}
+const Export = ({ onExport }) => (
+  <button className="btn btn-secondary" onClick={(e) => onExport(e.target.value)}>
+    <i class="fa-light fa-file-arrow-down"></i>
+    Generate Report
+  </button>
+)
+// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
+function downloadCSV(array) {
+  const link = document.createElement('a')
+  let csv = convertArrayOfObjectsToCSV(array)
+  if (csv == null) return
+
+  const filename = 'export.csv'
+
+  if (!csv.match(/^data:text\/csv/i)) {
+    csv = `data:text/csv;charset=utf-8,${csv}`
+  }
+
+  link.setAttribute('href', encodeURI(csv))
+  link.setAttribute('download', filename)
+  link.click()
+}
 const AdminCompanyPayments = () => {
+  const history = useHistory();
   const [search, setSearch] = useState('')
-
+  const [data, setData] = useState([...dumyRequestPayments])
+  const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
   const columns = [
     {
-      Header: 'Image',
-      headerStyle: { textAlign: 'center' },
-      cell: (row) => (
-        <img src={'../img/spec_img/' + row.Images[0]} width={80} className="mx-auto mt-2 mb-2" />
-      ),
-    },
-    {
-      name: 'Payment',
-      selector: (row) => row.Title,
+      name: 'PAYMENT ID',
+      selector: (row) => row.payment.paymentId,
       sortable: true,
     },
     {
-      name: 'Brand',
-      selector: (row) => row.Brand,
+      name: 'CUSTOMER NAME',
+      selector: (row) => row.requestedBy.customerName,
       sortable: true,
     },
     {
-      name: 'Quantity',
-      selector: (row) => row.Quantity,
+      name: 'REQUEST ID',
+      selector: (row) => row.requestId,
       sortable: true,
     },
     {
-      name: 'Price',
-      selector: (row) => row.Price,
+      name: 'RECEIVED DATE',
+      selector: (row) => row.payment.receivedDate,
+      sortable: true,
+    },
+    {
+      name: 'COMPANY PAID',
+      selector: (row) => row.payment.companyPaid,
+      sortable: true,
+    },
+
+    {
+      name: "CUSTOMER'S CUT",
+      selector: (row) => row.payment.customerEarned,
+      sortable: true,
+    },
+
+    {
+      name: 'PROFIT',
+      selector: (row) => row.payment.profit,
       sortable: true,
     },
     {
       cell: (row) => (
         <button
-          className="mx-auto btn btn-danger"
+          className="mx-auto btn"
           // onClick={() => onRowDelete(row._id, row.Images)}
         >
-          <i className="fas fa-trash-alt"></i>
+          <span class="material-icons">
+            <img src={readMore} alt="" />
+          </span>
         </button>
       ),
+      name: 'ACTION',
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
@@ -51,7 +116,7 @@ const AdminCompanyPayments = () => {
     <div className="main">
       <DataTable
         columns={columns}
-        // data={filteredData}
+        data={data}
         pagination
         fixedHeaderScrollHeight="450px"
         selecttableRowsHighlighted
@@ -60,14 +125,18 @@ const AdminCompanyPayments = () => {
         data-tag="allowRowEvents"
         subHeader
         subHeaderComponent={
-          <input
-            type="text"
-            className="w-25 form-control font-color"
-            placeholder="Search here"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <div className="w-100">
+            {' '}
+            <input
+              type="text"
+              className="w-25 form-control font-color float-center"
+              placeholder="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            ></input>
+          </div>
         }
+        actions={actionsMemo}
       />
     </div>
   )
