@@ -56,10 +56,11 @@ a:focus {
 }
 
 .sidebar.active {
-  min-width: 0;
+  min-width: 75px;
   max-width: 0;
   text-align: center;
   margin: 0;
+  margin: 10;
 }
 
 .sidebar.active .sidebar-header h3,
