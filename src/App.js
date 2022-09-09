@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner';
-import Landing from './views/common/Landing';
+import Landing from './views/common/landing/Landing';
 
 const loading = (
   <Spinner animation="border" role="status">

@@ -1,10 +1,10 @@
 import "./landing.css"
-import TopNav from "../../components/topnav/TopNav"
+import TopNav from "../../../components/topnav/TopNav"
 import { Image } from "react-bootstrap"
-import Redivivus from '../../assets/Redivivus.svg'
+import Redivivus from '../../../assets/logo.png'
 import { Container, Row, Col } from "react-bootstrap"
 import Lottie from 'react-lottie';
-import animationData from '../../assets/logo-animated.json'
+import animationData from '../../../assets/logo-animated.json'
 import { useState } from "react"
 import Button from "react-bootstrap/Button"
 
