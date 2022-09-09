@@ -41,41 +41,41 @@ a:focus {
   border-left: #7d80fd solid 4px;
 }
 
-#sidebar {
-  min-width: 250px;
-  max-width: 250px;
+.sidebar {
+  min-width: 200px;
+  max-width: 200px;
   background: #fff;
   color: #fff;
   transition: all 0.3s;
   border-radius: 8px;
   box-shadow: 0 0 2px 0 rgb(0 0 0 / 10%);
-  margin: 0 0 20px 20px;
+  margin: 0;
   overflow-y: auto;
   overflow-x: hidden;
   /* background-image: linear-gradient(#e5e5f2, #b7cfe8); */
 }
 
-#sidebar.active {
+.sidebar.active {
   min-width: 0;
   max-width: 0;
   text-align: center;
   margin: 0;
 }
 
-#sidebar.active .sidebar-header h3,
-#sidebar.active .CTAs {
+.sidebar.active .sidebar-header h3,
+.sidebar.active .CTAs {
   display: none;
 }
 
-#sidebar.active .sidebar-header strong {
+.sidebar.active .sidebar-header strong {
   display: block;
 }
 
-#sidebar ul li a {
+.sidebar ul li a {
   text-align: left;
 }
 
-#sidebar.active ul li a {
+.sidebar.active ul li a {
   padding: 20px 10px;
   margin-left: 0;
   text-align: center;
@@ -84,15 +84,15 @@ a:focus {
   justify-content: center;
 }
 
-#sidebar.active ul li a svg {
+.sidebar.active ul li a svg {
   margin-right: 10px;
 }
 
-#sidebar.active ul ul a {
+.sidebar.active ul ul a {
   padding: 10px !important;
 }
 
-#sidebar.active .dropdown-toggle::after {
+.sidebar.active .dropdown-toggle::after {
   top: auto;
   bottom: 10px;
   right: 50%;
@@ -101,24 +101,24 @@ a:focus {
   transform: translateX(50%);
 }
 
-#sidebar .sidebar-header strong {
+.sidebar .sidebar-header strong {
   display: none;
 }
 
-#sidebar ul.components {
+.sidebar ul.components {
   padding: 20px 0;
 }
 
-#sidebar ul li a {
+.sidebar ul li a {
   padding: 10px;
   display: block;
 }
 
-#sidebar ul li a svg {
+.sidebar ul li a svg {
   margin-right: 10px;
 }
 
-#sidebar ul li.active > a,
+.sidebar ul li.active > a,
 a[aria-expanded='true'] {
   background: #ffffff;
 }
@@ -127,7 +127,7 @@ a[data-toggle='collapse'] {
   position: relative;
 }
 
-#sidebar .dropdown-toggle::after {
+.sidebar .dropdown-toggle::after {
   display: block;
   position: absolute;
   top: 50%;

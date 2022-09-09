@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -10,6 +10,7 @@ const loading = (
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
+const ClientLayout = React.lazy(() => import('./layout/UserLayout'))
 
 // Pages
 // const Login = React.lazy(() => import('./views/pages/login/Login'))
@@ -26,7 +27,8 @@ function App() {
           <Route exact path="/register" name="Register Page" element={<Register />} />
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} /> */}
-          <Route path="*" name="Home" element={<DefaultLayout />} />
+          <Route path="/admin/*" name="Home" element={<DefaultLayout />} />
+          <Route path="/user/*" name="ClientLayout" element={<ClientLayout />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

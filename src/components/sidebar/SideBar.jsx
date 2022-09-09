@@ -1,12 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./sidebar.css";
+import "./sidebar.scoped.css";
 
 export default function SideBar(props) {
 
   return (
-    <nav id="sidebar" className={props.isActive ? 'active' : null}>
+    <nav className={(props.isActive ? 'active ' : '') + 'sidebar'}>
 
       <ul className="list-unstyled components font-color">
         <li className="text-center font-weight-bold">
