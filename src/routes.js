@@ -1,9 +1,14 @@
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
-const AdminCompanyPayment = React.lazy(() => import('./views/payment-administration/admin-company-payments/AdminCompanyPayments'))
+const AdminCompanyPayment = React.lazy(() =>
+  import('./views/payment-administration/admin-company-payments/AdminCompanyPayments'),
+)
 const AdminCustomerPayment = React.lazy(() =>
   import('./views/payment-administration/admin-customer-payments/AdminCustomerPayments'),
+)
+const AdminCompany = React.lazy(() =>
+  import('./views/Company-Administration/addCompany/AddCompany'),
 )
 
 const routes = [
@@ -19,6 +24,11 @@ const routes = [
     path: '/dashboard/admin-company-payments',
     name: 'AdminCustomerPayment',
     element: AdminCompanyPayment,
+  },
+  {
+    path: '/dashboard/admin-company',
+    name: 'AdminCompany',
+    element: AdminCompany,
   },
 ]
 
