@@ -1,7 +1,9 @@
 import React, { Component, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
 import Spinner from 'react-bootstrap/Spinner';
 import Landing from './views/common/landing/Landing';
+
 
 const loading = (
   <Spinner animation="border" role="status">
@@ -24,6 +26,8 @@ function App() {
   
       <Suspense fallback={loading}>
         <Routes>
+
+        <Route path="/login" name="Login" element={<Login />} />
           {/* <Route path="/home" element={<Home/>}/> */}
           {/* <Route exact path="/login" name="Login Page" element={<Login />} />
           <Route exact path="/register" name="Register Page" element={<Register />} />
