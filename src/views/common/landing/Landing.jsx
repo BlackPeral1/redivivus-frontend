@@ -1,7 +1,7 @@
 import "./landing.css"
 import TopNav from "../../../components/topnav/TopNav"
 import { Image } from "react-bootstrap"
-import Redivivus from '../../../assets/logo.png'
+import Redivivus from '../../../assets/Redivivus.svg'
 import { Container, Row, Col } from "react-bootstrap"
 import Lottie from 'react-lottie';
 import animationData from '../../../assets/logo-animated.json'

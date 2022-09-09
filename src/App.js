@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './views/common/login/LoginPage'
 import Spinner from 'react-bootstrap/Spinner';
 import Landing from './views/common/landing/Landing';
-
+import RegistrationIntro from './views/common/registration-intro/RegistrationIntro';
 
 const loading = (
   <Spinner animation="border" role="status">
@@ -28,6 +28,7 @@ function App() {
         <Routes>
 
         <Route path="/login" name="Login" element={<Login />} />
+        <Route path="/registration-intro" name="Reg-intro" element={<RegistrationIntro />} />
           {/* <Route path="/home" element={<Home/>}/> */}
           {/* <Route exact path="/login" name="Login Page" element={<Login />} />
           <Route exact path="/register" name="Register Page" element={<Register />} />
