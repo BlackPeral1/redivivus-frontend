@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-
+import Login from './views/common/login/LoginPage'
 import Spinner from 'react-bootstrap/Spinner';
 import Landing from './views/common/landing/Landing';
 
