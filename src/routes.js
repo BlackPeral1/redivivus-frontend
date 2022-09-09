@@ -8,6 +8,7 @@ const AdminCustomerPayment = React.lazy(() =>
   import('./views/payment-administration/admin-customer-payments/AdminCustomerPayments'),
 )
 
+const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/ViewOnePayment'))
 const routes = [
   // { path: '/web', exact: true, name: 'Home' },
   { path: '/', exact: true, name: 'Home' },
@@ -19,8 +20,13 @@ const routes = [
   },
   {
     path: '/admin-company-payments',
-    name: 'AdminCustomerPayment',
+    name: 'AdminCompanyPayment',
     element: AdminCompanyPayment,
+  },
+  {
+    path: '/admin-customer-payments/viewonepayment/:id',
+    name: 'ViewOnePayment',
+    element: ViewOnePayment,
   },
 ]
 

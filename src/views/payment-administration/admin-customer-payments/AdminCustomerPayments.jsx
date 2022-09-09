@@ -1,7 +1,8 @@
 import './admin-customer-payments.css'
 import DataTable from 'react-data-table-component'
 import dumyRequestPayments from '../../../data/dumyData'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { useNavigate } from 'react-router-dom'
+
 import React, { useState } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
@@ -31,7 +32,7 @@ function convertArrayOfObjectsToCSV(array) {
   return result
 }
 const Export = ({ onExport }) => (
-  <button className="btn btn-secondary" onClick={(e) => onExport(e.target.value)}>
+  <button className="btn btn-secondary " onClick={(e) => onExport(e.target.value)}>
     <i class="fa-light fa-file-arrow-down"></i>
     Generate Report
   </button>
@@ -53,10 +54,15 @@ function downloadCSV(array) {
   link.click()
 }
 const AdminCompanyPayments = () => {
-  const history = useHistory();
+  const navigate = useNavigate()
+
   const [search, setSearch] = useState('')
   const [data, setData] = useState([...dumyRequestPayments])
   const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
+
+  const viewMore = (requestId) => {
+    navigate(`/admin-customer-payments/viewonepayment/${requestId}`)
+  }
   const columns = [
     {
       name: 'PAYMENT ID',
@@ -99,7 +105,7 @@ const AdminCompanyPayments = () => {
       cell: (row) => (
         <button
           className="mx-auto btn"
-          // onClick={() => onRowDelete(row._id, row.Images)}
+           onClick={()=>viewMore(row.requestId)}
         >
           <span class="material-icons">
             <img src={readMore} alt="" />
@@ -113,7 +119,7 @@ const AdminCompanyPayments = () => {
     },
   ]
   return (
-    <div className="main">
+    <div className="main shadow-lg mb-5 rounded-3">
       <DataTable
         columns={columns}
         data={data}
@@ -129,11 +135,14 @@ const AdminCompanyPayments = () => {
             {' '}
             <input
               type="text"
-              className="w-25 form-control font-color float-center"
+              className="w-25 form-control font-color float-center mt-0.5 me-2"
               placeholder="Search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             ></input>
+            <button className="btn font-color topbar-hover tcontainerbtn" type="submit">
+              <i className="fas fa-search"></i>
+            </button>
           </div>
         }
         actions={actionsMemo}
