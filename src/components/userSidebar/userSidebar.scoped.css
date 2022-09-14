@@ -33,12 +33,12 @@ a:focus {
 
 .side-link:hover,
 .side-link:focus {
-  color: #7d80fd;
+  color: #218563;
 }
 
 .selected {
-  background-color: #e7e7ff;
-  border-left: #7d80fd solid 4px;
+  background-color: #36ecaf30;
+  border-left: #36ecaf solid 4px;
 }
 
 .sidebar {

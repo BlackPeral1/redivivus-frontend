@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import routes from '../routes'
 import {
-  AppContent, UserSidebar
+  AppContent, UserSidebar, TopNav
 } from '../components'
+
 
 const DefaultLayout = () => {
   const [isActive, setActive] = useState(false);
@@ -35,7 +36,7 @@ const DefaultLayout = () => {
   return (
     <>
 
-      {/* <TopBar setActive={setActive} isActive={isActive} /> */}
+      <TopNav />
       <div className="container mt-2">
         <div className="row">
           <p>Home / {breadcrumbs}</p>

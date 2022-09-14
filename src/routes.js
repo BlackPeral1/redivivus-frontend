@@ -2,25 +2,26 @@ import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const AdminCompanyPayment = React.lazy(() => import('./views/payment-administration/admin-company-payments/AdminCompanyPayments'))
-const AdminCustomerPayment = React.lazy(() =>
-  import('./views/payment-administration/admin-customer-payments/AdminCustomerPayments'),
-)
+const AdminCustomerPayment = React.lazy(() => import('./views/payment-administration/admin-customer-payments/AdminCustomerPayments'))
+
+const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
+const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickupReq'))
 
 const routes = [
-  // { path: '/web', exact: true, name: 'Home' },
+
   { path: '/', exact: true, name: 'Home' },
-  { path: '/admin/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/user/company', name: 'Company', element: Dashboard },
-  {
-    path: '/dashboard/admin-customer-payments',
-    name: 'AdminCustomerPayment',
-    element: AdminCustomerPayment,
-  },
-  {
-    path: '/dashboard/admin-company-payments',
-    name: 'AdminCustomerPayment',
-    element: AdminCompanyPayment,
-  },
+
+  //Customer Route
+  { path: '/company', name: 'Company', element: Dashboard, permissions: 'isCompany' },
+
+  //Customer Route
+  { path: '/new-pickup-request', name: 'New Pickup Request', element: NewPickupReq, permissions: 'isCustomer' },
+  { path: '/my-request', name: 'My Pickup Request', element: AllPickupReq, permissions: 'isCustomer' },
+
+  //Admin Route
+  { path: '/dashboard', name: 'Dashboard', element: Dashboard, permissions: 'isAdmin' },
+  { path: '/admin-customer-payments', name: 'AdminCustomerPayment', element: AdminCustomerPayment, permissions: 'isAdmin' },
+  { path: '/dashboard/admin-company-payments', name: 'AdminCustomerPayment', element: AdminCompanyPayment, permissions: 'isAdmin' },
 ]
 
 export default routes

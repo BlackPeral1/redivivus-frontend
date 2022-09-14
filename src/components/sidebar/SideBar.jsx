@@ -11,7 +11,7 @@ export default function SideBar(props) {
         </li>
         <li>
           <NavLink
-            to="/dashboard"
+            to="/admin/dashboard"
             className={({ isActive }) =>
               isActive ? 'font-color side-link selected' : 'font-color side-link '
             }
