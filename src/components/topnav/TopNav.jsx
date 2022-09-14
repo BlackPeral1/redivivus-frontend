@@ -19,15 +19,12 @@ function TopNav() {
             <Nav.Link href="#contact">Contact</Nav.Link>
           </Nav>
           <Nav>
-            <button type="button" className="btn dropdown-toggle d-flex align-items-center font-color topbar-hover p-0" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className="fas fa-user-circle fa-2x tcontainerbtn" id='iprofile'></i> Amal
-            </button>
-            {/* <Nav.Link href="#login">
+            <Nav.Link href="#login">
               <Button variant='text'>Login</Button>
             </Nav.Link>
             <Nav.Link eventKey={2} href="#signup">
               <Button>Signup</Button>
-            </Nav.Link> */}
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
