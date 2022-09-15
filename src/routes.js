@@ -28,6 +28,11 @@ const routes = [
     name: 'ViewOnePayment',
     element: ViewOnePayment,
   },
+  {
+    path: '/admin-company-payments/viewonepayment/:id',
+    name: 'ViewOnePayment',
+    element: ViewOnePayment,
+  },
 ]
 
 export default routes

@@ -2,8 +2,8 @@ import './admin-customer-payments.css'
 import DataTable from 'react-data-table-component'
 import dumyRequestPayments from '../../../data/dumyData'
 import { useNavigate } from 'react-router-dom'
-
-import React, { useState } from 'react'
+import BinRequestServices from '../../../services/BinRequestServices'
+import React, { useState, useEffect } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 function convertArrayOfObjectsToCSV(array) {
@@ -11,7 +11,11 @@ function convertArrayOfObjectsToCSV(array) {
 
   const columnDelimiter = ','
   const lineDelimiter = '\n'
-  const keys = Object.keys(dumyRequestPayments[0])
+  let exportData
+  // BinRequestServices.getAllBinreuests().then((res) => {
+  //   exportData = res.data.data
+  // })
+  const keys = Object.keys(exportData)
 
   result = ''
   result += keys.join(columnDelimiter)
@@ -33,7 +37,7 @@ function convertArrayOfObjectsToCSV(array) {
 }
 const Export = ({ onExport }) => (
   <button className="btn btn-secondary " onClick={(e) => onExport(e.target.value)}>
-    <i class="fa-light fa-file-arrow-down"></i>
+    <i class="fal fa-file-download"></i>
     Generate Report
   </button>
 )
@@ -57,7 +61,8 @@ const AdminCompanyPayments = () => {
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
-  const [data, setData] = useState([...dumyRequestPayments])
+  const [data, setData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
   const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
 
   const viewMore = (requestId) => {
@@ -103,10 +108,7 @@ const AdminCompanyPayments = () => {
     },
     {
       cell: (row) => (
-        <button
-          className="mx-auto btn"
-           onClick={()=>viewMore(row.requestId)}
-        >
+        <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
           <span class="material-icons">
             <img src={readMore} alt="" />
           </span>
@@ -118,6 +120,27 @@ const AdminCompanyPayments = () => {
       button: true,
     },
   ]
+  useEffect(() => {
+    BinRequestServices.getAllBinreuests()
+      .then((resp) => {
+        setData(resp.data.data)
+        setFilteredData(resp.data.data)
+        console.log(data)
+      })
+      .catch((e) => {
+        console.log(e.meesage)
+      })
+  }, [])
+  useEffect(() => {
+    const result = filteredData.filter((dataItem) => {
+      if (search === '') {
+        return dataItem
+      } else if (dataItem.requestId.toLowerCase().includes(search.toLowerCase())) {
+        return dataItem
+      }
+    })
+    setData(result)
+  }, [search])
   return (
     <div className="main shadow-lg mb-5 rounded-3">
       <DataTable
@@ -140,9 +163,6 @@ const AdminCompanyPayments = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             ></input>
-            <button className="btn font-color topbar-hover tcontainerbtn" type="submit">
-              <i className="fas fa-search"></i>
-            </button>
           </div>
         }
         actions={actionsMemo}

@@ -28,7 +28,7 @@ export default function SideBar(props) {
             data-toggle="collapse"
             aria-expanded="false"
           >
-            <i className="fas fa-glasses"></i>
+            <i className="fa fa-users" aria-hidden="true"></i>
             Customers
           </a>
           <ul className="collapse list-unstyled font-color" id="customer">
@@ -39,7 +39,7 @@ export default function SideBar(props) {
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
               >
-                <i className="fa fa-users" aria-hidden="true"></i>
+                <i class="fas fa-user"></i>
                 New Customer
               </NavLink>
             </li>
@@ -50,7 +50,7 @@ export default function SideBar(props) {
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
               >
-                <i className="fas fa-dot-circle"></i>
+                <i className="fa fa-users" aria-hidden="true"></i>
                 All Customers
               </NavLink>
             </li>
@@ -63,7 +63,7 @@ export default function SideBar(props) {
               isActive ? 'font-color side-link selected' : 'font-color side-link '
             }
           >
-            <i className="fa fa-cubes" aria-hidden="true"></i>
+            <i class="fas fa-building"></i>
             Company
           </NavLink>
         </li>
@@ -74,7 +74,7 @@ export default function SideBar(props) {
             data-toggle="collapse"
             aria-expanded="false"
           >
-            <i className="fas fa-glasses"></i>
+            <i class="fas fa-money-bill-alt"></i>
             Payments
           </a>
           <ul className="collapse list-unstyled font-color" id="payments">
@@ -86,7 +86,7 @@ export default function SideBar(props) {
                 }
               >
                 <i className="fa fa-users" aria-hidden="true"></i>
-                Customer
+                Customers
               </NavLink>
             </li>
             <li>
@@ -96,7 +96,7 @@ export default function SideBar(props) {
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
               >
-                <i className="fas fa-dot-circle"></i>
+                <i class="fas fa-building"></i>
                 Company
               </NavLink>
             </li>
