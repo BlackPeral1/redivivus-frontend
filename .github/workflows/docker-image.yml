@@ -16,7 +16,7 @@ jobs:
       with:
         image: spmproject/spm-front-end
         registry: docker.io
-        dockerfile: ../Dockerfile
+        dockerfile: ./Dockerfile
         username: spmproject
         password: spmproject_123
         
