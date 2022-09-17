@@ -1,14 +1,21 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
+import RImage from './R.png'
+import RImageTittle from './Redivivus.png'
 import './sidebar.css'
 
 export default function SideBar(props) {
+  const ref = useRef(null)
   return (
-    <nav id="sidebar" className={props.isActive ? 'active' : null}>
+    <nav id="sidebar" ref={ref} className={props.isActive ? 'active' : null}>
       <ul className="list-unstyled components font-color">
         <li className="text-center font-weight-bold">
-          <h3>Redivivus</h3>
+          {!props.isActive ? (
+            <img alt="bit-logo" src={RImageTittle}></img>
+          ) : (
+            <img alt="mini-logo" src={RImage}></img>
+          )}
         </li>
         <li>
           <NavLink
@@ -18,18 +25,18 @@ export default function SideBar(props) {
             }
           >
             <i className="fa fa-cubes" aria-hidden="true"></i>
-            Dashboard
+            {!props.isActive ? <small> Dashboard</small> : <small> </small>}
           </NavLink>
         </li>
         <li>
           <a
             href="#customer"
-            className="font-color dropdown-toggle side-link"
+            className={`font-color  side-link ${!props.isActive ? 'dropdown-toggle' : ''}`}
             data-toggle="collapse"
             aria-expanded="false"
           >
             <i className="fa fa-users" aria-hidden="true"></i>
-            Customers
+            {!props.isActive ? <small> Customers</small> : <small> </small>}
           </a>
           <ul className="collapse list-unstyled font-color" id="customer">
             <li>
@@ -40,7 +47,7 @@ export default function SideBar(props) {
                 }
               >
                 <i class="fas fa-user"></i>
-                New Customer
+                {!props.isActive ? <small> New Customer</small> : <small> </small>}
               </NavLink>
             </li>
             <li>
@@ -51,7 +58,7 @@ export default function SideBar(props) {
                 }
               >
                 <i className="fa fa-users" aria-hidden="true"></i>
-                All Customers
+                {!props.isActive ? <small> All Customers</small> : <small> </small>}
               </NavLink>
             </li>
           </ul>
@@ -64,18 +71,18 @@ export default function SideBar(props) {
             }
           >
             <i class="fas fa-building"></i>
-            Company
+            {!props.isActive ? <small> Company</small> : <small> </small>}
           </NavLink>
         </li>
         <li>
           <a
             href="#payments"
-            className="font-color dropdown-toggle side-link"
+            className={`font-color  side-link ${!props.isActive ? 'dropdown-toggle' : ''}`}
             data-toggle="collapse"
             aria-expanded="false"
           >
             <i class="fas fa-money-bill-alt"></i>
-            Payments
+            {!props.isActive ? <small> Payments</small> : <small> </small>}
           </a>
           <ul className="collapse list-unstyled font-color" id="payments">
             <li>
@@ -86,7 +93,7 @@ export default function SideBar(props) {
                 }
               >
                 <i className="fa fa-users" aria-hidden="true"></i>
-                Customers
+                {!props.isActive ? <small> Customers</small> : <small> </small>}
               </NavLink>
             </li>
             <li>
@@ -97,10 +104,37 @@ export default function SideBar(props) {
                 }
               >
                 <i class="fas fa-building"></i>
-                Company
+                {!props.isActive ? <small> Company</small> : <small> </small>}
               </NavLink>
             </li>
           </ul>
+        </li>
+        <li>
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
+              isActive ? 'font-color side-link selected' : 'font-color side-link '
+            }
+          >
+            <i class="fas fa-wrench"></i>
+            {!props.isActive ? <small> Settings</small> : <small> </small>}
+          </NavLink>
+        </li>
+      </ul>
+
+      <ul className="px-0 ">
+        <li></li>
+        <hr id="last-navlink" />{' '}
+        <li>
+          <NavLink
+            to="/signout"
+            className={({ isActive }) =>
+              isActive ? 'font-color side-link selected' : 'font-color side-link '
+            }
+          >
+            <i class="fas fa-sign-out-alt"></i>
+            {!props.isActive ? <small> Sign out</small> : <small> </small>}
+          </NavLink>
         </li>
       </ul>
     </nav>
