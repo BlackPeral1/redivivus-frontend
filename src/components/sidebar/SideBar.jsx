@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useEffect, useState, useRef } from 'react'
 import RImage from './R.png'
 import RImageTittle from './Redivivus.png'
-import './sidebar.css'
+
 
 
 export default function SideBar(props) {
@@ -18,7 +18,7 @@ export default function SideBar(props) {
       <ul className="list-unstyled components font-color">
         <li className="text-center font-weight-bold">
           {!props.isActive ? (
-            <img alt="bit-logo" src={RImageTittle}></img>
+            <img id='rimage-title' alt="bit-logo" src={RImageTittle}></img>
           ) : (
             <img alt="mini-logo" src={RImage}></img>
           )}
@@ -93,7 +93,7 @@ export default function SideBar(props) {
           <ul className="collapse list-unstyled font-color" id="payments">
             <li>
               <NavLink
-                to="/admin-customer-payments"
+                to="./admin-customer-payments"
                 className={({ isActive }) =>
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
@@ -104,7 +104,7 @@ export default function SideBar(props) {
             </li>
             <li>
               <NavLink
-                to="/admin-company-payments"
+                to="./admin-company-payments"
                 className={({ isActive }) =>
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
