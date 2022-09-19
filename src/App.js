@@ -20,7 +20,7 @@ const AdminLayout = React.lazy(() => import('./layout/AdminLayout'))
 const UserLayout = React.lazy(() => import('./layout/UserLayout'))
 
 
-const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
+
 const ContactUsPage = React.lazy(() => import('./components/contact-us/ContactUsPage'))
 
 // Pages
@@ -47,7 +47,7 @@ function App() {
           <Route path="/landing" name="Landing" element={<Landing />} />
 
           <Route path="/landing" name="Landing" element={<Landing />} />
-          <Route path="*" name="Home" element={<DefaultLayout />} />
+
           <Route path="/contact-us" name="contact-us" element={<ContactUsPage />} />
 
         </Routes>

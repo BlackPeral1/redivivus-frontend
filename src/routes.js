@@ -42,32 +42,23 @@ const routes = [
     permissions: 'isAdmin',
   },
   {
-    path: '/dashboard/admin-company-payments',
+    path: '/admin-company-payments',
     name: 'AdminCustomerPayment',
     element: AdminCompanyPayment,
     permissions: 'isAdmin',
   },
 
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  {
-    path: '/admin-customer-payments',
-    name: 'AdminCustomerPayment',
-    element: AdminCustomerPayment,
-  },
-  {
-    path: '/admin-company-payments',
-    name: 'AdminCompanyPayment',
-    element: AdminCompanyPayment,
-  },
   {
     path: '/admin-customer-payments/viewonepayment/:id',
     name: 'ViewOnePayment',
     element: ViewOnePayment,
+    permissions: 'isAdmin',
   },
   {
     path: '/admin-company-payments/viewonepayment/:id',
     name: 'ViewOnePayment',
     element: ViewOnePayment,
+    permissions: 'isAdmin',
   },
 ]
 
