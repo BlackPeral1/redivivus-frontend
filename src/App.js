@@ -21,7 +21,7 @@ const UserLayout = React.lazy(() => import('./layout/UserLayout'))
 
 
 
-const ContactUsPage = React.lazy(() => import('./components/contact-us/ContactUsPage'))
+const ContactUsPage = React.lazy(() => import('./views/common/contact-us/ContactUsPage'))
 
 // Pages
 // const Login = React.lazy(() => import('./views/pages/login/Login'))

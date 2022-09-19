@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './contactus.css'
 import ContactUS from './contactuspic.png'
 import validator from 'validator'
-import BinRequestService from '../../services/BinRequestServices'
+import BinRequestService from '../../../services/BinRequestServices'
 import { ToastContainer, toast, Zoom, Bounce } from 'react-toastify'
 const ContactUsPage = () => {
   const [emailError, setEmailError] = useState('')
