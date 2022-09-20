@@ -16,7 +16,7 @@ const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/View
 const routes = [
   { path: '/', exact: true, name: 'Home' },
 
-  //Customer Route
+  //Company Route
   { path: '/company', name: 'Company', element: Dashboard, permissions: 'isCompany' },
 
   //Customer Route
