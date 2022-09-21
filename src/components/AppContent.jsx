@@ -5,22 +5,20 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import routes from '../routes'
 
 const AppContent = () => {
-
   const location = useLocation()
 
   const matchRoutes = (r) => {
     switch (r) {
-      case "isAdmin":
-        return location.pathname.split("/")[1] === "admin"
-      case "isCustomer":
-        return location.pathname.split("/")[1] === "user"
-      case "isCompany":
-        return location.pathname.split("/")[1] === "user"
+      case 'isAdmin':
+        return location.pathname.split('/')[1] === 'admin'
+      case 'isCustomer':
+        return location.pathname.split('/')[1] === 'user'
+      case 'isCompany':
+        return location.pathname.split('/')[1] === 'user'
       default:
         return false
     }
   }
-
 
   return (
     <>
@@ -40,7 +38,6 @@ const AppContent = () => {
             )
         })}
         <Route path="/" element={<Navigate to="dashboard" replace />} />
-
       </Routes>
     </>
   )

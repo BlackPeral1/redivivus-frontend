@@ -1,68 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Multiselect from 'multiselect-react-dropdown';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
+import Multiselect from 'multiselect-react-dropdown'
+import axios from 'axios'
 import Swal from 'sweetalert2'
 
-import './newPickupReq.scoped.css';
+import './newPickupReq.scoped.css'
 
 // import 'sweetalert2/src/sweetalert2.scss'
 export default function NewPickupReq(props) {
-  const [validated, setValidated] = useState(false);
-  const [location, setLocation] = useState({});
+  const [validated, setValidated] = useState(false)
+  const [location, setLocation] = useState({})
   const [form, setForm] = useState({})
   // const [error, setError] = useState({})
 
-
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const inForm = e.currentTarget;
+    e.preventDefault()
+    const inForm = e.currentTarget
     if (inForm.checkValidity() === false) {
-      setValidated(true);
+      setValidated(true)
     } else {
-      axios.post('http://localhost:3001/api/pickupRequest', form)
+      axios
+        .post('http://localhost:3001/api/pickupRequest', form)
         .then(function (response) {
-
-
-          console.log(response);
+          console.log(response)
         })
         .catch(function (error) {
           // handle error
-          console.log(error);
+          console.log(error)
         })
         .then(function () {
           // always executed
-        });
+        })
       Swal.fire({
         icon: 'success',
         title: 'Request successfully sent!',
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       })
       setForm({
-        'company': 'Select Company',
-        'address': '',
-        'size': 'Select Size',
+        company: 'Select Company',
+        address: '',
+        size: 'Select Size',
       })
-      setValidated(false);
+      setValidated(false)
     }
-
-  };
+  }
 
   useEffect(() => {
     if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition((location) => {
-        if (location) selectLocation(location.coords);
-      });
+        if (location) selectLocation(location.coords)
+      })
     }
-  }, []);
+  }, [])
 
   const selectLocation = (location) => {
     setLocation({
-      ...form, location: location
+      ...form,
+      location: location,
     })
   }
 
@@ -92,13 +90,12 @@ export default function NewPickupReq(props) {
         <div className="card p-4 form">
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row className="mb-3">
-              <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex'>
+              <Form.Group as={Col} md="12" controlId="validationCustom01" className="d-flex">
                 <Col md="2">
                   <Form.Label>Company</Form.Label>
                 </Col>
                 <Col md="10">
-                  <Form.Select value={form.company}
-                    name="company">
+                  <Form.Select value={form.company} name="company">
                     <option>Select Company</option>
                     <option>ABC Inc</option>
                     <option>Earthology Inc</option>
@@ -109,7 +106,7 @@ export default function NewPickupReq(props) {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex'>
+              <Form.Group as={Col} md="12" controlId="validationCustom01" className="d-flex">
                 <Col md="2">
                   <Form.Label>Address</Form.Label>
                 </Col>
@@ -127,7 +124,7 @@ export default function NewPickupReq(props) {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} md="6" controlId="validationCustom01" className='d-flex'>
+              <Form.Group as={Col} md="6" controlId="validationCustom01" className="d-flex">
                 <Col md="4">
                   <Form.Label>Location</Form.Label>
                 </Col>
@@ -143,7 +140,7 @@ export default function NewPickupReq(props) {
                   <span style={{ fontSize: '12px' }}>Live Location</span>
                 </Col>
               </Form.Group>
-              <Form.Group as={Col} md="6" controlId="validationCustom01" className='d-flex'>
+              <Form.Group as={Col} md="6" controlId="validationCustom01" className="d-flex">
                 <Col md="4">
                   <Form.Label>Size</Form.Label>
                 </Col>
@@ -159,24 +156,18 @@ export default function NewPickupReq(props) {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex'>
+              <Form.Group as={Col} md="12" controlId="validationCustom01" className="d-flex">
                 <Col md="2">
                   <Form.Label>Waste Types</Form.Label>
                 </Col>
                 <Col md="10">
                   <Multiselect
-                    className='from-control'
+                    className="from-control"
                     isObject={false}
                     onSelect={changeWasteTypes} // Function will trigger on select event
                     onRemove={removeWasteTypes}
-                    selectedValues={
-                      form.wasteTypes
-                    }
-                    options={[
-                      'Plastic',
-                      'Glass',
-                      'Iron',
-                    ]}
+                    selectedValues={form.wasteTypes}
+                    options={['Plastic', 'Glass', 'Iron']}
                     placeholder="Waste Types"
                     style={{
                       chip: {
@@ -188,9 +179,11 @@ export default function NewPickupReq(props) {
                 </Col>
               </Form.Group>
             </Row>
-            <Col md="12" className='d-flex justify-content-end'>
+            <Col md="12" className="d-flex justify-content-end">
               {/* <Button>Reset</Button> */}
-              <Button type="submit" style={{ backgroundColor: '#36ECAF', color: '#4F4E4E' }}>Request</Button>
+              <Button type="submit" style={{ backgroundColor: '#36ECAF', color: '#4F4E4E' }}>
+                Request
+              </Button>
             </Col>
           </Form>
         </div>
