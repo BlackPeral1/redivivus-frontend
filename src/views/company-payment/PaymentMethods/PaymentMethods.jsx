@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 
-export const PaymentMethods = () => {
+const PaymentMethods = () => {
   
     return (
       <>
-        <h1>Payment method</h1>
+       <h1>Payment Methods</h1>
       </>
     )
 }
+export default PaymentMethods

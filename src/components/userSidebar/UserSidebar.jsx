@@ -111,7 +111,7 @@ export default function UserSideBar(props) {
           </li>
           <li>
             <NavLink
-              to="/user/company"
+              to="/user/payment"
               className={({ isActive }) =>
                 (isActive ? ' selected ' : ' ') + 'font-color fw-normal side-link'
               }

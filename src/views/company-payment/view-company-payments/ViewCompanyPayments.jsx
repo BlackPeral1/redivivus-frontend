@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const ViewCompanyPayments = () => {
+const ViewCompanyPayments = () => {
   return (
     <>
       {' '}
@@ -8,3 +8,5 @@ export const ViewCompanyPayments = () => {
     </>
   )
 }
+
+export default ViewCompanyPayments

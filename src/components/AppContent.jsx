@@ -14,7 +14,7 @@ const AppContent = () => {
       case 'isCustomer':
         return location.pathname.split('/')[1] === 'user'
       case 'isCompany':
-        return location.pathname.split('/')[1] === 'company'
+        return location.pathname.split('/')[1] === 'user'
       default:
         return false
     }
