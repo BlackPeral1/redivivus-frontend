@@ -83,7 +83,7 @@ export default function SideBar(props) {
           <ul className="collapse list-unstyled font-color" id="company">
             <li>
               <NavLink
-                to="/dashboard/admin-company"
+                to="/admin/admin-company"
                 className={({ isActive }) =>
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
