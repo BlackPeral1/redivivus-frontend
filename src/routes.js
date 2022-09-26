@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+
 const AdminCompanyPayment = React.lazy(() =>
   import('./views/payment-administration/admin-company-payments/AdminCompanyPayments'),
 )
@@ -11,19 +12,65 @@ const AdminCompany = React.lazy(() =>
   import('./views/Company-Administration/addCompany/AddCompany'),
 )
 
+const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
+const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickupReq'))
+const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
+const ViewPayments = React.lazy(() => import('./views/company-payment/view-company-payments/ViewCompanyPayments'))
+const PaymentMethods = React.lazy(() => import('./views/company-payment/paymentMethods/PaymentMethods'))
+const MakePayment = React.lazy(() => import('./views/company-payment/make-payment/MakePayment'))
+const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/ViewOnePayment'))
 const routes = [
-  // { path: '/web', exact: true, name: 'Home' },
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+
+  //Company Route
+  { path: '/company', name: 'Company', element: Dashboard, permissions: 'isCompany' },
   {
-    path: '/dashboard/admin-customer-payments',
-    name: 'AdminCustomerPayment',
-    element: AdminCustomerPayment,
+    path: '/payment',
+    name: 'Payment',
+    element: Payment,
+    permissions: 'isCompany',
+  },
+
+  //Customer Route
+  {
+    path: '/new-pickup-request',
+    name: 'New Pickup Request',
+    element: NewPickupReq,
+    permissions: 'isCustomer',
   },
   {
-    path: '/dashboard/admin-company-payments',
+    path: '/my-request',
+    name: 'My Pickup Request',
+    element: AllPickupReq,
+    permissions: 'isCustomer',
+  },
+
+  //Admin Route
+  { path: '/dashboard', name: 'Dashboard', element: Dashboard, permissions: 'isAdmin' },
+  {
+    path: '/admin-customer-payments',
+    name: 'AdminCustomerPayment',
+    element: AdminCustomerPayment,
+    permissions: 'isAdmin',
+  },
+  {
+    path: '/admin-company-payments',
     name: 'AdminCustomerPayment',
     element: AdminCompanyPayment,
+    permissions: 'isAdmin',
+  },
+
+  {
+    path: '/admin-customer-payments/viewonepayment/:id',
+    name: 'ViewOnePayment',
+    element: ViewOnePayment,
+    permissions: 'isAdmin',
+  },
+  {
+    path: '/admin-company-payments/viewonepayment/:id',
+    name: 'ViewOnePayment',
+    element: ViewOnePayment,
+    permissions: 'isAdmin',
   },
   {
     path: '/dashboard/admin-company',
