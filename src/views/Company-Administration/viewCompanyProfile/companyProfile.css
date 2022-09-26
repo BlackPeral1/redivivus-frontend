@@ -1,0 +1,161 @@
+.container{
+
+	width: 100%;
+	height: auto;
+}
+.sub_container2{
+	width: 24%;
+	height: auto;
+	border: 1px solid black;
+	float: left;
+	margin-left: 2px;
+	margin-top: 2px;
+	border-radius: 10px;
+	text-align: center;
+	margin-top: 20px;
+}
+.sub_container1{
+	width: 24%;
+	height: auto;
+	/*border: 1px solid black;*/
+	float:left;
+	text-align: center;
+	margin-top: 30px;
+
+	position: absolute;
+width: 303.86px;
+height: 43.9px;
+left: 390px;
+top: 369px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 150%;
+/* or 24px */
+
+letter-spacing: -0.011em;
+
+color: rgba(0, 0, 0, 0.7);
+}
+
+
+.company-profile-form-data{
+
+	position: absolute;
+width: 1147px;
+height: 1030px;
+
+
+background: #ededf0;
+padding: 20px;
+margin-left: 158px;
+border-radius: 10px;
+
+}
+
+.container2{
+	float:left
+}
+
+.container-div{
+
+	width: 500px;
+}
+
+.container-div2{
+
+	width: 200px;
+	float:right
+
+}
+
+.container-div3{
+
+	width: 200px;
+}
+
+.comapny-labels-div{
+
+	
+position: absolute;
+width: 370.61px;
+height: 48px;
+
+background: #FFFFFF;
+border-radius: 10px;
+text-align: center;
+}
+
+.compo-div-form{
+	padding: 20px;
+	text-align: center;
+	
+}
+
+.container-div-company-form{
+
+	text-align: center;
+	padding: 20px;
+	margin:20px;
+	margin-top:30px
+}
+
+.comapny-labels-div{
+
+	align-items: center;
+	
+	margin: 10px;
+	margin-left: 300px;
+	padding: 10px;
+}
+
+.company-profile-header{
+
+	
+	font-style: bold;
+	text-align: center;
+	font-size: 40px;
+ }
+
+
+ .label-font-company{
+
+	
+position: absolute;
+/* width: 199px;
+height: 41.6px;
+left: 197px;
+top: 488px; */
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 52px;
+/* or 260% */
+
+
+color: #153761;
+ }
+
+ .card-commpany-profile{
+
+	width: 600px;
+	float:left;
+	padding: 10px;
+	margin-left:100px;
+ }
+
+ .card-commpany-profile2{
+
+	
+	width: 600px;
+	float:right;
+	padding: 10px;
+	top:-537px;
+	margin-top: -530px;
+	margin-left: 10px;
+ 
+ }

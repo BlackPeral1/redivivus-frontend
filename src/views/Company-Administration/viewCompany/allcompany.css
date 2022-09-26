@@ -1,0 +1,31 @@
+.search-box-company{
+   
+   float: right;
+   margin-left: 50px;
+
+   
+
+}
+
+.company-styled-table th{
+
+   text-justify: center;
+}
+
+.btn-class-company{
+
+  width: 250px;
+
+}
+
+.styled-table head tr{
+
+   background-color: aqua;
+}
+
+.all-company-header{
+
+   font-style: bold;
+   text-align: center;
+   font-size: 50px;
+}
