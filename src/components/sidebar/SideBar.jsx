@@ -70,15 +70,40 @@ export default function SideBar(props) {
           </ul>
         </li>
         <li>
-          <NavLink
-            to="/company"
-            className={({ isActive }) =>
-              isActive ? 'font-color side-link selected' : 'font-color side-link '
-            }
+          <a
+            href="#company"
+            className="font-color dropdown-toggle side-link"
+            data-toggle="collapse"
+            aria-expanded="false"
           >
-            <i class="fas fa-building"></i>
-            {!props.isActive ? <small> Company</small> : <small> </small>}
-          </NavLink>
+
+            <i className="fas fa-glasses"></i>
+            Company
+          </a>
+          <ul className="collapse list-unstyled font-color" id="company">
+            <li>
+              <NavLink
+                to="/dashboard/admin-company"
+                className={({ isActive }) =>
+                  isActive ? 'font-color side-link selected' : 'font-color side-link '
+                }
+              >
+                <i className="fa fa-users" aria-hidden="true"></i>
+                New Company
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="./all-customer"
+                className={({ isActive }) =>
+                  isActive ? 'font-color side-link selected' : 'font-color side-link '
+                }
+              >
+                <i className="fas fa-dot-circle"></i>
+                All Customers
+              </NavLink>
+            </li>
+          </ul>
         </li>
         <li>
           <a

@@ -8,6 +8,9 @@ const AdminCompanyPayment = React.lazy(() =>
 const AdminCustomerPayment = React.lazy(() =>
   import('./views/payment-administration/admin-customer-payments/AdminCustomerPayments'),
 )
+const AdminCompany = React.lazy(() =>
+  import('./views/Company-Administration/addCompany/AddCompany'),
+)
 
 const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
 const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickupReq'))
@@ -66,6 +69,11 @@ const routes = [
     name: 'ViewOnePayment',
     element: ViewOnePayment,
     permissions: 'isAdmin',
+  },
+  {
+    path: '/dashboard/admin-company',
+    name: 'AdminCompany',
+    element: AdminCompany,
   },
 ]
 
