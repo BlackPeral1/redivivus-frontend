@@ -12,9 +12,7 @@ const AdminCustomerPayment = React.lazy(() =>
 const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
 const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickupReq'))
 const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
-const ViewPayments = React.lazy(() => import('./views/company-payment/view-company-payments/ViewCompanyPayments'))
-const PaymentMethods = React.lazy(() => import('./views/company-payment/paymentMethods/PaymentMethods'))
-const MakePayment = React.lazy(() => import('./views/company-payment/make-payment/MakePayment'))
+
 const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/ViewOnePayment'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
