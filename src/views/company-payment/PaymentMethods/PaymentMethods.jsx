@@ -66,29 +66,29 @@ const PaymentMethods = () => {
   }
   const columns = [
     {
-      name: 'PAYMENT ID',
+      name: 'CARD NO:',
       selector: (row) => row.payment.paymentId,
       sortable: true,
     },
 
     {
-      name: 'REQUEST ID',
+      name: 'TYPE',
       selector: (row) => row.requestId,
       sortable: true,
     },
     {
-      name: 'PAID DATE',
+      name: 'DATE ADDED',
       selector: (row) => row.payment.paidDate,
       sortable: true,
     },
     {
-      name: 'COMPANY PAID',
+      name: 'LAST USED',
       selector: (row) => row.payment.companyPaid,
       sortable: true,
     },
 
     {
-      name: 'DEDUCT AMOUNT',
+      name: 'TOTAL PAYMENT',
       selector: (row) => row.payment.customerEarned,
       sortable: true,
     },
@@ -100,11 +100,18 @@ const PaymentMethods = () => {
     },
     {
       cell: (row) => (
-        <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
-          <span className="material-icons">
-            <img src={readMore} alt="" />
-          </span>
-        </button>
+        <div>
+          <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
+            <span className="material-icons">
+              <img src={readMore} alt="" />
+            </span>
+          </button>
+          <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
+            <span className="material-icons">
+              <img src={readMore} alt="" />
+            </span>
+          </button>
+        </div>
       ),
       name: 'ACTION',
       ignoreRowClick: true,
