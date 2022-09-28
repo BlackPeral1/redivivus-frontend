@@ -6,16 +6,78 @@ import Row from 'react-bootstrap/Row';
 import Multiselect from 'multiselect-react-dropdown';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import MapPicker from 'react-google-map-picker'
+import LocationPicker from 'react-location-picker';
+import { createRoot } from "react-dom/client";
+import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 
 import './newPickupReq.scoped.css';
+
+const DefaultLocation = { lat: 10, lng: 106 };
+const DefaultZoom = 10;
+const defaultPosition = {
+  lat: 27.9878,
+  lng: 86.9250
+};
 
 // import 'sweetalert2/src/sweetalert2.scss'
 export default function NewPickupReq(props) {
   const [validated, setValidated] = useState(false);
-  const [location, setLocation] = useState({});
   const [form, setForm] = useState({})
   // const [error, setError] = useState({})
+  const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
+  const [dLocation, setdLocation] = useState({
+    address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal",
+    position: {
+      lat: 0,
+      lng: 0
+    }
+  });
+  const mapContainerStyle = {
+    height: "400px",
+    width: "800px"
+  }
 
+  const center = {
+    lat: 0,
+    lng: -180
+  }
+
+  const position = {
+    lat: 37.772,
+    lng: -122.214
+  }
+
+  const onLoad = marker => {
+    console.log('marker: ', marker)
+  }
+
+
+  const [location, setLocation] = useState(defaultLocation);
+  const [zoom, setZoom] = useState(DefaultZoom);
+  function ChangeLocation(e) {
+    console.log(e);
+  }
+
+
+  function handleChangeLocation(lat, lng) {
+    setLocation({ lat: lat, lng: lng });
+  }
+
+  function handleChangeZoom(newZoom) {
+    setZoom(newZoom);
+  }
+
+  function handleResetLocation() {
+    setDefaultLocation({ ...DefaultLocation });
+    setZoom(DefaultZoom);
+  }
+
+  function handleLocationChange({ position, address, places }) {
+
+    // Set new location
+    setdLocation({ position, address });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,11 +115,6 @@ export default function NewPickupReq(props) {
   };
 
   useEffect(() => {
-    if (navigator?.geolocation) {
-      navigator.geolocation.getCurrentPosition((location) => {
-        if (location) selectLocation(location.coords);
-      });
-    }
   }, []);
 
   const selectLocation = (location) => {
@@ -84,6 +141,24 @@ export default function NewPickupReq(props) {
       wasteTypes: value,
     })
   }
+
+  const renderMap = () => {
+    return (
+      <GoogleMap
+        center={{ lat: 39.09366509575983, lng: -94.58751660204751 }}
+        zoom={8}
+        mapContainerStyle={{
+          margin: "20px 0 0",
+          height: "30vh",
+          width: "100%"
+        }}
+      >
+        <Marker
+          position={{ lat: 39.09366509575983, lng: -94.58751660204751 }}
+        />
+      </GoogleMap>
+    );
+  };
   return (
     <>
       <h4 className="content-title">Create New Request</h4>
@@ -193,8 +268,39 @@ export default function NewPickupReq(props) {
               <Button type="submit" style={{ backgroundColor: '#36ECAF', color: '#4F4E4E' }}>Request</Button>
             </Col>
           </Form>
+          <button onClick={handleResetLocation}>Reset Location</button>
+          <label>Latitute:</label><input type='text' value={location.lat} disabled />
+          <label>Longitute:</label><input type='text' value={location.lng} disabled />
+          <label>Zoom:</label><input type='text' value={zoom} disabled />
+
+          {/* <MapPicker defaultLocation={defaultLocation}
+            zoom={zoom}
+            mapTypeId="roadmap"
+            style={{ height: '700px' }}
+            onChangeLocation={handleChangeLocation}
+            onChangeZoom={handleChangeZoom}
+            apiKey='AIzaSyAePk9SYfZTMpAJZ7pOutFK_ixi72CzS2I' /> */}
+          <LoadScript
+            googleMapsApiKey="AIzaSyAePk9SYfZTMpAJZ7pOutFK_ixi72CzS2I"
+          >
+            <GoogleMap
+              id="marker-example"
+              mapContainerStyle={mapContainerStyle}
+              zoom={2}
+              center={center}
+            >
+              <Marker
+                draggable={true}
+                clickable={true}
+                onClick={ChangeLocation}
+                onLoad={onLoad}
+                position={position}
+              />
+            </GoogleMap>
+          </LoadScript>
         </div>
       </div>
     </>
   )
-}
+};
+

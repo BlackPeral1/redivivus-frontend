@@ -25,6 +25,7 @@ function App() {
 
       <Suspense fallback={loading}>
         <Routes>
+          <Route path="/" name="Landing" element={<Landing />} />
           {/* <Route path="/home" element={<Home/>}/> */}
           {/* <Route exact path="/login" name="Login Page" element={<Login />} />
           <Route exact path="/register" name="Register Page" element={<Register />} />
@@ -32,7 +33,6 @@ function App() {
           <Route exact path="/500" name="Page 500" element={<Page500 />} /> */}
           <Route path="admin/*" name="Home" element={<AdminLayout />} />s
           <Route path="user/*" name="UserLayout" element={<UserLayout />} />
-          <Route path="/landing" name="Landing" element={<Landing />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
