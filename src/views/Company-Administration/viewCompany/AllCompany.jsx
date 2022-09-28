@@ -186,7 +186,7 @@ const AllCompany = () => {
      
 
 <div className='companytable'> 
- <h3 className='main-title-allcompany'>All Companies</h3>
+ <h3 className='main-title-allcompany'>ALL COMPANIES</h3>
 
 <Table striped bordered hover variant="light" className='tableofcontent-company'>
       <thead>

@@ -78,159 +78,115 @@ const CompanyProfile = () => {
   }, [id])
 
   return (
-    //     <div className style={{marginRight:"100px"}}>
-    //     <div className = "container" style ={{marginTop:"50px"}}>
+    // <div>
+    //   <div className="company-profile-form-data">
+      
+    //     <div className="compo-div-form">
+    //       <div className="company-profile-header">Company Profile</div>
 
-    //      <center>
-    //      <h4 className='header'>CROWN HOTEL EMPLOYEE LIST</h4>
-    //      </center><br></br>
+    //       <div className="container-div-company-form">
+    //         Company Name
+    //         <div className="comapny-labels-div">{name}</div>
+    //       </div>
 
-    //     <h8 className style={{marginLeft:"100px"}}>YEAR:2022</h8>
-    //     <h8 className style={{marginLeft:"260px"}}> EMPLOYEE WITH DESIGNATION</h8>
-    //     {/* <div className='searchopt'>
-    //       <input placeholder='search' value={filterVal} onInput={(e) =>handleFilter(e)} />
-    //   </div> */}
+    //       <div className="container-div-company-form">
+    //         Company Email
+    //         <div className="comapny-labels-div">{email}</div>
+    //       </div>
 
-    //   <Table striped bordered hover>
-    //     <thead >
-    //     <tr className='styled-table tbody tr'>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>ComppanyNAME</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>EMAIL</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>ADRESS</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>GENDER </th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>LANDLINE</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>DESIGNATION</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>DEPARTMENT</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>BANKACCOUNT</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>LANDLINE</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>DESIGNATION</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>DEPARTMENT</th>
-    //     <th className='styled-table th' style={{textAlign:"center"}}>BANKACCOUNT</th>
+    //       <div className="container-div-company-form">
+    //         Company Telephone
+    //         <div className="comapny-labels-div">{telephone}</div>
+    //       </div>
 
-    //     </tr>
-    //     </thead>
-    //     <tbody>
-    //     {companyprofile && companyprofile.map((item,index)=>{
-    //         return(
-    //             <tr className='styled-table tbody tr' key={index}>
+    //       <div className="container-div-company-form">
+    //         Company Address
+    //         <div className="comapny-labels-div">{address}</div>
+    //       </div>
 
-    //             <td>{item.name}</td>
-    //             <td>{item.email}</td>
-    //             <td>{item.address}</td>
-    //             <td>{item.telephone}</td>
-    //             <td>{item.customers}</td>
-    //             <td>{item.logo}</td>
-    //             <td>{item.openhour}</td>
-    //             <td>{item.closehour}</td>
-    //             <td>{item.opendays}</td>
-    //             <td>{item.slogan}</td>
-    //             <td>{item.about}</td>
+    //       <div className="container-div-company-form">
+    //         Company Centers
+    //         <div className="comapny-labels-div">{centers}</div>
+    //       </div>
 
-    //             </tr>
-    //         )
-    //     })}
-    //     </tbody>
-    //     </Table>
-    //     {/* <button className="btn btn-info bbbt mt-2"onClick={generatePdf}>PRINT REPORT</button> */}
+    //       <div className="container-div-company-form">
+    //         Open Hour
+    //         <div className="comapny-labels-div">{openhour}</div>
+    //       </div>
+
+    //       <div className="container-div-company-form">
+    //         Close Hour
+    //         <div className="comapny-labels-div">{closehour}</div>
+    //       </div>
+
+    //       <div className="container-div-company-form">
+    //         Company Slogan
+    //         <div className="comapny-labels-div">{slogan}</div>
+    //       </div>
+
+    //       <div className="container-div-company-form">
+    //         Company About
+    //         <div className="comapny-labels-div">{about}</div>
+    //       </div>
     //     </div>
-    //     </div>
-
-    <div>
-      <div className="company-profile-form-data">
-        {/* <div className='sub_container1'>
-          <label className='sub_container3'>Company Name</label>
-          <div className="sub_container2">{name}</div>
-        </div> */}
-        {/* 
-        <label>Comapny Name</label>
-        <div className='container2'>{name}</div> */}
-
-        {/* <div className="sub_container1">
-          <div className="sub_container2">{telephone}</div>
-        </div>
-
-        <div className="sub_container1">
-          <div className="sub_container2">{email}</div>
-        </div>
-
-        <div className="sub_container1">
-          <div className="sub_container2">{address}</div>
-        </div>
-
-        <div className="sub_container1">
-          <div className="sub_container2">{openhour}</div>
-        </div>
-
-        <div className="sub_container1">
-          <div className="sub_container2">{closehour}</div>
-        </div>
-
-        <div className="sub_container1">
-          <div className="sub_container2">{slogan}</div>
-        </div>
-        <div className="sub_container1">
-          <div className="sub_container2"> {about}</div>
-        </div> */}
-
-        {/* <div className='container-div'>
-          <div className='container-div2'>Company name</div>
-          <div className='container-div3'>{name}</div>
-        </div> */}
-
-        {/* <ul>
-          <div></div>
-          <li> Company Name         :    {name}</li>
-        </ul> */}
-
-        <div className="compo-div-form">
-          <div className="company-profile-header">Company Profile</div>
-
-          <div className="container-div-company-form">
-            Company Name
-            <div className="comapny-labels-div">{name}</div>
-          </div>
-
-          <div className="container-div-company-form">
-            Company Email
-            <div className="comapny-labels-div">{email}</div>
-          </div>
-
-          <div className="container-div-company-form">
-            Company Telephone
-            <div className="comapny-labels-div">{telephone}</div>
-          </div>
-
-          <div className="container-div-company-form">
-            Company Address
-            <div className="comapny-labels-div">{address}</div>
-          </div>
-
-          <div className="container-div-company-form">
-            Company Centers
-            <div className="comapny-labels-div">{centers}</div>
-          </div>
-
-          <div className="container-div-company-form">
-            Open Hour
-            <div className="comapny-labels-div">{openhour}</div>
-          </div>
-
-          <div className="container-div-company-form">
-            Close Hour
-            <div className="comapny-labels-div">{closehour}</div>
-          </div>
-
-          <div className="container-div-company-form">
-            Company Slogan
-            <div className="comapny-labels-div">{slogan}</div>
-          </div>
-
-          <div className="container-div-company-form">
-            Company About
-            <div className="comapny-labels-div">{about}</div>
-          </div>
-        </div>
+    //   </div>
+    // </div>
+  <div className='companyprofile-row'>  
+     <h2 className='main-title-companyprofile'>Company Profile</h2>
+    <div className='profile-container'>
+     
+      <div className='profile-container1'>
+       <div className='company-label-bar-profile'>
+         <div className='label-company-profile'>Company Name</div>
+         <div className='label-company-profile1'>{name}</div>
+       </div>
+       <div className='company-label-bar-profile'>
+         <div className='label-company-profile'>Company Email</div>
+         <div className='label-company-profile1'>{email}</div>
+       </div>
+       <div className='company-label-bar-profile'>
+         <div className='label-company-profile'> Phone Number</div>
+         <div className='label-company-profile1'>{telephone}</div>
+       </div>
+     
+       <div className='company-label-bar-profile'>
+         <div className='label-company-profile'>  Open Hour</div>
+         <div className='label-company-profile1'>{openhour}</div>
+       </div>
+       <div className='company-label-bar-profile'>
+         <div className='label-company-profile'> Company Slogan</div>
+         <div className='label-company-profile1'>{slogan}</div>
+       </div>
+       
+          
       </div>
+
+      <div className='profile-container1'>
+      <div className='company-label-bar-profile'>
+         <div className='label-company-profile'> Company Address</div>
+         <div className='label-company-profile1'>{address}</div>
+       </div>
+       <div className='company-label-bar-profile'>
+         <div className='label-company-profile'>No Of Centers</div>
+         <div className='label-company-profile1'>{centers}</div>
+       </div>
+       <div className='company-label-bar-profile'>
+         <div className='label-company-profile'>Close Hour</div>
+         <div className='label-company-profile1'>{closehour}</div>
+       </div>
+       <div className='company-label-bar-profile-label'>
+         <div className='label-company-profile-about'>Company About</div>
+         <div className='field-company-profile1-about'>{about}</div>
+       </div>
+       <div className='image-companyprofile'>
+       <img className='image-companyprofile-img'
+          src="
+          https://previews.123rf.com/images/chudtsankov/chudtsankov1607/chudtsankov160700278/61547748-happy-green-recycle-bin-cartoon-mascot-character-waving-for-greeting-illustration-isolated-on-white-.jpg"
+          alt=""
+        />
+       </div>
+      </div>
+    </div>
     </div>
   )
 }
