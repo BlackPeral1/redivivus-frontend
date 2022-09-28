@@ -75,110 +75,206 @@ const AllCompany = () => {
 
   // console.log("data",employee)
   return (
-    <div className="company-All-Form" style={{ marginRight: '75px' }}>
-      <div className="table-container" style={{ marginTop: '50px' }}>
-        <center>
-          <div className="all-company-header">All Company List</div>
-        </center>
+    // <div className="company-All-Form" style={{ marginRight: '75px' }}>
+    //   <div className="table-container" style={{ marginTop: '50px' }}>
+    //     <center>
+    //       <div className="all-company-header">All Company List</div>
+    //     </center>
 
-        <div className="search-box-company" style={{ textAlign: 'right' }}>
-          <input placeholder="search" />
-        </div>
-        <br />
-        <br />
-        <a class="btn btn-primary" href="/addstudent">
-          <i class="fa-solid fa-plus"></i>&nbsp;Create New Company
-        </a>
+    //     <div className="search-box-company" style={{ textAlign: 'right' }}>
+    //       <input placeholder="search" />
+    //     </div>
+    //     <br />
+    //     <br />
+    //     <a class="btn btn-primary" href="/addstudent">
+    //       <i class="fa-solid fa-plus"></i>&nbsp;Create New Company
+    //     </a>
 
-        <div className="table-company-container">
-          <Table striped bordered hover>
-            <thead>
-              <tr className="styled-table head tr">
-                <th className="styled-table th">COMPANY NAME</th>
-                <th className="company-styled-table th" style={{ textAlign: 'center' }}>
-                  EMAIL
-                </th>
-                <th className="company-styled-table th" style={{ textAlign: 'center' }}>
-                  ADRESS
-                </th>
-                <th className="company-styled-table th" style={{ textAlign: 'center' }}>
-                  TELEPHONE
-                </th>
-                <th className="company-styled-table th" style={{ textAlign: 'center' }}>
-                  OPEN HOUR
-                </th>
-                <th className="company-styled-table th" style={{ textAlign: 'center' }}>
-                  CLOSE HOUR
-                </th>
-                <th className="company-styled-table th" style={{ textAlign: 'center' }}>
-                  OPEN DAYS
-                </th>
-                <th className="company-styled-table th" style={{ textAlign: 'center' }}>
-                  SLOGAN
-                </th>
-                <th className="company-styled-table th" style={{ textAlign: 'center' }}>
-                  ABOUT
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {company &&
-                company.map((item, index) => {
-                  return (
-                    <tr className="company-styled-table tbody tr" key={index}>
-                      <td>{item.name}</td>
-                      <td>{item.email}</td>
-                      <td>{item.address}</td>
-                      <td>{item.telephone}</td>
+    //     <div className="table-company-container">
+    //       <Table striped bordered hover>
+    //         <thead>
+    //           <tr className="styled-table head tr">
+    //             <th className="styled-table th">COMPANY NAME</th>
+    //             <th className="company-styled-table th" style={{ textAlign: 'center' }}>
+    //               EMAIL
+    //             </th>
+    //             <th className="company-styled-table th" style={{ textAlign: 'center' }}>
+    //               ADRESS
+    //             </th>
+    //             <th className="company-styled-table th" style={{ textAlign: 'center' }}>
+    //               TELEPHONE
+    //             </th>
+    //             <th className="company-styled-table th" style={{ textAlign: 'center' }}>
+    //               OPEN HOUR
+    //             </th>
+    //             <th className="company-styled-table th" style={{ textAlign: 'center' }}>
+    //               CLOSE HOUR
+    //             </th>
+    //             <th className="company-styled-table th" style={{ textAlign: 'center' }}>
+    //               OPEN DAYS
+    //             </th>
+    //             <th className="company-styled-table th" style={{ textAlign: 'center' }}>
+    //               SLOGAN
+    //             </th>
+    //             <th className="company-styled-table th" style={{ textAlign: 'center' }}>
+    //               ABOUT
+    //             </th>
+    //           </tr>
+    //         </thead>
+    //         <tbody>
+    //           {company &&
+    //             company.map((item, index) => {
+    //               return (
+    //                 <tr className="company-styled-table tbody tr" key={index}>
+    //                   <td>{item.name}</td>
+    //                   <td>{item.email}</td>
+    //                   <td>{item.address}</td>
+    //                   <td>{item.telephone}</td>
 
-                      <td>{item.openhour}</td>
-                      <td>{item.closehour}</td>
-                      <td>{item.opendays}</td>
-                      <td>{item.slogan}</td>
-                      {/* <td>{item.about}</td> */}
-                      <td className="btn-class-company">
-                        {/* <a className="btn-btn-warning">
-                      <FaViber />
-                      </a>
-                      <a className="btn-btn-warning">
-                      <FaEdit />
-                      </a>
+    //                   <td>{item.openhour}</td>
+    //                   <td>{item.closehour}</td>
+    //                   <td>{item.opendays}</td>
+    //                   <td>{item.slogan}</td>
+    //                   {/* <td>{item.about}</td> */}
+    //                   <td className="btn-class-company">
+    //                     {/* <a className="btn-btn-warning">
+    //                   <FaViber />
+    //                   </a>
+    //                   <a className="btn-btn-warning">
+    //                   <FaEdit />
+    //                   </a>
                       
-                      <i class="fa fa-trash" aria-hidden="true"></i>
+    //                   <i class="fa fa-trash" aria-hidden="true"></i>
 
-                      <i class="bi bi-trash"></i> */}
-                        {/* <a className="btn btn-warning" href={'/admin/admin-company/companyedit'+item._id}>
-                          <i className="fas fa-edit"></i>&nbsp;Edit
-                        </a> */}
-                         <Link
-                          className="btn btn-warning"
-                          to={`/admin/admin-company/companyedit/${item._id}`}
-                        >
-                          <i className="fa-solid fa-eye"></i>&nbsp;Edit
-                        </Link>
+    //                   <i class="bi bi-trash"></i> */}
+    //                     {/* <a className="btn btn-warning" href={'/admin/admin-company/companyedit'+item._id}>
+    //                       <i className="fas fa-edit"></i>&nbsp;Edit
+    //                     </a> */}
+    //                      <Link
+    //                       className="btn btn-warning"
+    //                       to={`/admin/admin-company/companyedit/${item._id}`}
+    //                     >
+    //                       <i className="fa-solid fa-eye"></i>&nbsp;Edit
+    //                     </Link>
                          
-                        &nbsp;
-                        <a className="btn btn-danger" href="@">
-                          <i className="far fa-trash-alt"></i>&nbsp;Delete
-                        </a>
-                        &nbsp;
-                        <Link
-                          className="btn btn-success"
-                          to={`/admin/admin-company/companyprofile/${item._id}`}
-                        >
-                          <i className="fa-solid fa-eye"></i>&nbsp;View
-                        </Link>
-                        &nbsp;
-                      </td>
-                    </tr>
-                  )
-                })}
-            </tbody>
-          </Table>
-        </div>
-        {/* <button className="btn btn-info bbbt mt-2"onClick={generatePdf}>PRINT REPORT</button> */}
-      </div>
-    </div>
+    //                     &nbsp;
+    //                     <a className="btn btn-danger" href="@">
+    //                       <i className="far fa-trash-alt"></i>&nbsp;Delete
+    //                     </a>
+    //                     &nbsp;
+    //                     <Link
+    //                       className="btn btn-success"
+    //                       to={`/admin/admin-company/companyprofile/${item._id}`}
+    //                     >
+    //                       <i className="fa-solid fa-eye"></i>&nbsp;View
+    //                     </Link>
+    //                     &nbsp;
+    //                   </td>
+    //                 </tr>
+    //               )
+    //             })}
+    //         </tbody>
+    //       </Table>
+    //     </div>
+    //     {/* <button className="btn btn-info bbbt mt-2"onClick={generatePdf}>PRINT REPORT</button> */}
+    //   </div>
+    // </div>
+
+
+  
+   
+     
+
+<div className='companytable'> 
+ <h3 className='main-title-allcompany'>All Companies</h3>
+
+<Table striped bordered hover variant="light" className='tableofcontent-company'>
+      <thead>
+        <tr className='tr-th-allcompany'>
+          <th className='thallcompany'>COMPANY NAME</th>
+          <th className='thallcompany'>COMPANY EMAIL</th>
+          <th className='thallcompany'>ADDRESS</th>
+          <th className='thallcompany'>TELEPHONE NUMBER</th>
+          <th className='thallcompany'>OPEN TIME</th>
+          <th className='thallcompany'>CLOSE TIME</th>
+          <th className='thallcompany'>OPEN DAYS</th>
+          <th className='thallcompany'>COMPANY SLOGAN</th>
+          <th colSpan={3} className='thallcompany'>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+      {company &&
+              company.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td className='tdallcompany'>{item.name}</td>
+                    <td className='tdallcompany'>{item.email}</td>
+                    <td className='tdallcompany'>{item.address}</td>
+                    <td className='tdallcompany'>{item.telephone}</td>
+
+                    <td className='tdallcompany'>{item.openhour}</td>
+                    <td>{item.closehour}</td>
+                    <td>{item.opendays}</td>
+                    <td>{item.slogan}</td>
+
+                    {/* <td>
+                     
+                       <Link
+                        className="btn btn-warning"
+                        to={`/admin/admin-company/companyedit/${item._id}`}
+                      >
+                        <i className="fa-solid fa-eye"></i>&nbsp;Edit
+                      </Link>
+                       
+                      &nbsp;
+                      <a className="btn btn-danger" href="@">
+                        <i className="far fa-trash-alt"></i>&nbsp;Delete
+                      </a>
+                      &nbsp;
+                      <Link
+                        className="btn btn-success"
+                        to={`/admin/admin-company/companyprofile/${item._id}`}
+                      >
+                        <i className="fa-solid fa-eye"></i>&nbsp;View
+                      </Link>
+                      &nbsp;
+                      
+                    </td> */}
+
+                    <td>
+                      <Link
+                        className="btn btn-success"
+                        to={`/admin/admin-company/companyprofile/${item._id}`}
+                      >
+                        <i className="fa-solid fa-eye"></i>&nbsp;View
+                      </Link>
+                      &nbsp;
+                    </td>
+                    <td>  
+                      <Link
+                        className="btn btn-warning"
+                        to={`/admin/admin-company/companyedit/${item._id}`}
+                      >
+                        <i className="fa-solid fa-eye"></i>&nbsp;Edit 
+                      </Link></td>
+
+                    <td> 
+                      <a className="btn btn-danger" href="@">
+                        <i className="far fa-trash-alt"></i>&nbsp;Delete
+                      </a>
+                      &nbsp;</td>
+                    
+                  </tr>
+                )
+              })}
+       
+       
+       </tbody>
+    </Table>
+
+    </div>  
+     
+   
   )
 }
 

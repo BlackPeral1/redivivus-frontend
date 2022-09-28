@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import './editcompany.css'
 
 export default function EditEmployee() {
     const { id } = useParams();
@@ -88,18 +89,18 @@ export default function EditEmployee() {
     return (
         <div className="row">
         <div className="card">
-          <h2>UPDATE COMPANY</h2>
+          <h2 className="main-title-edit">UPDATE COMPANY</h2>
           <div className="container3">
-            <div className="container1">
+            <div className="container2">
               <Form onSubmit={updateData} onReset={onReset}>
                 {/* <div className="container2"> */}
                 <div hidden={isShow}>
                   <div className="company-registartion-container-part">
-                    <Form.Group as={Row} controlId="name" className="companylabel">
-                      <Form.Label column sm={2}>
+                    <Form.Group as={Row} controlId="name"  className={'pt-3'}>
+                      <Form.Label column sm={2} className="companylabel">
                         Company Name
                       </Form.Label>
-                      <Col sm={5} class="company-input-layer">
+                      <Col sm={7}>
                         <Form.Control
                           required
                           type="text"
@@ -116,11 +117,11 @@ export default function EditEmployee() {
                       return <div style={{ color: 'red' }}>{nameErr[key]}</div>
                     })} */}
   
-                    <Form.Group as={Row} controlId="Email" className={'pt-3'}>
+                    <Form.Group as={Row} controlId="Email" className={'pt-4'}>
                       <Form.Label column sm={2} className="companylabel">
                         E-mail
                       </Form.Label>
-                      <Col sm={5} class>
+                      <Col sm={7}>
                         <Form.Control
                           required
                           type=""
@@ -137,11 +138,11 @@ export default function EditEmployee() {
                       return <div style={{ color: 'red' }}>{emailErr[key]}</div>
                     })} */}
   
-                    <Form.Group as={Row} controlId="address" className={'pt-3'}>
+                    <Form.Group as={Row} controlId="address" className={'pt-4'}>
                       <Form.Label column sm={2} className="companylabel">
                         Address
                       </Form.Label>
-                      <Col sm={5} class>
+                      <Col sm={7}>
                         <Form.Control
                           required
                           type="text"
@@ -155,12 +156,12 @@ export default function EditEmployee() {
                       </Col>
                     </Form.Group>
   
-                    <Form.Group as={Row} controlId="Telephone" className={'pt-3'}>
+                    <Form.Group as={Row} controlId="Telephone" className={'pt-4'}>
                       <Form.Label column sm={2} className="companylabel">
                         Telephone
                       </Form.Label>
   
-                      <Col sm={5}>
+                      <Col sm={7}>
                         <Form.Control
                           required
                           type="Number"
@@ -177,11 +178,11 @@ export default function EditEmployee() {
                       return <div style={{ color: 'red' }}>{telephoneErr[key]}</div>
                     })}
    */}
-                    <Form.Group as={Row} controlId="centers" className={'pt-3'}>
+                    <Form.Group as={Row} controlId="centers" className={'pt-4'}>
                       <Form.Label column sm={2} className="companylabel">
                         No of Centers
                       </Form.Label>
-                      <Col sm={5}>
+                      <Col sm={7}>
                         <Form.Control
                           required
                           type="Number"
@@ -197,11 +198,11 @@ export default function EditEmployee() {
                   </div>
   
                   <div className="company-registartion-container-part">
-                    <Form.Group as={Row} controlId="logo" className={'pt-3'}>
+                    <Form.Group as={Row} controlId="logo" className={'pt-4'}>
                       <Form.Label column sm={2} className="companylabel">
                         Company Logo
                       </Form.Label>
-                      <Col sm={5}>
+                      <Col sm={7}>
                         <Form.Control
                           required
                           type="text"
@@ -214,7 +215,7 @@ export default function EditEmployee() {
                         ></Form.Control>
                       </Col>
                     </Form.Group>
-  
+{/*   
                     <Form.Group as={Row} controlId="openhour" className={'pt-3'}>
                       <Form.Label column sm={2} className="companylabel">
                         Opening Hour
@@ -248,7 +249,7 @@ export default function EditEmployee() {
                           }}
                         ></Form.Control>
                       </Col>
-                    </Form.Group>
+                    </Form.Group> */}
   
                     {/* <Form.Group as={Row} controlId="opendays" className={"pt-3"}>
                     <Form.Label column sm={2} className="companylabel">
@@ -269,18 +270,19 @@ export default function EditEmployee() {
                   </div>
   
                   <div>
-                    <Button type="button" variant="secondary" onClick={() => setIsShow(true)}>
+                    <Button type="button" variant="secondary" className="next-btn-edit"
+                    onClick={() => setIsShow(true)}>
                       Next
                     </Button>
                   </div>
                 </div>
   
                 <div hidden={!isShow}>
-                  <Form.Group as={Row} controlId="slogans" className={'pt-3'}>
+                  <Form.Group as={Row} controlId="slogans" className={'pt-4'}>
                     <Form.Label column sm={2} className="companylabel">
                       Company Slogan
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="text"
@@ -294,11 +296,11 @@ export default function EditEmployee() {
                     </Col>
                   </Form.Group>
   
-                  <Form.Group as={Row} controlId="about" className={'pt-3'}>
+                  <Form.Group as={Row} controlId="about" className={'pt-4'}>
                     <Form.Label column sm={2} className="companylabel">
                       About Company
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="text"
@@ -311,7 +313,7 @@ export default function EditEmployee() {
                       ></Form.Control>
                     </Col>
                   </Form.Group>
-                  <button type="button" variant="secondary" onClick={() => setIsShow(false)}>
+                  {/* <button type="button" variant="secondary" onClick={() => setIsShow(false)}>
                     Previous
                   </button>
                   <Form.Group as={Row} className={'pt-2'}>
@@ -323,7 +325,31 @@ export default function EditEmployee() {
                       </Button>
                       {'\u00A0'}
                     </Col>
+                  </Form.Group> */}
+
+<div className="add-bottom-buttons">
+                  <button
+                    type="button"
+                    className="secondary-butn-previous"
+                    onClick={() => setIsShow(false)}
+                  >
+                    PREVIOUS
+                  </button>
+                  <Form.Group as={Row} className={'pt-2'}>
+                    <Col sm={{ span: 10, offset: 2 }}>
+                      <div className="create-btn-company-group">
+                        <Button type="submit" className="create-btn-company">
+                          CREATE
+                        </Button>
+                        {'\u00A0'}
+                        <Button type="reset" className="btn-danger">
+                          RESET
+                        </Button>
+                        {'\u00A0'}
+                      </div>
+                    </Col>
                   </Form.Group>
+                </div>
                 </div>
               </Form>
             </div>

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
+// import './addcompany.css'
 import './addcompany.css'
 
 export default function AddCompany() {
@@ -23,7 +24,7 @@ export default function AddCompany() {
 
   function createData(e) {
     e.preventDefault()
-       
+
     const isValid = formValidation()
     if (isValid) {
       //send this data to your back
@@ -31,8 +32,6 @@ export default function AddCompany() {
       setTelephone('')
       setEmail('')
     }
-
-
 
     const company = {
       name,
@@ -115,18 +114,18 @@ export default function AddCompany() {
   return (
     <div className="row">
       <div className="card">
-        <h2>ADD COMPANY</h2>
+        <h2 className="main-title">ADD COMPANY</h2>
         <div className="container3">
-          <div className="container1">
+          <div className="container2">
             <Form onSubmit={createData} onReset={onReset}>
               {/* <div className="container2"> */}
               <div hidden={isShow}>
                 <div className="company-registartion-container-part">
-                  <Form.Group as={Row} controlId="name" className="companylabel">
-                    <Form.Label column sm={2}>
+                  <Form.Group as={Row} controlId="name" className={'pt-4'}>
+                    <Form.Label column sm={2} className="companylabel">
                       Company Name
                     </Form.Label>
-                    <Col sm={5} class="company-input-layer">
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="text"
@@ -143,11 +142,11 @@ export default function AddCompany() {
                     return <div style={{ color: 'red' }}>{nameErr[key]}</div>
                   })}
 
-                  <Form.Group as={Row} controlId="Email" className={'pt-3'}>
+                  <Form.Group as={Row} controlId="Email" className={'pt-4'}>
                     <Form.Label column sm={2} className="companylabel">
                       E-mail
                     </Form.Label>
-                    <Col sm={5} class>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type=""
@@ -168,7 +167,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Address
                     </Form.Label>
-                    <Col sm={5} class>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="text"
@@ -187,7 +186,7 @@ export default function AddCompany() {
                       Telephone
                     </Form.Label>
 
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="Number"
@@ -208,7 +207,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       No of Centers
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="Number"
@@ -228,7 +227,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Company Logo
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="text"
@@ -246,7 +245,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Opening Hour
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="Time"
@@ -264,7 +263,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Closing Hour
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="Time"
@@ -295,9 +294,14 @@ export default function AddCompany() {
                 </Form.Group> */}
                 </div>
 
-                <div>
-                  <Button type="button" variant="secondary" onClick={() => setIsShow(true)}>
-                    Next
+                <div className="next-btn-add">
+                  <Button
+                    type="button"
+                    className="next-btn-add"
+                    variant="secondary"
+                    onClick={() => setIsShow(true)}
+                  >
+                    NEXT
                   </Button>
                 </div>
               </div>
@@ -307,7 +311,7 @@ export default function AddCompany() {
                   <Form.Label column sm={2} className="companylabel">
                     Company Slogan
                   </Form.Label>
-                  <Col sm={5}>
+                  <Col sm={7}>
                     <Form.Control
                       required
                       type="text"
@@ -325,10 +329,11 @@ export default function AddCompany() {
                   <Form.Label column sm={2} className="companylabel">
                     About Company
                   </Form.Label>
-                  <Col sm={5}>
+                  <Col sm={7}>
                     <Form.Control
                       required
-                      type="text"
+                      as="textarea"
+                      rows={3}
                       name="about"
                       value={about}
                       onChange={(e) => {
@@ -338,19 +343,29 @@ export default function AddCompany() {
                     ></Form.Control>
                   </Col>
                 </Form.Group>
-                <button type="button" variant="secondary" onClick={() => setIsShow(false)}>
-                  Previous
-                </button>
-                <Form.Group as={Row} className={'pt-2'}>
-                  <Col sm={{ span: 10, offset: 2 }}>
-                    <Button type="submit">CREATE</Button>
-                    {'\u00A0'}
-                    <Button type="reset" className="btn-danger">
-                      RESET
-                    </Button>
-                    {'\u00A0'}
-                  </Col>
-                </Form.Group>
+                <div className="add-bottom-buttons">
+                  <button
+                    type="button"
+                    className="secondary-butn-previous"
+                    onClick={() => setIsShow(false)}
+                  >
+                    PREVIOUS
+                  </button>
+                  <Form.Group as={Row} className={'pt-2'}>
+                    <Col sm={{ span: 10, offset: 2 }}>
+                      <div className="create-btn-company-group">
+                        <Button type="submit" className="create-btn-company">
+                          CREATE
+                        </Button>
+                        {'\u00A0'}
+                        <Button type="reset" className="btn-danger">
+                          RESET
+                        </Button>
+                        {'\u00A0'}
+                      </div>
+                    </Col>
+                  </Form.Group>
+                </div>
               </div>
             </Form>
           </div>

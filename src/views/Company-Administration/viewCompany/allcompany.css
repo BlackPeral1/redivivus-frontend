@@ -29,3 +29,62 @@
    text-align: center;
    font-size: 50px;
 }
+
+.thallcompany{
+
+   color:rgb(5, 5, 5);
+   background-color: blueviolet;
+   text-align: center;
+   padding: 20px;
+}
+
+.editbtn{
+
+   display:block;
+   float: left;
+
+}
+
+.deletebtn{
+
+   float:right
+}
+
+.companytable{
+
+   width:100%
+}
+
+.main-title-allcompany{
+       
+   font-family: 'Ubuntu Mono';
+   font-style: normal;
+   font-weight: 700;
+   font-size: 40px;
+   line-height: 40px;
+   display: flex;
+   align-items: center;
+   color: #153761;
+   margin-left: 430px;
+   padding-bottom: 30px;
+
+}
+
+.tr-th-allcompany{
+
+   background-color: blue;
+}
+
+.tableofcontent-company{
+
+   border-radius: 10px;
+}
+.tdallcompany{
+
+   text-align: center;
+   padding: 20px;
+   text-align: justify;
+   justify-items: center;
+   margin:10px;
+
+}

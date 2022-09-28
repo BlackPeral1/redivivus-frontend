@@ -1,4 +1,4 @@
-.company-registration-container{
+/* /* .company-registration-container{
 
     position: absolute;
 width: 1228px;
@@ -36,7 +36,7 @@ width: 100px;
 
 } */
 
-.table-container{
+/* .table-container{
 
     align: center;
 }
@@ -44,18 +44,18 @@ width: 100px;
 
 .table-company-container {
 	/* max-width: 1000px; */
-	margin-right:auto;
+	/* margin-right:auto;
 	margin-left:auto;
 	display:flex;
 	justify-content:center;
 	align-items:center;
 	/* min-height:100vh; */
-    padding: 20px;
+    /* padding: 20px;
     margin-left: 40px;
-}
+} */ 
 
 
-.company-styled-table th{
+/* .company-styled-table th{
 
      background-color: rgb(68, 52, 33);
 }
@@ -71,8 +71,86 @@ width: 100px;
   height: 1000px;
 
 }
+  */
+ 
 
-.table-container{
+  .card{
+    padding: 20px;
+    padding-left: 200px;
+    /* background-color: antiquewhite; */
+    background-color: #F2EFEE;
+  }
 
-   
+  .container1{
+
+    padding: 30px;
+  }
+
+  .add-bottom-buttons{
+
+    padding:20px;
+    padding-top: 50px;
+  }
+    .secondary-butn-previous{
+        background-color: rgb(106, 110, 109);
+        border-radius: 5px;
+        height: 40px;
+        width:120px;
+        border:none;
+        color:beige
+        
+    }
+
+    .next-btn-add{
+        max-width: 150px;
+        padding:10px;
+        margin-right: 145px;
+        margin-top: 10px;
+        float: right;
+        width:100%
+    }
+
+    .main-title{
+       
+        font-family: 'Ubuntu Mono';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        color: #153761;
+        margin-left: 250px;
+        padding-bottom: 30px;
+
+    }
+
+ .companylabel{
+
+    font-family: 'Poppins';
+    font-style: normal;
+    /* font-weight: 400; */
+    /* font-size: 20px; */
+    line-height: 35px;
+    /* or 260% */
+    
+    
+    color: #153761;
+ }
+
+.create-btn-company-group{
+    float:right;
+    margin-right:250px ;
+}
+
+.create-btn-company{
+
+    padding: 10px;
+    width: 100px;
+}
+
+.btn-danger-addcompany{
+
+    padding: 10px;
+    width: 100px;
 }
