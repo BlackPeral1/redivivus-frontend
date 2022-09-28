@@ -49,9 +49,10 @@ a:focus {
   transition: all 0.3s;
   border-radius: 8px;
   box-shadow: 0 0 2px 0 rgb(0 0 0 / 10%);
-  margin: 0 0 20px 20px;
+  margin: 0px 0px 20px 20px !important;
   overflow-y: auto;
   overflow-x: hidden;
+
   /* background-image: linear-gradient(#e5e5f2, #b7cfe8); */
 }
 
@@ -59,7 +60,8 @@ a:focus {
   min-width: 0;
   max-width: 0;
   text-align: center;
-  margin: 0;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .sidebar.active .sidebar-header h3,
@@ -99,6 +101,7 @@ a:focus {
   -webkit-transform: translateX(50%);
   -ms-transform: translateX(50%);
   transform: translateX(50%);
+ 
 }
 
 .sidebar .sidebar-header strong {
@@ -133,6 +136,7 @@ a[data-toggle='collapse'] {
   top: 50%;
   right: 20px;
   transform: translateY(-50%);
+   
 }
 
 ul ul a {
@@ -217,4 +221,7 @@ a.article:hover {
   .sidebarCollapse span {
     display: none;
   }
+}
+#rimage-title{
+  width: 92%;
 }

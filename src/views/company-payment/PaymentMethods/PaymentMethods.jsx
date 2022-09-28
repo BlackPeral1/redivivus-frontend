@@ -1,4 +1,3 @@
-import './admin-customer-payments.css'
 import DataTable from 'react-data-table-component'
 import dumyRequestPayments from '../../../data/dumyData'
 import { useNavigate } from 'react-router-dom'
@@ -11,11 +10,7 @@ function convertArrayOfObjectsToCSV(array) {
 
   const columnDelimiter = ','
   const lineDelimiter = '\n'
-  let exportData
-  // BinRequestServices.getAllBinreuests().then((res) => {
-  //   exportData = res.data.data
-  // })
-  const keys = Object.keys(exportData)
+  const keys = Object.keys(dumyRequestPayments[0])
 
   result = ''
   result += keys.join(columnDelimiter)
@@ -37,7 +32,7 @@ function convertArrayOfObjectsToCSV(array) {
 }
 const Export = ({ onExport }) => (
   <button className="btn btn-secondary " onClick={(e) => onExport(e.target.value)}>
-    <i class="fal fa-file-download"></i>
+    <i className="fal fa-file-download"></i>
     Generate Report
   </button>
 )
@@ -57,16 +52,17 @@ function downloadCSV(array) {
   link.setAttribute('download', filename)
   link.click()
 }
-const AdminCompanyPayments = () => {
+const PaymentMethods = () => {
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
+  const [paymentIdS, setPaymentIds] = useState([])
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
 
   const viewMore = (requestId) => {
-    navigate(`/admin-customer-payments/viewonepayment/${requestId}`)
+    navigate(`/admin-company-payments/viewonepayment/${requestId}`)
   }
   const columns = [
     {
@@ -74,19 +70,15 @@ const AdminCompanyPayments = () => {
       selector: (row) => row.payment.paymentId,
       sortable: true,
     },
-    {
-      name: 'CUSTOMER NAME',
-      selector: (row) => row.requestedBy.customerName,
-      sortable: true,
-    },
+
     {
       name: 'REQUEST ID',
       selector: (row) => row.requestId,
       sortable: true,
     },
     {
-      name: 'RECEIVED DATE',
-      selector: (row) => row.payment.receivedDate,
+      name: 'PAID DATE',
+      selector: (row) => row.payment.paidDate,
       sortable: true,
     },
     {
@@ -96,20 +88,20 @@ const AdminCompanyPayments = () => {
     },
 
     {
-      name: "CUSTOMER'S CUT",
+      name: 'DEDUCT AMOUNT',
       selector: (row) => row.payment.customerEarned,
       sortable: true,
     },
 
     {
-      name: 'PROFIT',
+      name: 'STATUS',
       selector: (row) => row.payment.profit,
       sortable: true,
     },
     {
       cell: (row) => (
         <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
-          <span class="material-icons">
+          <span className="material-icons">
             <img src={readMore} alt="" />
           </span>
         </button>
@@ -120,17 +112,7 @@ const AdminCompanyPayments = () => {
       button: true,
     },
   ]
-  useEffect(() => {
-    BinRequestServices.getAllBinreuests()
-      .then((resp) => {
-        setData(resp.data.data)
-        setFilteredData(resp.data.data)
-        console.log(data)
-      })
-      .catch((e) => {
-        console.log(e.meesage)
-      })
-  }, [])
+  useEffect(() => {}, [])
   useEffect(() => {
     const result = filteredData.filter((dataItem) => {
       if (search === '') {
@@ -142,33 +124,36 @@ const AdminCompanyPayments = () => {
     setData(result)
   }, [search])
   return (
-    <div className="main shadow-lg mb-5 rounded-3">
-      <DataTable
-        columns={columns}
-        data={data}
-        pagination
-        fixedHeaderScrollHeight="450px"
-        selecttableRowsHighlighted
-        highlightOnHover
-        // onRowClicked={onRowClicked}
-        data-tag="allowRowEvents"
-        subHeader
-        subHeaderComponent={
-          <div className="w-100">
-            {' '}
-            <input
-              type="text"
-              className="w-25 form-control font-color float-center mt-0.5 me-2"
-              placeholder="Search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            ></input>
-          </div>
-        }
-        actions={actionsMemo}
-      />
-    </div>
+    <>
+      <h4 className="content-title mt-5">All Payment Methods</h4>
+      <hr />
+      <div className="main shadow-lg mb-5 rounded-3 mt-5">
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          fixedHeaderScrollHeight="450px"
+          selecttableRowsHighlighted
+          highlightOnHover
+          // onRowClicked={onRowClicked}
+          data-tag="allowRowEvents"
+          subHeader
+          subHeaderComponent={
+            <div className="w-100">
+              {' '}
+              <input
+                type="text"
+                className="w-25 form-control font-color float-center mt-0.5 me-2"
+                placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              ></input>
+            </div>
+          }
+          actions={actionsMemo}
+        />
+      </div>
+    </>
   )
 }
-
-export default AdminCompanyPayments
+export default PaymentMethods
