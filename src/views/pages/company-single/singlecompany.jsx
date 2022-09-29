@@ -57,6 +57,8 @@ function SingleCompany() {
   const [address, setAdderss] = useState('')
   const [email, setEmail] = useState('')
   const [about, setAbout] = useState('')
+  const [openhour, setOpenhour] = useState('')
+  const [closehour, setClosehour] = useState('')
   const [view, setView] = useState('')
 
   const getCompanyProfile = async () => {
@@ -68,6 +70,8 @@ function SingleCompany() {
       setAdderss(response.data.data.address)
       setEmail(response.data.data.email)
       setAbout(response.data.data.about)
+      setOpenhour(response.data.data.openhour)
+      setClosehour(response.data.data.closehour)
     } else {
       console.log('Error Occured')
     }
@@ -92,7 +96,7 @@ function SingleCompany() {
         </button>
         <button className="company-nav-container">Home</button>
       </div> */}
-      {view === 'contact' && <Contact telephone={telephone} address={address} email={email} />}
+      {view === 'contact' && <Contact telephone={telephone} address={address} email={email} openhour={openhour} closehour={closehour} />}
       {view === 'about' && <About about={about} />}
     </div>
   )

@@ -16,7 +16,7 @@
 //       {/* {props.data}
 //       <contactcompo
 //           data={name}
-          
+
 //       /> */}
 
 //       <div className="company-contact-header">Sample Heading</div>
@@ -46,6 +46,7 @@ import './contact.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import TopNav from '../topnav/TopNav'
+import contactUsImg from '../../assets/images/company/contactUsImg.jpg'
 
 function Contact(props) {
   const _id = '631085b05e9006200d8f7c79'
@@ -101,28 +102,72 @@ function Contact(props) {
           </div>
         </div>
       </div> */}
-       <TopNav/>
-       <div className='contactpage-row'>
-         <h2 className='contactus-header'>Contact Us</h2>
-          <div className='contact-container'>
-          <div className='contact-container1'>
-                gfgfgfgfffffffx
-          </div>
-          <div className='about-container'>
-            <div className="about-container1">
-            <img className="img-aboutpage"
-          src="
-          https://previews.123rf.com/images/chudtsankov/chudtsankov1607/chudtsankov160700278/61547748-happy-green-recycle-bin-cartoon-mascot-character-waving-for-greeting-illustration-isolated-on-white-.jpg"
-          alt=""
-        />
+      <TopNav />
+      <div className="contactpage-row">
+        <h2 className="contactus-header">Contact Us</h2>
+        <div className="contact-container">
+          <div className="contact-container3">
+            <div className="contact-container2">
+              {/* <img
+                className="img-contactpage"
+                src="
+          https://cdn2.vectorstock.com/i/1000x1000/16/01/graphic-cartoon-character-contact-us-vector-34981601.jpg"
+                alt=""
+              /> */}
+              <img src={contactUsImg}  className="img-contactpage" alt="contactus" />
             </div>
-         
+          </div>
+          <div className="contact-container1">
+            <div className="contactpage-content">
+              <h4 className='contact-box-header'>Contact Our Recycling Company</h4> <br />
+              <div className="contact-box3">
+                <FontAwesomeIcon icon="fa-solid fa-phone" />
+                <FontAwesomeIcon icon="fa-solid fa-phone" />
+                <FontAwesomeIcon icon="fa-solid fa-phone" />
+              </div>
+              <div className="contact-box">
+                <div className="contact-telephone">{props.telephone}</div>
+                <div className="contact-address">{props.address}</div>
+                <div className="contact-email"> {props.email}</div>
+              </div>
+              <div className="contact-box2">
+                <div className="contact-imag2"> <img
+                className="img-contactpage2"
+                src="
+                https://us.123rf.com/450wm/orla/orla1306/orla130600025/20489851-3d-people-man-person-with-button-contact-us-.jpg?ver=6"
+                alt=""
+              /></div>
+                <div className="contact-address">Open Hour-{props.openhour}</div>
+                <div className="contact-email"> Close Hour-{props.closehour}</div>
+              </div>
+              <div className="contact-social-media">
+                <div className="socialmeadia-icon">
+                <FontAwesomeIcon icon="fa-solid fa-phone" />
+
+                </div>
+                <div className="socialmeadia-icon">
+                <FontAwesomeIcon icon="fa-solid fa-phone" />
+
+                </div>
+    
+                <div className="socialmeadia-icon">
+                <FontAwesomeIcon icon="fa-solid fa-phone" />
+
+                </div>
+     
+                
+                <div className="socialmeadia-icon">
+                <FontAwesomeIcon icon="fa-solid fa-phone" />
+
+                </div>
+    
+              </div>
+            </div>
           </div>
         </div>
-        </div>
+      </div>
     </div>
   )
 }
 
 export default Contact
-
