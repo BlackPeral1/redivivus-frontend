@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from "react-bootstrap/Nav";
 import animationData from '../../../assets/helloAnimation.json';
 import Lottie from 'react-lottie'
+import TopNav from "../../../components/topnav/TopNav";
 
 export default function Login() {
     const defaultOptions = {
@@ -18,7 +19,8 @@ export default function Login() {
 
     return (
         <>
-            <Container >
+            <TopNav />
+            <Container className="mt-5" >
                 <Row>
                     <Col >
                         <Lottie
