@@ -32,7 +32,7 @@ function convertArrayOfObjectsToCSV(array) {
 }
 const Export = ({ onExport }) => (
   <button className="btn btn-secondary " onClick={(e) => onExport(e.target.value)}>
-    <i class="fal fa-file-download"></i>
+    <i className="fal fa-file-download"></i>
     Generate Report
   </button>
 )
@@ -105,7 +105,7 @@ const AdminCompanyPayments = () => {
     {
       cell: (row) => (
         <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
-          <span class="material-icons">
+          <span className="material-icons">
             <img src={readMore} alt="" />
           </span>
         </button>
@@ -131,7 +131,7 @@ const AdminCompanyPayments = () => {
     console.log(paymentIdS)
   }, [])
   useEffect(() => {
-    const result= filteredData.filter((dataItem) => {
+    const result = filteredData.filter((dataItem) => {
       if (search === '') {
         return dataItem
       } else if (dataItem.requestId.toLowerCase().includes(search.toLowerCase())) {

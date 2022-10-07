@@ -39,7 +39,7 @@ const ViewOnePayment = () => {
   }, [])
 
   return (
-    <div class="main bg-white w-100 view-payment shadow-lg mb-5 rounded-3">
+    <div className="main bg-white w-100 view-payment shadow-lg mb-5 rounded-3">
       <div className="vstack gap-3">
         <div className="main w-80 mx-5 mt-5">
           <div className="">
@@ -71,7 +71,7 @@ const ViewOnePayment = () => {
               <div className="w-25 h-25   vstack">
                 <h6>FROM :</h6>
                 <p> {requestReceivedBy.name}</p>
-                <small>{}</small>
+                <small>{ }</small>
                 <small>
                   {companyAddress[0] + `,  `} {companyAddress[1]}
                 </small>
@@ -129,26 +129,26 @@ const ViewOnePayment = () => {
             <div className="d-flex my-5 justify-content-between">
               <div className="v-stack">
                 <h5 className="ms-5">Collected Bin Location</h5>
-                <span class="badge rounded-pill  bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75 ">
+                <span className="badge rounded-pill  bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75 ">
                   {binData.binLocation}
                 </span>
               </div>
               <div className="v-stack">
                 <h5 className="ms-5">Collected By</h5>
-                <span class="badge rounded-pill  bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75 ">
+                <span className="badge rounded-pill  bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75 ">
                   {binData.collectedBy}
                 </span>
               </div>
               <div className="v-stack">
                 <h5 className="ms-5">Confirmed Date</h5>
-                <span class="badge rounded-pill bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75  ">
+                <span className="badge rounded-pill bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75  ">
                   {binData.confirmedDate}
                 </span>
               </div>
 
               <div className="v-stack me-5">
                 <h5 className="ms-5">Confirmed Time</h5>
-                <span class="badge rounded-pill bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75  ">
+                <span className="badge rounded-pill bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75  ">
                   {binData.confirmedTime}
                 </span>
               </div>

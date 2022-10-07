@@ -1,0 +1,21 @@
+* {
+  color: #6e768e;
+}
+
+.font-s {
+  font-size: 14.35px;
+}
+
+.header a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.header a:hover {
+  color: #17d193;
+}
+
+.header a.active {
+  color: #17d193;
+  border-bottom: 3px solid #17d193;
+}

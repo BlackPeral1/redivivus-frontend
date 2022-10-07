@@ -6,97 +6,83 @@ import Row from 'react-bootstrap/Row';
 import Multiselect from 'multiselect-react-dropdown';
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import MapPicker from 'react-google-map-picker'
-import LocationPicker from 'react-location-picker';
-import { createRoot } from "react-dom/client";
-import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
+
+import { MapModal } from '../../../components';
 
 import './newPickupReq.scoped.css';
 
-const DefaultLocation = { lat: 10, lng: 106 };
-const DefaultZoom = 10;
-const defaultPosition = {
-  lat: 27.9878,
-  lng: 86.9250
-};
-
-// import 'sweetalert2/src/sweetalert2.scss'
 export default function NewPickupReq(props) {
   const [validated, setValidated] = useState(false);
   const [form, setForm] = useState({})
-  // const [error, setError] = useState({})
-  const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
-  const [dLocation, setdLocation] = useState({
-    address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal",
-    position: {
-      lat: 0,
-      lng: 0
-    }
+  const [position, setPosition] = useState({});
+  const [multiselectstyle, setMultiselectstyle] = useState({
+    chips: {
+      background: '#17d193'
+    },
+    highlightOption: {
+      background: '#17d193'
+    },
   });
-  const mapContainerStyle = {
-    height: "400px",
-    width: "800px"
-  }
+  const [mapModal, setMapModal] = useState(false);
+  const mapModalClose = () => setMapModal(false);
+  const mapModalShow = () => setMapModal(true);
 
-  const center = {
-    lat: 0,
-    lng: -180
-  }
+  useEffect(() => {
+    if (navigator?.geolocation) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        if (location) setForm({
+          ...form,
+          location: { lat: location.coords.latitude, lng: location.coords.longitude },
+        })
+      });
+    };
+  }, []);
 
-  const position = {
-    lat: 37.772,
-    lng: -122.214
-  }
-
-  const onLoad = marker => {
-    console.log('marker: ', marker)
-  }
-
-
-  const [location, setLocation] = useState(defaultLocation);
-  const [zoom, setZoom] = useState(DefaultZoom);
-  function ChangeLocation(e) {
-    console.log(e);
-  }
-
-
-  function handleChangeLocation(lat, lng) {
-    setLocation({ lat: lat, lng: lng });
-  }
-
-  function handleChangeZoom(newZoom) {
-    setZoom(newZoom);
-  }
-
-  function handleResetLocation() {
-    setDefaultLocation({ ...DefaultLocation });
-    setZoom(DefaultZoom);
-  }
-
-  function handleLocationChange({ position, address, places }) {
-
-    // Set new location
-    setdLocation({ position, address });
-  }
+  const checkValidity = (e) => {
+    if (form.wasteTypes == undefined || form.wasteTypes.length == 0) {
+      setMultiselectstyle({
+        chips: {
+          background: '#17d193'
+        },
+        highlightOption: {
+          background: '#17d193'
+        },
+        searchBox: {
+          border: '1px solid #dc3545'
+        }
+      })
+      return true;
+    } else {
+      setMultiselectstyle({
+        chips: {
+          background: '#17d193'
+        },
+        highlightOption: {
+          background: '#17d193'
+        },
+      })
+      return false;
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const inForm = e.currentTarget;
-    if (inForm.checkValidity() === false) {
+    checkValidity()
+    if (inForm.checkValidity() === false || !form.location.lat || !form.location.lng || checkValidity()) {
       setValidated(true);
+      console.log(form);
     } else {
+
+      console.log(form);
       axios.post('http://localhost:3001/api/pickupRequest', form)
-        .then(function (response) {
-
-
-          console.log(response);
+        .then((res) => {
+          console.log(res);
         })
-        .catch(function (error) {
-          // handle error
+        .catch((error) => {         // handle error
           console.log(error);
         })
-        .then(function () {
-          // always executed
+        .then(() => {     // always executed
         });
       Swal.fire({
         icon: 'success',
@@ -105,23 +91,17 @@ export default function NewPickupReq(props) {
         timer: 2000
       })
       setForm({
-        'company': 'Select Company',
-        'address': '',
-        'size': 'Select Size',
+        ...form,
+        company: '',
+        address: '',
+        size: '',
+        wasteTypes: []
       })
       setValidated(false);
     }
 
   };
 
-  useEffect(() => {
-  }, []);
-
-  const selectLocation = (location) => {
-    setLocation({
-      ...form, location: location
-    })
-  }
 
   const handleSelectChange = (e) => {
     setForm({
@@ -142,23 +122,7 @@ export default function NewPickupReq(props) {
     })
   }
 
-  const renderMap = () => {
-    return (
-      <GoogleMap
-        center={{ lat: 39.09366509575983, lng: -94.58751660204751 }}
-        zoom={8}
-        mapContainerStyle={{
-          margin: "20px 0 0",
-          height: "30vh",
-          width: "100%"
-        }}
-      >
-        <Marker
-          position={{ lat: 39.09366509575983, lng: -94.58751660204751 }}
-        />
-      </GoogleMap>
-    );
-  };
+
   return (
     <>
       <h4 className="content-title">Create New Request</h4>
@@ -172,13 +136,12 @@ export default function NewPickupReq(props) {
                   <Form.Label>Company</Form.Label>
                 </Col>
                 <Col md="10">
-                  <Form.Select value={form.company}
-                    name="company">
-                    <option>Select Company</option>
-                    <option>ABC Inc</option>
-                    <option>Earthology Inc</option>
-                    <option>Browning-Ferris Industries</option>
-                    <option>Casella Waste Systems</option>
+                  <Form.Select required value={form.company} name="company" onChange={handleSelectChange} className="font-s">
+                    <option value="">Select Company</option>
+                    <option value="ABC Inc">ABC Inc</option>
+                    <option value="Earthology Inc">Earthology Inc</option>
+                    <option value="Browning-Ferris Industries">Browning-Ferris Industries</option>
+                    <option value="Casella Waste Systems">Casella Waste Systems</option>
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -196,6 +159,7 @@ export default function NewPickupReq(props) {
                     onChange={handleSelectChange}
                     name="address"
                     value={form.address}
+                    className="font-s"
                   />
                   {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
                 </Col>
@@ -212,8 +176,10 @@ export default function NewPickupReq(props) {
                     type="text"
                     placeholder="Location"
                     onChange={handleSelectChange}
-                    value={location.location?.latitude + ',' + location.location?.longitude}
+                    value={form.location?.formatted_address}
+                    onClick={mapModalShow}
                     name="location"
+                    className='font-s'
                   />
                   <span style={{ fontSize: '12px' }}>Live Location</span>
                 </Col>
@@ -223,11 +189,11 @@ export default function NewPickupReq(props) {
                   <Form.Label>Size</Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Select onChange={handleSelectChange} name="size" value={form.location}>
-                    <option>Select Size</option>
-                    <option>Small</option>
-                    <option>Mediam</option>
-                    <option>Large</option>
+                  <Form.Select required onChange={handleSelectChange} name="size" value={form.size} className="d-flex">
+                    <option value="">Select Size</option>
+                    <option value="Small">Small</option>
+                    <option value="Mediam">Mediam</option>
+                    <option value="Large">Large</option>
                   </Form.Select>
                   {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
                 </Col>
@@ -240,6 +206,7 @@ export default function NewPickupReq(props) {
                 </Col>
                 <Col md="10">
                   <Multiselect
+                    required
                     className='from-control'
                     isObject={false}
                     onSelect={changeWasteTypes} // Function will trigger on select event
@@ -253,11 +220,7 @@ export default function NewPickupReq(props) {
                       'Iron',
                     ]}
                     placeholder="Waste Types"
-                    style={{
-                      chip: {
-                        backgroundColor: '#36ecaf',
-                      },
-                    }}
+                    style={multiselectstyle}
                   />
                   {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
                 </Col>
@@ -265,41 +228,18 @@ export default function NewPickupReq(props) {
             </Row>
             <Col md="12" className='d-flex justify-content-end'>
               {/* <Button>Reset</Button> */}
-              <Button type="submit" style={{ backgroundColor: '#36ECAF', color: '#4F4E4E' }}>Request</Button>
+              <Button type="submit" >Request</Button>
             </Col>
           </Form>
-          <button onClick={handleResetLocation}>Reset Location</button>
-          <label>Latitute:</label><input type='text' value={location.lat} disabled />
-          <label>Longitute:</label><input type='text' value={location.lng} disabled />
-          <label>Zoom:</label><input type='text' value={zoom} disabled />
-
-          {/* <MapPicker defaultLocation={defaultLocation}
-            zoom={zoom}
-            mapTypeId="roadmap"
-            style={{ height: '700px' }}
-            onChangeLocation={handleChangeLocation}
-            onChangeZoom={handleChangeZoom}
-            apiKey='AIzaSyAePk9SYfZTMpAJZ7pOutFK_ixi72CzS2I' /> */}
-          <LoadScript
-            googleMapsApiKey="AIzaSyAePk9SYfZTMpAJZ7pOutFK_ixi72CzS2I"
-          >
-            <GoogleMap
-              id="marker-example"
-              mapContainerStyle={mapContainerStyle}
-              zoom={2}
-              center={center}
-            >
-              <Marker
-                draggable={true}
-                clickable={true}
-                onClick={ChangeLocation}
-                onLoad={onLoad}
-                position={position}
-              />
-            </GoogleMap>
-          </LoadScript>
         </div>
       </div>
+
+      <MapModal
+        show={mapModal}
+        mapModalShow={mapModalShow}
+        mapModalClose={mapModalClose}
+        setForm={setForm}
+        form={form} />
     </>
   )
 };
