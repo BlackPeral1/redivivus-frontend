@@ -6,6 +6,8 @@ import Nav from "react-bootstrap/Nav";
 import animationData from '../../../assets/helloAnimation.json';
 import Lottie from 'react-lottie'
 import TopNav from "../../../components/topnav/TopNav";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
     const defaultOptions = {
@@ -16,6 +18,30 @@ export default function Login() {
             preserveAspectRatio: 'xMidYMid slice'
         }
     };
+
+    const [email , setEmail] = useState("")
+    const [password , setPassword] = useState("")
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        axios
+        .post('http://localhost:3001/api/auth/login', {email,password})
+        .then(function (res) {
+          if(res.status === 200){
+            localStorage.setItem("role" , res.data.data.user.role)
+            localStorage.setItem("token" , res.data.data.access_token)
+            alert('Logged in successfully')
+          }
+        })
+        .catch(function (error) {
+          // handle error
+          alert('Failed to login')
+          console.log(error)
+        })
+        .then(function () {
+          // always executed
+        })
+    }
 
     return (
         <>
@@ -29,12 +55,12 @@ export default function Login() {
                             width={300} />
                     </Col>
                     <Col>
-                        <Form className="mt-5 " >
+                        <Form className="mt-5 " onSubmit={handleSubmit}>
                             <Form.Group className="mb-3 w-75 ms-5" controlId="formBasicEmail">
-                                <Form.Control type="email" placeholder="Username" />
+                                <Form.Control type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </Form.Group>
                             <Form.Group className="mb-3 w-75 ms-5" controlId="formBasicPassword">
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </Form.Group>
                             <Form.Group className="text-center">
                                 <Button variant="primary" type="submit" >
