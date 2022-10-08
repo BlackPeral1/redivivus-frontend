@@ -15,12 +15,21 @@ const AdminCompany = React.lazy(() =>
 const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
 const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickupReq'))
 
+
 const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
 const AddPaymentMethod = React.lazy(() =>
   import('./views/company-payment/addPaymentMethod/AddPaymentMethod'),
 )
 
-const Payment = React.lazy(() => import('./views/company-payment/Payment/Payment'))
+
+
+
+
+
+
+const AddPaymentMethod = React.lazy(() =>
+  import('./views/company-payment/addPaymentMethod/AddPaymentMethod'),
+)
 
 
 const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/ViewOnePayment'))
@@ -29,6 +38,9 @@ const routes = [
 
   //Company Route
   { path: '/company', name: 'Company', element: Dashboard, permissions: 'isCompany' },
+
+  { path: '/payment', name: 'Payment', element: Payment, permissions: 'isCompany' },
+
 
   {
     path: '/payment',
@@ -43,20 +55,49 @@ const routes = [
     permissions: 'isCompany',
   },
 
-  { path: '/payment', name: 'Payment', element: Payment, permissions: 'isCompany', },
 
 
   //Customer Route
-  { path: '/new-pickup-request', name: 'New Pickup Request', element: NewPickupReq, permissions: 'isCustomer', },
-  { path: '/my-request', name: 'My Pickup Request', element: AllPickupReq, permissions: 'isCustomer', },
+  {
+    path: '/new-pickup-request',
+    name: 'New Pickup Request',
+    element: NewPickupReq,
+    permissions: 'isCustomer',
+  },
+  {
+    path: '/my-request',
+    name: 'My Pickup Request',
+    element: AllPickupReq,
+    permissions: 'isCustomer',
+  },
 
   //Admin Route
   { path: '/dashboard', name: 'Dashboard', element: Dashboard, permissions: 'isAdmin' },
-  { path: '/admin-customer-payments', name: 'AdminCustomerPayment', element: AdminCustomerPayment, permissions: 'isAdmin', },
-  { path: '/admin-company-payments', name: 'AdminCustomerPayment', element: AdminCompanyPayment, permissions: 'isAdmin', },
+  {
+    path: '/admin-customer-payments',
+    name: 'AdminCustomerPayment',
+    element: AdminCustomerPayment,
+    permissions: 'isAdmin',
+  },
+  {
+    path: '/admin-company-payments',
+    name: 'AdminCustomerPayment',
+    element: AdminCompanyPayment,
+    permissions: 'isAdmin',
+  },
 
-  { path: '/admin-customer-payments/viewonepayment/:id', name: 'ViewOnePayment', element: ViewOnePayment, permissions: 'isAdmin', },
-  { path: '/admin-company-payments/viewonepayment/:id', name: 'ViewOnePayment', element: ViewOnePayment, permissions: 'isAdmin', },
+  {
+    path: '/admin-customer-payments/viewonepayment/:id',
+    name: 'ViewOnePayment',
+    element: ViewOnePayment,
+    permissions: 'isAdmin',
+  },
+  {
+    path: '/admin-company-payments/viewonepayment/:id',
+    name: 'ViewOnePayment',
+    element: ViewOnePayment,
+    permissions: 'isAdmin',
+  },
   { path: '/admin-company', name: 'AdminCompany', element: AdminCompany, permissions: 'isAdmin' },
 ]
 
