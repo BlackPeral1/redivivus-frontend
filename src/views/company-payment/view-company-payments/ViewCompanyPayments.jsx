@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import BinRequestServices from '../../../services/BinRequestServices'
 import React, { useState, useEffect } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
+import removeRecord from '../../../assets/images/table-icon/remove_record.png'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 function convertArrayOfObjectsToCSV(array) {
   let result
@@ -32,7 +33,7 @@ function convertArrayOfObjectsToCSV(array) {
 }
 const Export = ({ onExport }) => (
   <button className="btn btn-secondary " onClick={(e) => onExport(e.target.value)}>
-    <i className="fal fa-file-download"></i>
+    <i class="fas fa-download fa-lg me-2" style={{ color: '#ffffff' }}></i>
     Generate Report
   </button>
 )
@@ -108,7 +109,7 @@ const ViewCompanyPayments = () => {
           </button>
           <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
             <span className="material-icons">
-              <img src={readMore} alt="" />
+              <img src={removeRecord} alt="" />
             </span>
           </button>
         </div>
@@ -120,7 +121,9 @@ const ViewCompanyPayments = () => {
       button: true,
     },
   ]
-  useEffect(() => {}, [])
+  useEffect(() => {
+   
+  }, [])
   useEffect(() => {
     const result = filteredData.filter((dataItem) => {
       if (search === '') {
