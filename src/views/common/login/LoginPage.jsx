@@ -8,6 +8,7 @@ import Lottie from 'react-lottie'
 import TopNav from "../../../components/topnav/TopNav";
 import { useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export default function Login() {
     const defaultOptions = {
@@ -30,12 +31,22 @@ export default function Login() {
           if(res.status === 200){
             localStorage.setItem("role" , res.data.data.user.role)
             localStorage.setItem("token" , res.data.data.access_token)
-            alert('Logged in successfully')
+            Swal.fire({
+                icon: 'success',
+                title: 'Logged in successfully!',
+                showConfirmButton: false,
+                timer: 2000,
+              })
           }
         })
         .catch(function (error) {
           // handle error
-          alert('Failed to login')
+          Swal.fire({
+            icon: 'error',
+            title: 'Failed to login!',
+            showConfirmButton: false,
+            timer: 2000,
+          })
           console.log(error)
         })
         .then(function () {
