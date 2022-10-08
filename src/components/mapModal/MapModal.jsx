@@ -15,7 +15,7 @@ export default function MapModal(props) {
   function ChangeLocation(e) {
     console.log(e);
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat()},${e.latLng.lng()}&key=AIzaSyAePk9SYfZTMpAJZ7pOutFK_ixi72CzS2I`).then((res) => {
-      console.log(res);
+      // console.log(res);
       props.setForm({
         ...props.form,
         location: { lat: e.latLng.lat(), lng: e.latLng.lng(), formatted_address: res.data.results[0].formatted_address }
@@ -24,7 +24,7 @@ export default function MapModal(props) {
       .catch((error) => {         // handle error
         console.log(error);
       })
-
+    console.log(props.form.location);
   }
 
   const onLoad = marker => {

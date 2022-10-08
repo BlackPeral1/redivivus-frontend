@@ -93,7 +93,7 @@ export default function NewPickupReq(props) {
       setForm({
         ...form,
         company: '',
-        address: '',
+        note: '',
         size: '',
         wasteTypes: []
       })
@@ -149,30 +149,12 @@ export default function NewPickupReq(props) {
             <Row className="mb-3">
               <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex'>
                 <Col md="2">
-                  <Form.Label>Address</Form.Label>
+                  <Form.Label>Location</Form.Label>
                 </Col>
                 <Col md="10">
                   <Form.Control
                     required
-                    type="text"
-                    placeholder="Address"
-                    onChange={handleSelectChange}
-                    name="address"
-                    value={form.address}
-                    className="font-s"
-                  />
-                  {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
-                </Col>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} md="6" controlId="validationCustom01" className='d-flex'>
-                <Col md="4">
-                  <Form.Label>Location</Form.Label>
-                </Col>
-                <Col md="8">
-                  <Form.Control
-                    required
+                    readOnly
                     type="text"
                     placeholder="Location"
                     onChange={handleSelectChange}
@@ -184,27 +166,33 @@ export default function NewPickupReq(props) {
                   <span style={{ fontSize: '12px' }}>Live Location</span>
                 </Col>
               </Form.Group>
-              <Form.Group as={Col} md="6" controlId="validationCustom01" className='d-flex'>
-                <Col md="4">
-                  <Form.Label>Size</Form.Label>
+
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex'>
+                <Col md="2">
+                  <Form.Label>Note</Form.Label>
                 </Col>
-                <Col md="8">
-                  <Form.Select required onChange={handleSelectChange} name="size" value={form.size} className="d-flex">
-                    <option value="">Select Size</option>
-                    <option value="Small">Small</option>
-                    <option value="Mediam">Mediam</option>
-                    <option value="Large">Large</option>
-                  </Form.Select>
+                <Col md="10">
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Note"
+                    onChange={handleSelectChange}
+                    name="note"
+                    value={form.note}
+                    className="font-s"
+                  />
                   {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
                 </Col>
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex'>
-                <Col md="2">
+              <Form.Group as={Col} md="6" controlId="validationCustom01" className='d-flex'>
+                <Col md="4">
                   <Form.Label>Waste Types</Form.Label>
                 </Col>
-                <Col md="10">
+                <Col md="8">
                   <Multiselect
                     required
                     className='from-control'
@@ -225,7 +213,22 @@ export default function NewPickupReq(props) {
                   {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
                 </Col>
               </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom01" className='d-flex'>
+                <Col md="4">
+                  <Form.Label>Size</Form.Label>
+                </Col>
+                <Col md="8">
+                  <Form.Select required onChange={handleSelectChange} name="size" value={form.size} className="d-flex">
+                    <option value="">Select Size</option>
+                    <option value="Small">Small</option>
+                    <option value="Mediam">Mediam</option>
+                    <option value="Large">Large</option>
+                  </Form.Select>
+                  {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
+                </Col>
+              </Form.Group>
             </Row>
+
             <Col md="12" className='d-flex justify-content-end'>
               {/* <Button>Reset</Button> */}
               <Button type="submit" >Request</Button>
