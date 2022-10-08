@@ -23,7 +23,7 @@ export default function AddCompany() {
 
   function createData(e) {
     e.preventDefault()
-       
+
     const isValid = formValidation()
     if (isValid) {
       //send this data to your back
@@ -126,7 +126,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2}>
                       Company Name
                     </Form.Label>
-                    <Col sm={5} class="company-input-layer">
+                    <Col sm={5} className="company-input-layer">
                       <Form.Control
                         required
                         type="text"
