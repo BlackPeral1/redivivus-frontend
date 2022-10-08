@@ -1,8 +1,8 @@
-FROM node:17-alpine 
+FROM node
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-COPY package.json /usr/src/app/
-RUN npm install --force
+COPY package.json yarn.lock /usr/src/app/
+RUN yarn
 COPY . /usr/src/app
 EXPOSE 3000
-CMD [ "npm", "start" ]
+CMD [ "yarn","dev","start" ]
