@@ -1,0 +1,78 @@
+.company-registration-container{
+
+    position: absolute;
+width: 1228px;
+height: 727px;
+left: 115px;
+top: 21px;
+
+background: #F2EFEE;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 20px;
+padding: 50px;
+align-items: center;
+}
+
+/* .companylabel{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 52px;
+width: 100px;
+/* or 260% */
+
+
+/* color: #153761;
+}
+
+
+
+/* .company-registartion-container-part{
+
+     padding: 30px;
+     width: 558px;
+     float:left
+
+} */
+
+.table-container{
+
+    align: center;
+}
+
+
+.table-company-container {
+	/* max-width: 1000px; */
+	margin-right:auto;
+	margin-left:auto;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	/* min-height:100vh; */
+    padding: 20px;
+    margin-left: 40px;
+}
+
+
+.company-styled-table th{
+
+     background-color: rgb(68, 52, 33);
+}
+
+
+.company-All-Form{
+
+  background-color: rgb(232, 224, 238);
+
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 20px;
+  height: 1000px;
+
+}
+
+.table-container{
+
+   
+}
