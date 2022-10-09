@@ -52,7 +52,7 @@ const MakePayment = () => {
     axios
       .get('http://localhost:3001/api/pickupRequest/')
       .then(function (response) {
-        console.log(response.data)
+        console.log(response.data.data)
         setBinRequests(response.data.data)
       })
       .catch(function (error) {
@@ -111,19 +111,13 @@ const MakePayment = () => {
                 </Col>
                 <Col md="8">
                   <Form.Select value={form.cardNo} name="cardNo">
-                    {paymentMethods
-                      .filter((method) => {
-                        if (method.methodType === form.paymentType) return method
-                      })
-                      .map((oneFilteredMethod) => {
-                        return (
-                          <option value={form.cardNumber}>{oneFilteredMethod.cardNumber}</option>
-                        )
-                      })}
-                    {/* <option>1089 0067 0005 6000</option>
-                    <option>1089 0067 0005 6000</option>
-                    <option>1089 0067 0005 6000</option>
-                    <option>1089 0067 0005 6000</option> */}
+                    {paymentMethods.map((singleMethod) => {
+          
+                      if (singleMethod.methodType == form.paymentType) {
+                        console.log(singleMethod.cardNumber)
+                        return <option value={form.cardNumber}>{singleMethod.cardNumber}</option>
+                      }
+                    })}
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -135,9 +129,9 @@ const MakePayment = () => {
                 </Col>
                 <Col md="8">
                   <Form.Select value={form.requestId} name="requestId">
-                    {/* <option>REQID10890067</option>
-                    <option>REQID10890067</option>
-                    <option>REQID10890067</option> */}
+                    {binRequests.map((binRequest) => {
+                      return <option value={form.requestNo}>{binRequest.requestNo}</option>
+                    })}
                   </Form.Select>
                 </Col>
               </Form.Group>

@@ -52,7 +52,7 @@ export default function SideBar(props) {
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
               >
-                <i class="fas fa-user"></i>
+                <i className="fas fa-user"></i>
                 {!props.isActive ? <small> New Customer</small> : <small> </small>}
               </NavLink>
             </li>
@@ -112,7 +112,7 @@ export default function SideBar(props) {
             data-toggle="collapse"
             aria-expanded="false"
           >
-            <i class="fas fa-money-bill-alt"></i>
+            <i className="fas fa-money-bill-alt"></i>
             {!props.isActive ? <small> Payments</small> : <small> </small>}
           </a>
           <ul className="collapse list-unstyled font-color" id="payments">
@@ -134,7 +134,7 @@ export default function SideBar(props) {
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
               >
-                <i class="fas fa-building"></i>
+                <i className="fas fa-building"></i>
                 {!props.isActive ? <small> Company</small> : <small> </small>}
               </NavLink>
             </li>
@@ -147,7 +147,7 @@ export default function SideBar(props) {
               isActive ? 'font-color side-link selected' : 'font-color side-link '
             }
           >
-            <i class="fas fa-wrench"></i>
+            <i className="fas fa-wrench"></i>
             {!props.isActive ? <small> Settings</small> : <small> </small>}
           </NavLink>
         </li>
@@ -163,7 +163,7 @@ export default function SideBar(props) {
               isActive ? 'font-color side-link selected' : 'font-color side-link '
             }
           >
-            <i class="fas fa-sign-out-alt"></i>
+            <i className="fas fa-sign-out-alt"></i>
             {!props.isActive ? <small> Sign out</small> : <small> </small>}
           </NavLink>
         </li>
