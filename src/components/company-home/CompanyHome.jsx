@@ -123,7 +123,9 @@ function CompanyHome(props) {
             />
           </div>
         </div>
-        <div className="companyhomecontainer2">fdfdfdfd</div>
+        <div className="companyhomecontainer2">
+          fdfdfdfddfdaassgghhjjkkoouufreed
+        </div>
       </div>
     </div>
   )

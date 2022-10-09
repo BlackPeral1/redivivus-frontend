@@ -19,33 +19,14 @@ const AllCompany = () => {
     const response = await axios.get('http://localhost:3001/api/company/allcompany')
     if (response.status === 200) {
       setCompany(response.data.data)
-     
+      // setSearchData(response.data.data);
       console.log(response.data.data)
     }
   }
-  
-  const deleteCompany = (id) => {
-    if (window.confirm("Are you sure?")) {
-
-        fetch('http://localhost:3001/api/company/deletecompany/' + id,
-            {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'content-Type': 'application/json'
-                }
-            })
-
-            .then(console.log("Deleted"))
-            .catch(err => console.log(err));
-    }
-  }
-  
 
   return (
-      
-
-<div className='companytable'> 
+   
+{/* <div className='companytable'> 
  <h3 className='main-title-allcompany'>ALL COMPANIES</h3>
 
 <Table striped bordered hover variant="light" className='tableofcontent-company'>
@@ -77,29 +58,7 @@ const AllCompany = () => {
                     <td>{item.opendays}</td>
                     <td>{item.slogan}</td>
 
-                    {/* <td>
-                     
-                       <Link
-                        className="btn btn-warning"
-                        to={`/admin/admin-company/companyedit/${item._id}`}
-                      >
-                        <i className="fa-solid fa-eye"></i>&nbsp;Edit
-                      </Link>
-                       
-                      &nbsp;
-                      <a className="btn btn-danger" href="@">
-                        <i className="far fa-trash-alt"></i>&nbsp;Delete
-                      </a>
-                      &nbsp;
-                      <Link
-                        className="btn btn-success"
-                        to={`/admin/admin-company/companyprofile/${item._id}`}
-                      >
-                        <i className="fa-solid fa-eye"></i>&nbsp;View
-                      </Link>
-                      &nbsp;
-                      
-                    </td> */}
+                   
 
                     <td>
                       <Link
@@ -119,13 +78,10 @@ const AllCompany = () => {
                       </Link></td>
 
                     <td> 
-                      {/* <a className="btn btn-danger" onClick={() => removeData(item.id)}>
-                    
+                      <a className="btn btn-danger" href="@">
                         <i className="far fa-trash-alt"></i>&nbsp;Delete
                       </a>
-                      &nbsp; */}
-                      <button onClick={() => deleteCompany(item._id)}>Delete</button>
-                      </td>
+                      &nbsp;</td>
                     
                   </tr>
                 )
@@ -135,10 +91,11 @@ const AllCompany = () => {
        </tbody>
     </Table>
 
-    </div>  
+    </div>   */}
      
    
   )
 }
 
 export default AllCompany
+

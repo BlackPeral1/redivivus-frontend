@@ -22,78 +22,74 @@ export default function AddCompany() {
   const [emailErr, setemailErr] = useState({})
   const [isShow, setIsShow] = useState(false)
 
-  function createData(e) {
-    e.preventDefault()
+  const createData = () => {
+    try {
+      const data = {
+        name,
+        email,
+        address,
+        telephone,
+        customers,
+        centers,
+        logo,
+        openhour,
+        closehour,
+        opendays,
+        slogan,
+        about,
+      }
+      axios.post('http://localhost:3001/api/company/addCompany', data).then((res) => {
 
-    const isValid = formValidation()
-    if (isValid) {
-      //send this data to your back
-      setName('')
-      setTelephone('')
-      setEmail('')
-    }
-
-    const company = {
-      name,
-      email,
-      address,
-      telephone,
-      customers,
-      centers,
-      logo,
-      openhour,
-      closehour,
-      opendays,
-      slogan,
-      about,
-    }
-
-    console.log(company)
-
-    axios
-      .post('http://localhost:3001/api/company/addcompany', company)
-      .then(() => {
-        console.log('CREATE PROCEED!')
-
-        onReset()
-        alert('Successfully Created!')
+        alert('Company Added Successfully')
+        console.log(res)
+        
       })
-      .catch((err) => {
-        alert(err)
-      })
+    } catch (err) {
+      console.log(err)
+      alert('Company Added Failed')
+    }
   }
 
-  const formValidation = () => {
-    const nameErr = {}
-
-    let isValid = true
-
-    if (name.trim().length < 3) {
-      nameErr.nameShort = 'Company Name is too short'
-      isValid = false
+  const handleShow = () => {
+    if (name === '') {
+      setnameErr({ name: 'Name is required' })
+      alert('Name is required')
+    } else if (telephone === '' || telephone.length < 10) {
+      settelephoneErr({ telephone: 'Telephone is required' })
+      alert('Telephone is required')
+    } else if (email === '' || !email.includes('@')) {
+      setemailErr({ email: 'Please insert valid email' })
+      alert('Please insert valid email')
+    } else {
+      setIsShow(true)
     }
-
-    if (name.trim().length > 10) {
-      nameErr.nameLong = 'Company Name is too long'
-      isValid = false
-    }
-
-    if (telephone.trim().length == 10) {
-      telephoneErr.telephoneLength = 'Must have 10 numbers for field'
-      isValid = false
-    }
-
-    // if (!email.include('@')) {
-    //   emailErr.emailInvalid = 'Email must have @ sign '
-    //   isValid = false
-    // }
-
-    setnameErr(nameErr)
-    settelephoneErr(telephoneErr)
-    setemailErr(emailErr)
-
-    return isValid
   }
+  // const formValidation = () => {
+  //   const nameErr = {}
+  //   const telephoneErr = {}
+  //   const emailErr = {}
+  //   let isValid = true
+
+  //   if (name.trim().length < 3) {
+  //     nameErr.nameShort = 'Name is too short'
+  //     isValid = false
+  //   }
+
+  //   if (telephone.trim().length < 10) {
+  //     telephoneErr.telephoneShort = 'Telephone is too short'
+  //     isValid = false
+  //   }
+
+  //   if (email.trim().length < 5) {
+  //     emailErr.emailShort = 'Email is too short'
+  //     isValid = false
+  //   }
+
+  //   setnameErr(nameErr)
+  //   settelephoneErr(telephoneErr)
+  //   setemailErr(emailErr)
+  //   return isValid
+  // }
 
   function onReset() {
     console.log('RESET PROCEED!')
@@ -299,7 +295,8 @@ export default function AddCompany() {
                     type="button"
                     className="next-btn-add"
                     variant="secondary"
-                    onClick={() => setIsShow(true)}
+                    // onClick={() => setIsShow(true)}
+                    onClick={handleShow}
                   >
                     NEXT
                   </Button>
