@@ -15,12 +15,12 @@ const AdminCompany = React.lazy(() =>
 const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
 const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickupReq'))
 
-const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
+
 const AddPaymentMethod = React.lazy(() =>
   import('./views/company-payment/addPaymentMethod/AddPaymentMethod'),
 )
 
-const Payment = React.lazy(() => import('./views/company-payment/Payment/Payment'))
+const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
 
 
 const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/ViewOnePayment'))
@@ -43,7 +43,7 @@ const routes = [
     permissions: 'isCompany',
   },
 
-  { path: '/payment', name: 'Payment', element: Payment, permissions: 'isCompany', },
+
 
 
   //Customer Route

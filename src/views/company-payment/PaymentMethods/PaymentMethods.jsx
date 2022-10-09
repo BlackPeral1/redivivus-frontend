@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import BinRequestServices from '../../../services/BinRequestServices'
 import React, { useState, useEffect } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
+import edit from '../../../assets/images/table-icon/table_edit _icon.png'
+import removeRecord from '../../../assets/images/table-icon/remove_record.png'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 
 const Export = ({ onExport }) => (
@@ -66,15 +68,15 @@ const PaymentMethods = () => {
     },
     {
       cell: (row) => (
-        <div>
+        <div className="d-flex me-3">
           <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
             <span className="material-icons">
-              <img src={readMore} alt="" />
+              <img src={edit} alt="" />
             </span>
           </button>
           <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
             <span className="material-icons">
-              <img src={readMore} alt="" />
+              <img src={removeRecord} alt="" />
             </span>
           </button>
         </div>

@@ -32,7 +32,7 @@ const AddPaymentMethod = () => {
     } else {
 
       axios
-        .post(`http://lcoalhost:3001/api/paymentmethod/`, form)
+        .post(`http://localhost:3001/api/paymentmethod`, form)
         .then(function (response) {
           console.log(response.message)
           Swal.fire({
