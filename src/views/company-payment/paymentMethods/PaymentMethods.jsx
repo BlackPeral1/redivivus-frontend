@@ -38,7 +38,6 @@ const PaymentMethods = () => {
   })
 
   const removePaymentMethod = (id) => {
-    //_id
     swalWithBootstrapButtons
       .fire({
         title: 'Are you sure?',
@@ -79,8 +78,9 @@ const PaymentMethods = () => {
         }
       })
   }
+  //navigate edit payment method ui
   const editPaymentMethod = (id) => {
-    navigate(`/payment/add-payment-method/${id}`)
+    navigate(`/user/payment/update-payment/${id}`)
   }
   const columns = [
     {

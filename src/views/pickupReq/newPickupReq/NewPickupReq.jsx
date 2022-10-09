@@ -30,6 +30,7 @@ export default function NewPickupReq(props) {
   useEffect(() => {
     if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition((location) => {
+
         if (location) setForm({
           ...form,
           location: { lat: location.coords.latitude, lng: location.coords.longitude },
@@ -101,6 +102,7 @@ export default function NewPickupReq(props) {
     }
 
   };
+
 
 
   const handleSelectChange = (e) => {
