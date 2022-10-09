@@ -16,17 +16,13 @@ function TopNav() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-<<<<<<< HEAD
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#about">About</Nav.Link>
-            <Nav.Link href="#buyers">Buyers</Nav.Link>
-            <Nav.Link href="#contact-us">Contact</Nav.Link>
-=======
+
+          
+
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/buyers">Buyers</Nav.Link>
-            <Nav.Link href="/contact-us">Contact</Nav.Link>
->>>>>>> 8ac8de17f4d1a10d0e7e9880cbd57aefeff8440d
+  <Nav.Link href="#contact-us">Contact</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link href="/login">
