@@ -33,6 +33,28 @@ const AddPaymentMethod = () => {
   const location = useLocation()
 
   const [decision, setDecision] = useState([])
+  useEffect(() => {
+    setDecision(location.pathname.toString().split('/')[3])
+    console.log(decision)
+  }, [])
+  useEffect(() => {
+    if (decision === 'update-payment') {
+      axios
+        .get(`http://localhost:3001/api/paymentmethod/${params.id}`)
+        .then(function (response) {
+          setForm(response.data.data)
+          setAddress(response.data.data.paymentAddress)
+           console.log(form.paymentAddress)
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error)
+        })
+        .then(function () {
+          // always executed
+        })
+    }
+  }, [decision])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -43,24 +65,45 @@ const AddPaymentMethod = () => {
     if (inForm.checkValidity() === false) {
       setValidated(true)
     } else {
-      axios
-        .post(`http://localhost:3001/api/paymentmethod`, form)
-        .then(function (response) {
-          console.log(response.message)
-          Swal.fire({
-            icon: 'success',
-            title: 'Request successfully sent!',
-            showConfirmButton: false,
-            timer: 2000,
+      if (decision === 'update-payment') {
+        axios
+          .patch(`http://localhost:3001/api/paymentmethod/${params.id}`, form)
+          .then(function (response) {
+            console.log(response.data.message)
+            Swal.fire({
+              icon: 'success',
+              title: 'Request successfully updated!',
+              showConfirmButton: false,
+              timer: 2000,
+            })
           })
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error)
-        })
-        .then(function () {
-          // always executed
-        })
+          .catch(function (error) {
+            // handle error
+            console.log(error)
+          })
+          .then(function () {
+            // always executed
+          })
+      } else if (decision === 'add-payment-method') {
+        axios
+          .post(`http://localhost:3001/api/paymentmethod`, form)
+          .then(function (response) {
+            console.log(response.message)
+            Swal.fire({
+              icon: 'success',
+              title: 'Request successfully sent!',
+              showConfirmButton: false,
+              timer: 2000,
+            })
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error)
+          })
+          .then(function () {
+            // always executed
+          })
+      }
 
       setValidated(false)
     }
@@ -103,7 +146,11 @@ const AddPaymentMethod = () => {
   }
   return (
     <>
-      <h2 className="content-title mt-5">Company Add Payment Method</h2>
+      <h2 className="content-title mt-5">
+        {decision === 'update-payment'
+          ? 'Update Company Payment Method'
+          : 'Company Add Payment Method'}
+      </h2>
       <hr />
       <div className="row">
         <div className="card p-4 form">
@@ -275,7 +322,7 @@ const AddPaymentMethod = () => {
                 type="submit"
                 style={{ backgroundColor: '#36ECAF', color: '#4F4E4E', marginRight: '1.25%' }}
               >
-                Add
+                {decision === 'update-payment' ? 'Update' : 'Add'}
               </Button>
             </Col>
           </Form>

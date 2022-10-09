@@ -15,24 +15,11 @@ const AdminCompany = React.lazy(() =>
 const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
 const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickupReq'))
 
-
-
-
-
 const AddPaymentMethod = React.lazy(() =>
   import('./views/company-payment/addPaymentMethod/AddPaymentMethod'),
 )
 
-
-
 const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
-
-
-
-
-
-
-
 
 const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/ViewOnePayment'))
 const routes = [
@@ -41,14 +28,19 @@ const routes = [
   //Company Route
   { path: '/company', name: 'Company', element: Dashboard, permissions: 'isCompany' },
 
-
   { path: '/payment', name: 'Payment', element: Payment, permissions: 'isCompany' },
-
 
   {
     path: '/payment',
     name: 'Payment',
     element: Payment,
+    permissions: 'isCompany',
+  },
+
+  {
+    path: '/payment/update-payment/:id',
+    name: 'Update Payment Method',
+    element: AddPaymentMethod,
     permissions: 'isCompany',
   },
   {
@@ -57,9 +49,6 @@ const routes = [
     element: AddPaymentMethod,
     permissions: 'isCompany',
   },
-
-
-
   //Customer Route
   {
     path: '/new-pickup-request',

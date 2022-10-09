@@ -38,7 +38,6 @@ const PaymentMethods = () => {
   })
 
   const removePaymentMethod = (id) => {
-    //_id
     swalWithBootstrapButtons
       .fire({
         title: 'Are you sure?',
@@ -71,12 +70,17 @@ const PaymentMethods = () => {
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
         ) {
-          swalWithBootstrapButtons.fire('Cancelled', 'Your Payment method details are safe :)', 'error')
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your Payment method details are safe :)',
+            'error',
+          )
         }
       })
   }
+  //navigate edit payment method ui
   const editPaymentMethod = (id) => {
-    navigate(`/payment/add-payment-method/${id}`)
+    navigate(`/user/payment/update-payment/${id}`)
   }
   const columns = [
     {
