@@ -76,7 +76,7 @@ const AllCompany = () => {
                     <td className='tdallcompany'>{item.closehour}</td>
                     <td className='tdallcompany'>{item.opendays}</td>
                     <td className='tdallcompany'>{item.slogan}</td>
-
+                    {/* <td ><img src={item.logo}/></td> */}
                     {/* <td>
                      
                        <Link

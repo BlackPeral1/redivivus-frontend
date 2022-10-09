@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 // import './addcompany.css'
 import './addcompany.scoped.css'
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+import app from '../../../firebase'
 
 export default function AddCompany() {
   const [name, setName] = useState('')
@@ -22,32 +24,67 @@ export default function AddCompany() {
   const [emailErr, setemailErr] = useState({})
   const [isShow, setIsShow] = useState(false)
 
-  const createData = () => {
-    try {
-      const data = {
-        name,
-        email,
-        address,
-        telephone,
-        customers,
-        centers,
-        logo,
-        openhour,
-        closehour,
-        opendays,
-        slogan,
-        about,
-      }
-      axios.post('http://localhost:3001/api/company/addCompany', data).then((res) => {
+  const createData = (e) => {
+    e.preventDefault()
+    const fileName = new Date().getTime().toString() + logo.name
 
-        alert('Company Added Successfully')
-        console.log(res)
-        
-      })
-    } catch (err) {
-      console.log(err)
-      alert('Company Added Failed')
-    }
+    const storage = getStorage(app)
+    const storageRef = ref(storage, fileName)
+
+    const uploadTask = uploadBytesResumable(storageRef, logo)
+
+    //Upload the file to Firebase Storage
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        console.log('Upload is ' + progress + ' % done')
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused')
+            break
+          case 'running':
+            console.log('Upload is running')
+            break
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((logo) => {
+          console.log('File available at :', logo)
+
+          const data = {
+            name,
+            email,
+            address,
+            telephone,
+            customers,
+            centers,
+            logo,
+            openhour,
+            closehour,
+            opendays,
+            slogan,
+            about,
+          }
+
+          console.log(data)
+          axios
+            .post('http://localhost:3001/api/company/addCompany', data)
+            .then((res) => {
+              console.log(res)
+              alert('Company Added Successfully!')
+            })
+            .catch((res) => {
+              console.log('Failed')
+            })
+        })
+      },
+    )
   }
 
   const handleShow = () => {
@@ -191,7 +228,7 @@ export default function AddCompany() {
                         onChange={(e) => {
                           setTelephone(e.target.value)
                         }}
-                        placeholder="No Of Centers"
+                        placeholder="Enter Telephone Number"
                       ></Form.Control>
                     </Col>
                   </Form.Group>
@@ -226,11 +263,10 @@ export default function AddCompany() {
                     <Col sm={7}>
                       <Form.Control
                         required
-                        type="text"
+                        type="file"
                         name="logo"
-                        value={logo}
                         onChange={(e) => {
-                          setLogo(e.target.value)
+                          setLogo(e.target.files[0]);
                         }}
                         placeholder="company Logo Url"
                       ></Form.Control>
