@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
+import { useParams, Link, useLocation } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
@@ -12,25 +13,36 @@ import Swal from 'sweetalert2'
 const AddPaymentMethod = () => {
   const navigate = useNavigate()
   const [validated, setValidated] = useState(false)
-  const [location, setLocation] = useState({})
-  const [form, setForm] = useState({})
-  const [address, setAddress] = useState([])
-  const [addressLine1, setAddressLine1] = useState('')
-  const [addressLine2, setAddressLine2] = useState('')
-  const [addressLine3, setAddressLine3] = useState('')
-  // const [error, setError] = useState({})
+  const [address, setAddress] = useState({ addressLine1: '', addressLine2: '', addressLine3: '' })
+
+  const [form, setForm] = useState({
+    methodType: '',
+    expirationDate: '',
+    activeStatus: true,
+    paymentAddress: {
+      addressLine1: '',
+      addressLine2: '',
+      addressLine3: '',
+    },
+    cardNumber: '',
+    cvc: 0,
+    postalCode: 0,
+  })
+
+  const params = useParams()
+  const location = useLocation()
+
+  const [decision, setDecision] = useState([])
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    setAddress([addressLine1, addressLine2, addressLine3])
-    console.log(address)
-    setForm({ ...form, address: address })
+    console.log(form)
+
     const inForm = e.currentTarget
     if (inForm.checkValidity() === false) {
       setValidated(true)
     } else {
-
       axios
         .post(`http://localhost:3001/api/paymentmethod`, form)
         .then(function (response) {
@@ -50,11 +62,6 @@ const AddPaymentMethod = () => {
           // always executed
         })
 
-      // setForm({
-      //   company: 'Select Company',
-      //   address: '',
-      //   size: 'Select Size',
-      // })
       setValidated(false)
     }
   }
@@ -78,16 +85,18 @@ const AddPaymentMethod = () => {
   const handleAddress = (e) => {
     const name = e.target.name
     let value = e.target.value
-    if (name == 'addressLine1') {
-      setAddressLine1(value)
-      console.log(addressLine1)
-    } else if (name == 'addressLine2') {
-      setAddressLine2(value)
-      console.log(addressLine2)
-    } else {
-      setAddressLine3(value)
-      console.log(addressLine3)
+
+    if (name === 'addressLine1') {
+      setAddress({ ...address, [name]: value })
+    } else if (name === 'addressLine2') {
+      setAddress({ ...address, [name]: value })
+    } else if (name === 'addressLine3') {
+      setAddress({ ...address, [name]: value })
     }
+    setForm({
+      ...form,
+      ['paymentAddress']: { ...address },
+    })
   }
   const backToAllPayments = () => {
     navigate(`/user/payment`)
@@ -183,7 +192,7 @@ const AddPaymentMethod = () => {
                     type="text"
                     placeholder="Adress Line 1"
                     onChange={handleAddress}
-                    value={addressLine1}
+                    value={address.addressLine1}
                     name="addressLine1"
                   />
                 </Col>
@@ -198,7 +207,7 @@ const AddPaymentMethod = () => {
                     type="text"
                     placeholder="Address Line 2"
                     onChange={handleAddress}
-                    value={addressLine2}
+                    value={address.addressLine2}
                     name="addressLine2"
                   />
                 </Col>
@@ -215,7 +224,7 @@ const AddPaymentMethod = () => {
                     type="text"
                     placeholder="Address Line 3"
                     onChange={handleAddress}
-                    value={addressLine3}
+                    value={address.addressLine3}
                     name="addressLine3"
                   />
                 </Col>

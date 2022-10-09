@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
 import edit from '../../../assets/images/table-icon/table_edit _icon.png'
 import removeRecord from '../../../assets/images/table-icon/remove_record.png'
+import Swal from 'sweetalert2'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 
 const Export = ({ onExport }) => (
@@ -28,8 +29,54 @@ const PaymentMethods = () => {
     [],
   )
 
-  const viewMore = (requestId) => {
-    navigate(`/admin-company-payments/viewonepayment/${requestId}`)
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger',
+    },
+    buttonsStyling: false,
+  })
+
+  const removePaymentMethod = (id) => {
+    //_id
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(`http://localhost:3001/api/paymentmethod/${id}`)
+            .then(function (response) {
+              console.log(response.data.data)
+              const result = filteredData.filter((dataItem) => {
+                return dataItem._id !== id
+              })
+              swalWithBootstrapButtons.fire('Deleted!', 'Your file has been deleted.', 'success')
+              setData(result)
+
+              setFilteredData(result)
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error)
+            })
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire('Cancelled', 'Your Payment method details are safe :)', 'error')
+        }
+      })
+  }
+  const editPaymentMethod = (id) => {
+    navigate(`/payment/add-payment-method/${id}`)
   }
   const columns = [
     {
@@ -69,14 +116,14 @@ const PaymentMethods = () => {
     {
       cell: (row) => (
         <div className="d-flex me-3">
-          <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
-            <span className="material-icons">
-              <img src={edit} alt="" />
-            </span>
-          </button>
-          <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
+          <button className="mx-auto btn" onClick={() => removePaymentMethod(row._id)}>
             <span className="material-icons">
               <img src={removeRecord} alt="" />
+            </span>
+          </button>
+          <button className="mx-auto btn" onClick={() => editPaymentMethod(row._id)}>
+            <span className="material-icons">
+              <img src={edit} alt="" />
             </span>
           </button>
         </div>
@@ -93,6 +140,7 @@ const PaymentMethods = () => {
       .then(function (response) {
         console.log(response.data.data)
         setData(response.data.data)
+        setFilteredData(response.data.data)
       })
       .catch(function (error) {
         // handle error
