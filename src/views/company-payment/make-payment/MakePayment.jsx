@@ -117,15 +117,11 @@ const MakePayment = () => {
                 </Col>
                 <Col md="8">
                   <Form.Select value={form.cardNumber} name="cardNumber" onChange={handleInput}>
-                    {paymentMethods.map((singleMethod) => {
-                      console.log(form.paymentType)
-                      console.log(singleMethod.cardNumber)
-
-                      if (singleMethod.methodType === form.paymentType) {
-                        console.log(singleMethod.cardNumber)
-                        return <option value={form.cardNumber}>{singleMethod.cardNumber}</option>
-                      }
-                    })}
+                    {paymentMethods
+                      .filter((paymentMethod) => form.paymentType === paymentMethod.methodType)
+                      .map((filteredMethod) => {
+                        return <option value={form.cardNumber}>{filteredMethod.cardNumber}</option>
+                      })}
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -136,7 +132,7 @@ const MakePayment = () => {
                   <Form.Label>Request ID :</Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Select value={form.requestNo} name="requestNo">
+                  <Form.Select value={form.requestNo} name="requestNo" onChange={handleInput}>
                     {binRequests.map((binRequest) => {
                       return <option value={form.requestNo}>{binRequest.requestNo}</option>
                     })}
@@ -148,7 +144,7 @@ const MakePayment = () => {
                   <Form.Label>Transaction Date :</Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Control type="date" value={form.date} name="date" />
+                  <Form.Control type="date" value={form.date} name="date" onChange={handleInput} />
                 </Col>
               </Form.Group>
             </Row>
@@ -164,6 +160,7 @@ const MakePayment = () => {
                     placeholder="Amount"
                     value={form.amount}
                     name="amount"
+                    onChange={handleInput}
                   />
                 </Col>
               </Form.Group>
@@ -178,6 +175,7 @@ const MakePayment = () => {
                     name="note"
                     style={{ resize: 'none' }}
                     placeholder="Leave a note"
+                    onChange={handleInput}
                   />
                 </Col>
               </Form.Group>
