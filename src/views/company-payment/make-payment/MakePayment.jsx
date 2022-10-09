@@ -47,7 +47,15 @@ const MakePayment = () => {
       setValidated(false)
     }
   }
+  const handleInput = (e) => {
+    const name = e.target.name
+    const value = e.target.value
 
+    setForm({
+      ...form,
+      [name]: value,
+    })
+  }
   useEffect(() => {
     axios
       .get('http://localhost:3001/api/pickupRequest/')
@@ -94,7 +102,7 @@ const MakePayment = () => {
                   <Form.Label>Payment Type :</Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Select value={form.paymentType} name="paymentType">
+                  <Form.Select value={form.paymentType} name="paymentType" onChange={handleInput}>
                     {/* <option>Visa</option>
                     <option>Master Card</option>
                     <option>Credit Card</option> */}
@@ -110,10 +118,12 @@ const MakePayment = () => {
                   <Form.Label>Card. No. : </Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Select value={form.cardNo} name="cardNo">
+                  <Form.Select value={form.cardNumber} name="cardNumber" onChange={handleInput}>
                     {paymentMethods.map((singleMethod) => {
-          
-                      if (singleMethod.methodType == form.paymentType) {
+                      console.log(form.paymentType)
+                      console.log(singleMethod.cardNumber)
+
+                      if (singleMethod.methodType === form.paymentType) {
                         console.log(singleMethod.cardNumber)
                         return <option value={form.cardNumber}>{singleMethod.cardNumber}</option>
                       }

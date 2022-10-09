@@ -140,7 +140,7 @@ const PaymentMethods = () => {
   ]
   useEffect(() => {
     axios
-      .get(`https://blackperar-redivivus.herokuapp.com/api/paymentmethod/`)
+      .get(`http://localhost:3001/api/paymentmethod`)
       .then(function (response) {
         console.log(response.data.data)
         setData(response.data.data)
