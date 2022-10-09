@@ -71,7 +71,11 @@ const PaymentMethods = () => {
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
         ) {
-          swalWithBootstrapButtons.fire('Cancelled', 'Your Payment method details are safe :)', 'error')
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your Payment method details are safe :)',
+            'error',
+          )
         }
       })
   }
@@ -136,7 +140,7 @@ const PaymentMethods = () => {
   ]
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/paymentmethod/`)
+      .get(`https://blackperar-redivivus.herokuapp.com/api/paymentmethod/`)
       .then(function (response) {
         console.log(response.data.data)
         setData(response.data.data)
