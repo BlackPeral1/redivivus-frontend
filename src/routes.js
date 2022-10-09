@@ -13,7 +13,10 @@ const AdminCompany = React.lazy(() =>
 )
 
 const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
-const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickupReq'))
+
+const AllPickupReq = React.lazy(() => import('./views/pickupReq/allPickupReq/AllPickupReq'))
+
+
 
 
 
@@ -26,6 +29,7 @@ const AddPaymentMethod = React.lazy(() =>
 
 
 const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
+
 
 
 

@@ -33,6 +33,7 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={loading}>
         <Routes>
+          <Route path="/" name="Landing" element={<Landing />} />
           <Route exact path="/company/:id" name="company" element={<Singlecompany />} />
           <Route path="/login" name="Login" element={<Login />} />
           <Route path="/registration-intro" name="Reg-intro" element={<RegistrationIntro />} />
@@ -45,7 +46,7 @@ function App() {
           <Route path="admin/*" name="Home" element={<AdminLayout />} />
           <Route path="user/*" name="UserLayout" element={<UserLayout />} />
 
-          <Route path="/landing" name="Landing" element={<Landing />} />
+
         </Routes>
       </Suspense>
     </BrowserRouter>

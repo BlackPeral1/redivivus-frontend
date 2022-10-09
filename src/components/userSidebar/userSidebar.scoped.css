@@ -14,7 +14,6 @@ a {
   font-size: 14.35px;
   font-weight: 300;
   line-height: 1.7em;
-  margin-top: 10%;
   color: #6e768e;
 }
 a:hover,
@@ -39,7 +38,7 @@ a:focus {
 
 .selected {
   background-color: #36ecaf30;
-  border-left: #36ecaf solid 4px;
+  border-left: #17d193 solid 4px;
 }
 
 .sidebar {
@@ -75,7 +74,6 @@ a:focus {
 .sidebar ul li a {
   text-align: left;
 }
-
 
 #sidebar.active ul li a {
   padding: 20px 25px;
