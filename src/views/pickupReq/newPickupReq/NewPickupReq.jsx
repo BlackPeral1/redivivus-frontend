@@ -53,6 +53,7 @@ export default function NewPickupReq(props) {
     if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition((location) => {
         if (location) selectLocation(location.coords)
+       
       })
     }
   }, [])

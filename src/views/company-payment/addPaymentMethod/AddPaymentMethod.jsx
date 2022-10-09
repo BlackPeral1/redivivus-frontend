@@ -44,7 +44,7 @@ const AddPaymentMethod = () => {
         .then(function (response) {
           setForm(response.data.data)
           setAddress(response.data.data.paymentAddress)
-           console.log(form.paymentAddress)
+          console.log(form.paymentAddress)
         })
         .catch(function (error) {
           // handle error
@@ -139,6 +139,14 @@ const AddPaymentMethod = () => {
     setForm({
       ...form,
       ['paymentAddress']: { ...address },
+    })
+  }
+  const resetForm = () => {
+    setAddress((address) => {
+      return {}
+    })
+    setForm((form) => {
+      return {}
     })
   }
   const backToAllPayments = () => {
@@ -313,7 +321,8 @@ const AddPaymentMethod = () => {
             <Col md="12" className="d-flex justify-content-end">
               {/* <Button>Reset</Button> */}
               <Button
-                type="reset"
+                type="button"
+                onClick={resetForm}
                 style={{ backgroundColor: '#36ECAF', color: '#4F4E4E', marginRight: '5%' }}
               >
                 Clear

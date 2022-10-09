@@ -10,6 +10,8 @@ import Swal from 'sweetalert2'
 const MakePayment = () => {
   const [validated, setValidated] = useState(false)
   const [location, setLocation] = useState({})
+  const [binRequests, setBinRequests] = useState([])
+  const [paymentMethods, setPaymentMethods] = useState([])
   const [form, setForm] = useState({})
   // const [error, setError] = useState({})
 
@@ -47,38 +49,38 @@ const MakePayment = () => {
   }
 
   useEffect(() => {
-    if (navigator?.geolocation) {
-      navigator.geolocation.getCurrentPosition((location) => {
-        if (location) selectLocation(location.coords)
+    axios
+      .get('http://localhost:3001/api/pickupRequest/')
+      .then(function (response) {
+        console.log(response.data)
+        setBinRequests(response.data.data)
       })
-    }
+      .catch(function (error) {
+        // handle error
+        console.log(error)
+      })
+      .then(function () {
+        // always executed
+      })
+
+    axios
+      .get('http://localhost:3001/api/paymentmethod/')
+      .then(function (response) {
+        console.log(response.data.data)
+        setPaymentMethods(response.data.data)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error)
+      })
+      .then(function () {
+        // always executed
+      })
+
+    setForm({})
+    setValidated(false)
   }, [])
 
-  const selectLocation = (location) => {
-    setLocation({
-      ...form,
-      location: location,
-    })
-  }
-
-  const handleSelectChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    })
-  }
-  const changeWasteTypes = (value) => {
-    setForm({
-      ...form,
-      wasteTypes: value,
-    })
-  }
-  const removeWasteTypes = (value) => {
-    setForm({
-      ...form,
-      wasteTypes: value,
-    })
-  }
   return (
     <>
       <h4 className="content-title mt-5">Make Payment</h4>
@@ -93,9 +95,13 @@ const MakePayment = () => {
                 </Col>
                 <Col md="8">
                   <Form.Select value={form.paymentType} name="paymentType">
-                    <option>Visa</option>
+                    {/* <option>Visa</option>
                     <option>Master Card</option>
-                    <option>Credit Card</option>
+                    <option>Credit Card</option> */}
+                    {paymentMethods.map((paymentMethod) => {
+                      const { methodType } = paymentMethod
+                      return <option value={form.paymentType}>{methodType}</option>
+                    })}
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -105,10 +111,19 @@ const MakePayment = () => {
                 </Col>
                 <Col md="8">
                   <Form.Select value={form.cardNo} name="cardNo">
+                    {paymentMethods
+                      .filter((method) => {
+                        if (method.methodType === form.paymentType) return method
+                      })
+                      .map((oneFilteredMethod) => {
+                        return (
+                          <option value={form.cardNumber}>{oneFilteredMethod.cardNumber}</option>
+                        )
+                      })}
+                    {/* <option>1089 0067 0005 6000</option>
                     <option>1089 0067 0005 6000</option>
                     <option>1089 0067 0005 6000</option>
-                    <option>1089 0067 0005 6000</option>
-                    <option>1089 0067 0005 6000</option>
+                    <option>1089 0067 0005 6000</option> */}
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -120,9 +135,9 @@ const MakePayment = () => {
                 </Col>
                 <Col md="8">
                   <Form.Select value={form.requestId} name="requestId">
+                    {/* <option>REQID10890067</option>
                     <option>REQID10890067</option>
-                    <option>REQID10890067</option>
-                    <option>REQID10890067</option>
+                    <option>REQID10890067</option> */}
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -145,7 +160,6 @@ const MakePayment = () => {
                     required
                     type="text"
                     placeholder="Amount"
-                    onChange={handleSelectChange}
                     value={form.amount}
                     name="amount"
                   />
