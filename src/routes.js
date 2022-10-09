@@ -18,12 +18,19 @@ const AllPickupReq = React.lazy(() => import('./views/pickupReq/allReq/AllPickup
 
 
 
+
 const AddPaymentMethod = React.lazy(() =>
   import('./views/company-payment/addPaymentMethod/AddPaymentMethod'),
 )
 
 
+
 const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
+
+
+
+
+
 
 
 
@@ -50,6 +57,7 @@ const routes = [
     element: AddPaymentMethod,
     permissions: 'isCompany',
   },
+
 
 
   //Customer Route
