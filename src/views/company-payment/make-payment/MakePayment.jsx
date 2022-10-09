@@ -51,6 +51,8 @@ const MakePayment = () => {
     const name = e.target.name
     const value = e.target.value
 
+    if (name === '') {
+    }
     setForm({
       ...form,
       [name]: value,
@@ -103,9 +105,6 @@ const MakePayment = () => {
                 </Col>
                 <Col md="8">
                   <Form.Select value={form.paymentType} name="paymentType" onChange={handleInput}>
-                    {/* <option>Visa</option>
-                    <option>Master Card</option>
-                    <option>Credit Card</option> */}
                     {paymentMethods.map((paymentMethod) => {
                       const { methodType } = paymentMethod
                       return <option value={form.paymentType}>{methodType}</option>
