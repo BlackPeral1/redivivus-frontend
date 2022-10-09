@@ -51,12 +51,11 @@ const MakePayment = () => {
     const name = e.target.name
     const value = e.target.value
 
-    if (name === '') {
-    }
     setForm({
       ...form,
       [name]: value,
     })
+    console.log(form)
   }
   useEffect(() => {
     axios
@@ -137,7 +136,7 @@ const MakePayment = () => {
                   <Form.Label>Request ID :</Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Select value={form.requestId} name="requestId">
+                  <Form.Select value={form.requestNo} name="requestNo">
                     {binRequests.map((binRequest) => {
                       return <option value={form.requestNo}>{binRequest.requestNo}</option>
                     })}
@@ -175,6 +174,8 @@ const MakePayment = () => {
                   <Form.Control
                     as="textarea"
                     rows={5}
+                    value={form.note}
+                    name="note"
                     style={{ resize: 'none' }}
                     placeholder="Leave a note"
                   />
