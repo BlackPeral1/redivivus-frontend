@@ -1,15 +1,16 @@
 import React from 'react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import './companyhome.css'
+import './companyhome.scoped.css'
 import TopNav from '../topnav/TopNav'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function CompanyHome(props) {
-  const id = '631085b05e9006200d8f7c79'
+  const id = '631b7cf1a68686de53c791a3'
 
   const [centers, setCenters] = useState('')
   const [slogan, setSlogan] = useState('')
+  const [about, setAbout] = useState('')
 
   return (
     <div>
@@ -110,7 +111,7 @@ function CompanyHome(props) {
             <div className="companyhome-bottom-section">+10000 <br/>Customers</div>
             <div className="companyhome-bottom-section">12 <br/>Centers</div>
             </div>
-            
+            {props.about}
           </div>
         </div>
         <div className="companyhomecontainer1">

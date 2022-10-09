@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "./about.css";
+import "./about.scoped.css";
 import TopNav from '../topnav/TopNav'
 
 function About(props) {

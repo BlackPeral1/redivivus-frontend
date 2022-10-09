@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import { Button, Table, Container } from 'react-bootstrap'
-import './allcompany.css'
+import './allcompany.scoped.css'
 
 const AllCompany = () => {
 
@@ -73,9 +73,9 @@ const AllCompany = () => {
                     <td className='tdallcompany'>{item.telephone}</td>
 
                     <td className='tdallcompany'>{item.openhour}</td>
-                    <td>{item.closehour}</td>
-                    <td>{item.opendays}</td>
-                    <td>{item.slogan}</td>
+                    <td className='tdallcompany'>{item.closehour}</td>
+                    <td className='tdallcompany'>{item.opendays}</td>
+                    <td className='tdallcompany'>{item.slogan}</td>
 
                     {/* <td>
                      
@@ -101,7 +101,7 @@ const AllCompany = () => {
                       
                     </td> */}
 
-                    <td>
+                    <td className='tdallcompany'>
                       <Link
                         className="btn btn-success"
                         to={`/admin/admin-company/companyprofile/${item._id}`}
@@ -110,23 +110,26 @@ const AllCompany = () => {
                       </Link>
                       &nbsp;
                     </td>
-                    <td>  
+                    <td className='tdallcompany'>  
                       <Link
                         className="btn btn-warning"
-                        to={`/admin/admin-company/companyedit/${item._id}`}
+                          to={`/admin/admin-company/companyedit/${item._id}`}
                       >
                         <i className="fa-solid fa-eye"></i>&nbsp;Edit 
-                      </Link></td>
+                      </Link> 
+                      </td>
 
-                    <td> 
-                      {/* <a className="btn btn-danger" onClick={() => removeData(item.id)}>
+                    <td className='tdallcompany'> 
+                      <a className="btn btn-danger" onClick={() => deleteCompany(item._id)}>
                     
                         <i className="far fa-trash-alt"></i>&nbsp;Delete
                       </a>
-                      &nbsp; */}
-                      <button onClick={() => deleteCompany(item._id)}>Delete</button>
+                      &nbsp;
+                      {/* <button  className="btn btn-danger" onClick={() => deleteCompany(item._id)}>Delete</button> */}
+
                       </td>
-                    
+
+                     
                   </tr>
                 )
               })}

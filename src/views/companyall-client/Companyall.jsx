@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import { Button, Table, Container } from 'react-bootstrap'
-import './allcompany.css'
+import './allcompany..scoped.css'
 
 const AllCompany = () => {
 

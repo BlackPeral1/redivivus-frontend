@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
 import { Button, Table, Container } from 'react-bootstrap'
-import './companyProfile.css'
+import './companyProfile.scoped.css'
 
 const CompanyProfile = () => {
   // const dummyData = [

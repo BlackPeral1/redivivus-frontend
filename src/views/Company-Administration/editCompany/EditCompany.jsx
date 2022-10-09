@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import './editcompany.css'
+import './editcompany.scoped.css'
 
 export default function EditEmployee() {
     const { id } = useParams();

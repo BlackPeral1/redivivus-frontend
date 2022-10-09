@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 // import './addcompany.css'
-import './addcompany.css'
+import './addcompany.scoped.css'
 
 export default function AddCompany() {
   const [name, setName] = useState('')

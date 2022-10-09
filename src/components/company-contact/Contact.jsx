@@ -42,14 +42,14 @@
 
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import './contact.css'
+import './contact.scoped.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import TopNav from '../topnav/TopNav'
 import contactUsImg from '../../assets/images/company/contactUsImg.jpg'
 
 function Contact(props) {
-  const _id = '631085b05e9006200d8f7c79'
+  const _id = '631b7cf1a68686de53c791a3'
 
   const [telephone, setTelephone] = useState('')
   const [address, setAdderss] = useState('')
