@@ -35,7 +35,12 @@ const routes = [
     element: Payment,
     permissions: 'isCompany',
   },
-
+  {
+    path: '/company/viewonepayment/:id',
+    name: 'ViewOnePayment',
+    element: ViewOnePayment,
+    permissions: 'isCompany',
+  },
   {
     path: '/payment/update-payment/:id',
     name: 'Update Payment Method',

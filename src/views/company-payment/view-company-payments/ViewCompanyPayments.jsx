@@ -64,7 +64,7 @@ const ViewCompanyPayments = () => {
   const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
 
   const viewMore = (requestId) => {
-    navigate(`/admin-company-payments/viewonepayment/${requestId}`)
+    navigate(`/company/viewonepayment/${requestId}`)
   }
   useEffect(() => {
     BinRequestServices.getAllBinreuests()
@@ -117,7 +117,7 @@ const ViewCompanyPayments = () => {
         </div>
       ),
 
-      name: 'STATUS',
+      name: 'CONFIRMATION',
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,

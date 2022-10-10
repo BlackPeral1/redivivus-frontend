@@ -12,6 +12,7 @@ const MakePayment = () => {
   const [location, setLocation] = useState({})
   const [binRequests, setBinRequests] = useState([])
   const [paymentMethods, setPaymentMethods] = useState([])
+  const [paymetMethodType, setPaymentMethodType] = useState('Credit Card')
   const current = new Date()
   const [form, setForm] = useState({
     amount: 0,
@@ -19,7 +20,7 @@ const MakePayment = () => {
     paymentId: '',
     date: `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`,
     note: '',
-    paymentType: 'Debit Card',
+
     requestNo: '',
   })
   // const [error, setError] = useState({})
@@ -40,11 +41,7 @@ const MakePayment = () => {
             showConfirmButton: false,
             timer: 2000,
           })
-          const actualData = binRequests.filter(
-            (oneRequest) => oneRequest['requestNo'] != form.requestNo,
-          )
-
-          setBinRequests(actualData)
+          setForm({})
         })
         .catch(function (error) {
           // handle error
@@ -75,7 +72,7 @@ const MakePayment = () => {
       .get('http://localhost:3001/api/pickupRequest/')
       .then(function (response) {
         const actualData = response.data.data.filter((oneRequest) => oneRequest['payment'] == null)
-
+        setForm({ ...form, requestNo: actualData[0].requestNo })
         setBinRequests(actualData)
       })
       .catch(function (error) {
@@ -90,7 +87,14 @@ const MakePayment = () => {
       .get('http://localhost:3001/api/paymentmethod/')
       .then(function (response) {
         console.log(response.data.data)
+
         setPaymentMethods(response.data.data)
+        const creditCardPaymentMethodS = response.data.data.filter(
+          (onePaymentMethod) => onePaymentMethod.methodType == 'Credit Card',
+        )
+        const defaultCardNumber = creditCardPaymentMethodS[0].cardNumber
+        setForm({ ...form, cardNumber: defaultCardNumber })
+        console.log(form)
       })
       .catch(function (error) {
         // handle error
@@ -117,7 +121,11 @@ const MakePayment = () => {
                   <Form.Label>Payment Type :</Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Select value={form.paymentType} name="paymentType" onChange={handleInput}>
+                  <Form.Select
+                    value={paymetMethodType}
+                    name="paymentType"
+                    onChange={(e) => setPaymentMethodType(e.target.value)}
+                  >
                     <option value="Credit Card" selected>
                       Credit Card
                     </option>
@@ -130,13 +138,8 @@ const MakePayment = () => {
                   <Form.Label>Card. No. : </Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Select
-                    value={form.cardNumber}
-                    name="cardNumber"
-                    defaultValue={''}
-                    onChange={handleInput}
-                  >
-                    {form.paymentType === 'Credit Card'
+                  <Form.Select value={form.cardNumber} name="cardNumber" onChange={handleInput}>
+                    {paymetMethodType === 'Credit Card'
                       ? paymentMethods.map((oneMethod) => {
                           if (oneMethod.methodType === 'Credit Card') {
                             return (
