@@ -8,6 +8,7 @@ import readMore from '../../../assets/images/table-icon/read-more.png'
 import edit from '../../../assets/images/table-icon/table_edit _icon.png'
 import removeRecord from '../../../assets/images/table-icon/remove_record.png'
 import Swal from 'sweetalert2'
+import './paymentMethods.scoped.css'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 
 const Export = ({ onExport }) => (
@@ -96,26 +97,32 @@ const PaymentMethods = () => {
     },
     {
       name: 'DATE ADDED',
-      selector: (row) => row.expirationDate,
+      selector: (row) => row.updatedAt.split('T')[0],
       sortable: true,
     },
     {
       name: 'LAST USED',
-      selector: (row) => row.expirationDate,
+      selector: (row) => row.createdAt.split('T')[0],
       sortable: true,
     },
-
     {
       name: 'TOTAL PAYMENT',
-      selector: (row) => row.expirationDate,
+      selector: (row) => row.totalPayment,
       sortable: true,
     },
     {
-      cell: (row) => <p>{row.activeStatus}</p>,
+      cell: (row) => (
+        <div>
+          <button className={`status-btn  ${row.activeStatus ? 'Active' : 'Inactive'}`}>
+            {row.activeStatus ? 'Active' : 'Inactive'}
+          </button>
+        </div>
+      ),
+
       name: 'STATUS',
       ignoreRowClick: true,
       allowOverflow: true,
-      button: false,
+      button: true,
     },
     {
       cell: (row) => (

@@ -12,7 +12,16 @@ const MakePayment = () => {
   const [location, setLocation] = useState({})
   const [binRequests, setBinRequests] = useState([])
   const [paymentMethods, setPaymentMethods] = useState([])
-  const [form, setForm] = useState({})
+  const current = new Date()
+  const [form, setForm] = useState({
+    amount: 0,
+    cardNumber: '',
+    paymentId: '',
+    date: `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`,
+    note: '',
+    paymentType: 'Debit Card',
+    requestNo: '',
+  })
   // const [error, setError] = useState({})
 
   const handleSubmit = (e) => {
@@ -31,6 +40,11 @@ const MakePayment = () => {
             showConfirmButton: false,
             timer: 2000,
           })
+          const actualData = binRequests.filter(
+            (oneRequest) => oneRequest['requestNo'] != form.requestNo,
+          )
+
+          setBinRequests(actualData)
         })
         .catch(function (error) {
           // handle error
@@ -54,13 +68,15 @@ const MakePayment = () => {
       ['paymentId']: `PAYID${Math.floor(Math.random() * 10000 + 1)}`,
       [name]: value,
     })
+    console.log(form)
   }
   useEffect(() => {
     axios
       .get('http://localhost:3001/api/pickupRequest/')
       .then(function (response) {
-        console.log(response.data.data)
-        setBinRequests(response.data.data)
+        const actualData = response.data.data.filter((oneRequest) => oneRequest['payment'] == null)
+
+        setBinRequests(actualData)
       })
       .catch(function (error) {
         // handle error
@@ -117,18 +133,26 @@ const MakePayment = () => {
                   <Form.Select
                     value={form.cardNumber}
                     name="cardNumber"
-                    defaultValue={form.cardNumber}
+                    defaultValue={''}
                     onChange={handleInput}
                   >
                     {form.paymentType === 'Credit Card'
                       ? paymentMethods.map((oneMethod) => {
                           if (oneMethod.methodType === 'Credit Card') {
-                            return <option value={form.cardNumber}>{oneMethod.cardNumber}</option>
+                            return (
+                              <option key={oneMethod.cardNumber} value={oneMethod.cardNumber}>
+                                {oneMethod.cardNumber}
+                              </option>
+                            )
                           }
                         })
                       : paymentMethods.map((oneMethod) => {
                           if (oneMethod.methodType === 'Debit Card') {
-                            return <option value={form.cardNumber}>{oneMethod.cardNumber}</option>
+                            return (
+                              <option key={oneMethod.cardNumber} value={oneMethod.cardNumber}>
+                                {oneMethod.cardNumber}
+                              </option>
+                            )
                           }
                         })}
                   </Form.Select>
@@ -143,7 +167,11 @@ const MakePayment = () => {
                 <Col md="8">
                   <Form.Select value={form.requestNo} name="requestNo" onChange={handleInput}>
                     {binRequests.map((binRequest) => {
-                      return <option value={form.requestNo}>{binRequest.requestNo}</option>
+                      return (
+                        <option key={binRequest.requestNo} value={binRequest.requestNo}>
+                          {binRequest.requestNo}
+                        </option>
+                      )
                     })}
                   </Form.Select>
                 </Col>
