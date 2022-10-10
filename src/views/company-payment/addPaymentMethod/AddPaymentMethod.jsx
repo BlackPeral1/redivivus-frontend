@@ -16,7 +16,7 @@ const AddPaymentMethod = () => {
   const [address, setAddress] = useState({ addressLine1: '', addressLine2: '', addressLine3: '' })
 
   const [form, setForm] = useState({
-    methodType: '',
+    methodType: 'Debit Card',
     expirationDate: '',
     activeStatus: true,
     paymentAddress: {
@@ -178,11 +178,13 @@ const AddPaymentMethod = () => {
                     value={form.methodType}
                     name="methodType"
                     placeholder=""
+                    defaultValue={'Debit Card'}
                     onChange={handleSelectChange}
                   >
-                    <option>Visa</option>
-                    <option>Master Card</option>
-                    <option>Credit Card</option>
+                    <option value={'Debit Card'} selected>
+                      Debit Card
+                    </option>
+                    <option value={'Credit Card'}>Credit Card</option>
                   </Form.Select>
                 </Col>
               </Form.Group>

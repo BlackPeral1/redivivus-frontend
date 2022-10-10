@@ -64,46 +64,60 @@ const AdminCompanyPayments = () => {
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
-
+  useEffect(() => {
+    BinRequestServices.getAllBinreuests()
+      .then((resp) => {
+        const actualData = resp.data.data.filter(
+          (oneRequest) =>
+            oneRequest['requestReceivedBy'] != null && oneRequest['requestedBy'] != null,
+        )
+        setData(actualData)
+        setFilteredData(actualData)
+        console.log(actualData)
+      })
+      .catch((e) => {
+        console.log(e.meesage)
+      })
+  }, [])
   const viewMore = (requestId) => {
     navigate(`/admin-customer-payments/viewonepayment/${requestId}`)
   }
   const columns = [
     {
       name: 'PAYMENT ID',
-      selector: (row) => row.payment.paymentId,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
     {
       name: 'CUSTOMER NAME',
-      selector: (row) => row.requestedBy.customerName,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
     {
       name: 'REQUEST ID',
-      selector: (row) => row.requestId,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
     {
       name: 'RECEIVED DATE',
-      selector: (row) => row.payment.receivedDate,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
     {
       name: 'COMPANY PAID',
-      selector: (row) => row.payment.companyPaid,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
 
     {
       name: "CUSTOMER'S CUT",
-      selector: (row) => row.payment.customerEarned,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
 
     {
       name: 'PROFIT',
-      selector: (row) => row.payment.profit,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
     {
@@ -120,17 +134,7 @@ const AdminCompanyPayments = () => {
       button: true,
     },
   ]
-  useEffect(() => {
-    BinRequestServices.getAllBinreuests()
-      .then((resp) => {
-        setData(resp.data.data)
-        setFilteredData(resp.data.data)
-        console.log(data)
-      })
-      .catch((e) => {
-        console.log(e.meesage)
-      })
-  }, [])
+
   useEffect(() => {
     const result = filteredData.filter((dataItem) => {
       if (search === '') {
@@ -167,6 +171,11 @@ const AdminCompanyPayments = () => {
         }
         actions={actionsMemo}
       />
+      <div>
+        {data.map((oneObject) => {
+          return <p>{oneObject.requestNo}</p>
+        })}
+      </div>
     </div>
   )
 }

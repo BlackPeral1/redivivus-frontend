@@ -16,15 +16,21 @@ const MakePayment = () => {
   // const [error, setError] = useState({})
 
   const handleSubmit = (e) => {
+    console.log(form)
     e.preventDefault()
     const inForm = e.currentTarget
     if (inForm.checkValidity() === false) {
       setValidated(true)
     } else {
       axios
-        .post('http://localhost:3001/api/pickupRequest', form)
+        .post('http://localhost:3001/api/makePayment', form)
         .then(function (response) {
-          console.log(response)
+          Swal.fire({
+            icon: 'success',
+            title: 'Request successfully sent!',
+            showConfirmButton: false,
+            timer: 2000,
+          })
         })
         .catch(function (error) {
           // handle error
@@ -33,29 +39,21 @@ const MakePayment = () => {
         .then(function () {
           // always executed
         })
-      Swal.fire({
-        icon: 'success',
-        title: 'Request successfully sent!',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      setForm({
-        company: 'Select Company',
-        address: '',
-        size: 'Select Size',
-      })
+
       setValidated(false)
     }
   }
   const handleInput = (e) => {
     const name = e.target.name
-    const value = e.target.value
-
+    let value = e.target.value
+    if (name === 'amount') {
+      value = Number(value)
+    }
     setForm({
       ...form,
+      ['paymentId']: `PAYID${Math.floor(Math.random() * 10000 + 1)}`,
       [name]: value,
     })
-    console.log(form)
   }
   useEffect(() => {
     axios
@@ -104,10 +102,10 @@ const MakePayment = () => {
                 </Col>
                 <Col md="8">
                   <Form.Select value={form.paymentType} name="paymentType" onChange={handleInput}>
-                    {paymentMethods.map((paymentMethod) => {
-                      const { methodType } = paymentMethod
-                      return <option value={form.paymentType}>{methodType}</option>
-                    })}
+                    <option value="Credit Card" selected>
+                      Credit Card
+                    </option>
+                    <option value="Debit Card">Debit Card</option>
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -116,12 +114,23 @@ const MakePayment = () => {
                   <Form.Label>Card. No. : </Form.Label>
                 </Col>
                 <Col md="8">
-                  <Form.Select value={form.cardNumber} name="cardNumber" onChange={handleInput}>
-                    {paymentMethods
-                      .filter((paymentMethod) => form.paymentType === paymentMethod.methodType)
-                      .map((filteredMethod) => {
-                        return <option value={form.cardNumber}>{filteredMethod.cardNumber}</option>
-                      })}
+                  <Form.Select
+                    value={form.cardNumber}
+                    name="cardNumber"
+                    defaultValue={form.cardNumber}
+                    onChange={handleInput}
+                  >
+                    {form.paymentType === 'Credit Card'
+                      ? paymentMethods.map((oneMethod) => {
+                          if (oneMethod.methodType === 'Credit Card') {
+                            return <option value={form.cardNumber}>{oneMethod.cardNumber}</option>
+                          }
+                        })
+                      : paymentMethods.map((oneMethod) => {
+                          if (oneMethod.methodType === 'Debit Card') {
+                            return <option value={form.cardNumber}>{oneMethod.cardNumber}</option>
+                          }
+                        })}
                   </Form.Select>
                 </Col>
               </Form.Group>

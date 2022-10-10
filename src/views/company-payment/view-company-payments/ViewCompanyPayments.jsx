@@ -5,6 +5,7 @@ import BinRequestServices from '../../../services/BinRequestServices'
 import React, { useState, useEffect } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
 import removeRecord from '../../../assets/images/table-icon/remove_record.png'
+import './viewCompanyPayments.scoped.css'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 function convertArrayOfObjectsToCSV(array) {
   let result
@@ -57,7 +58,7 @@ const ViewCompanyPayments = () => {
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
-  const [paymentIdS, setPaymentIds] = useState([])
+
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
@@ -65,6 +66,21 @@ const ViewCompanyPayments = () => {
   const viewMore = (requestId) => {
     navigate(`/admin-company-payments/viewonepayment/${requestId}`)
   }
+  useEffect(() => {
+    BinRequestServices.getAllBinreuests()
+      .then((resp) => {
+        console.log(resp.data.data[0].payment)
+        //myObj.hasOwnProperty('key')
+
+        const actualData = resp.data.data.filter((oneRequest) => oneRequest['payment'] != null)
+        setData(actualData)
+        setFilteredData(actualData)
+        console.log(actualData)
+      })
+      .catch((e) => {
+        console.log(e.meesage)
+      })
+  }, [])
   const columns = [
     {
       name: 'PAYMENT ID',
@@ -74,42 +90,45 @@ const ViewCompanyPayments = () => {
 
     {
       name: 'REQUEST ID',
-      selector: (row) => row.requestId,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
     {
-      name: 'PAID DATE',
-      selector: (row) => row.payment.paidDate,
+      name: 'DATE',
+      selector: (row) => row.payment.paidDate.split('T')[0],
       sortable: true,
     },
     {
-      name: 'COMPANY PAID',
+      name: 'AMOUNT',
       selector: (row) => row.payment.companyPaid,
       sortable: true,
     },
 
     {
-      name: 'DEDUCT AMOUNT',
-      selector: (row) => row.payment.customerEarned,
+      name: 'DEDUCTED AMT.',
+      selector: (row) => row.payment.profit,
       sortable: true,
     },
 
     {
+      cell: (row) => (
+        <div>
+          <button className={'status-btn ' + row.payment.status}>{row.payment.status}</button>
+        </div>
+      ),
+
       name: 'STATUS',
-      selector: (row) => row.payment.profit,
-      sortable: true,
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
     },
+    //
     {
       cell: (row) => (
         <div>
           <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
             <span className="material-icons">
               <img src={readMore} alt="" />
-            </span>
-          </button>
-          <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
-            <span className="material-icons">
-              <img src={removeRecord} alt="" />
             </span>
           </button>
         </div>
@@ -121,9 +140,7 @@ const ViewCompanyPayments = () => {
       button: true,
     },
   ]
-  useEffect(() => {
-   
-  }, [])
+
   useEffect(() => {
     const result = filteredData.filter((dataItem) => {
       if (search === '') {
