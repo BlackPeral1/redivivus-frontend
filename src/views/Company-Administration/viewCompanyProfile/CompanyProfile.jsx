@@ -76,59 +76,7 @@ const CompanyProfile = () => {
   }, [id])
 
   return (
-    // <div>
-    //   <div className="company-profile-form-data">
-      
-    //     <div className="compo-div-form">
-    //       <div className="company-profile-header">Company Profile</div>
-
-    //       <div className="container-div-company-form">
-    //         Company Name
-    //         <div className="comapny-labels-div">{name}</div>
-    //       </div>
-
-    //       <div className="container-div-company-form">
-    //         Company Email
-    //         <div className="comapny-labels-div">{email}</div>
-    //       </div>
-
-    //       <div className="container-div-company-form">
-    //         Company Telephone
-    //         <div className="comapny-labels-div">{telephone}</div>
-    //       </div>
-
-    //       <div className="container-div-company-form">
-    //         Company Address
-    //         <div className="comapny-labels-div">{address}</div>
-    //       </div>
-
-    //       <div className="container-div-company-form">
-    //         Company Centers
-    //         <div className="comapny-labels-div">{centers}</div>
-    //       </div>
-
-    //       <div className="container-div-company-form">
-    //         Open Hour
-    //         <div className="comapny-labels-div">{openhour}</div>
-    //       </div>
-
-    //       <div className="container-div-company-form">
-    //         Close Hour
-    //         <div className="comapny-labels-div">{closehour}</div>
-    //       </div>
-
-    //       <div className="container-div-company-form">
-    //         Company Slogan
-    //         <div className="comapny-labels-div">{slogan}</div>
-    //       </div>
-
-    //       <div className="container-div-company-form">
-    //         Company About
-    //         <div className="comapny-labels-div">{about}</div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
+    
   <div className='companyprofile-row'>  
      <h2 className='main-title-companyprofile'>Company Profile</h2>
     <div className='profile-container'>

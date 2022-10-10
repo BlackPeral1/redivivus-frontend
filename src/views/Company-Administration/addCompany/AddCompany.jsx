@@ -24,6 +24,13 @@ export default function AddCompany() {
   const [emailErr, setemailErr] = useState({})
   const [isShow, setIsShow] = useState(false)
 
+  const [firstname, setFirstName] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [buyeremail, setBuyerEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [buyertelephone, setBuyerTelephone] = useState('')
+  const [buyeraddress, setBuyerAddress] = useState('')
+
   const createData = (e) => {
     e.preventDefault()
     const fileName = new Date().getTime().toString() + logo.name
@@ -57,7 +64,33 @@ export default function AddCompany() {
         getDownloadURL(uploadTask.snapshot.ref).then((logo) => {
           console.log('File available at :', logo)
 
-          const data = {
+          // const data = {
+          //   name,
+          //   email,
+          //   address,
+          //   telephone,
+          //   customers,
+          //   centers,
+          //   logo,
+          //   openhour,
+          //   closehour,
+          //   opendays,
+          //   slogan,
+          //   about,
+          // }
+          const user = {
+            role: 'COMPANY',
+            name: {
+              first_name: firstname,
+              last_name: lastname,
+            },
+            email: buyeremail,
+            password: password,
+            phone: buyertelephone,
+            address: buyeraddress,
+          }
+
+          const specificData = {
             name,
             email,
             address,
@@ -72,9 +105,8 @@ export default function AddCompany() {
             about,
           }
 
-          console.log(data)
           axios
-            .post('http://localhost:3001/api/company/addCompany', data)
+            .post('http://localhost:3001/api/auth/register', { user, specificData })
             .then((res) => {
               console.log(res)
               alert('Company Added Successfully!')
@@ -152,7 +184,137 @@ export default function AddCompany() {
           <div className="container2">
             <Form onSubmit={createData} onReset={onReset}>
               {/* <div className="container2"> */}
+
               <div hidden={isShow}>
+                <div className="company-registartion-container-part">
+                  <Form.Group as={Row} controlId="firstname" className={'pt-4'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      First Name
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="text"
+                        name="firstname"
+                        value={firstname}
+                        onChange={(e) => {
+                          setFirstName(e.target.value)
+                        }}
+                        placeholder="First Name"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+                  {/* {Object.keys(nameErr).map((key) => {
+                    return <div style={{ color: 'red' }}>{nameErr[key]}</div>
+                  })} */}
+
+                  <Form.Group as={Row} controlId="lastname" className={'pt-4'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Last Name
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="text"
+                        name="lastname"
+                        value={lastname}
+                        onChange={(e) => {
+                          setLastName(e.target.value)
+                        }}
+                        placeholder="Last Name"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} controlId="email" className={'pt-3'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Email
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="email"
+                        name="email"
+                        value={buyeremail}
+                        onChange={(e) => {
+                          setBuyerEmail(e.target.value)
+                        }}
+                        placeholder="Email"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} controlId="password" className={'pt-3'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Password
+                    </Form.Label>
+
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="text"
+                        name="Password"
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value)
+                        }}
+                        placeholder="Enter Password"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} controlId="phone" className={'pt-3'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Telephone
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="Number"
+                        name="telephone"
+                        value={buyertelephone}
+                        onChange={(e) => {
+                          setBuyerTelephone(e.target.value)
+                        }}
+                        placeholder="Telephone Number"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} controlId="address" className={'pt-3'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Address
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="text"
+                        name="address"
+                        value={buyeraddress}
+                        onChange={(e) => {
+                          setBuyerAddress(e.target.value)
+                        }}
+                        placeholder="Address"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+                </div>
+
+                <div className="next-btn-add">
+                  <Button
+                    type="button"
+                    className="next-btn-add"
+                    variant="secondary"
+                    onClick={() => setIsShow(true)}
+                    // onClick={handleShow}
+                  >
+                    NEXT
+                  </Button>
+                </div>
+              </div>
+
+              <div hidden={!isShow}>
+                {/* <div hidden={isShow}> */}
                 <div className="company-registartion-container-part">
                   <Form.Group as={Row} controlId="name" className={'pt-4'}>
                     <Form.Label column sm={2} className="companylabel">
@@ -266,7 +428,7 @@ export default function AddCompany() {
                         type="file"
                         name="logo"
                         onChange={(e) => {
-                          setLogo(e.target.files[0]);
+                          setLogo(e.target.files[0])
                         }}
                         placeholder="company Logo Url"
                       ></Form.Control>
@@ -338,6 +500,10 @@ export default function AddCompany() {
                   </Button>
                 </div>
               </div>
+
+              <br />
+              <br />
+              <br />
 
               <div hidden={!isShow}>
                 <Form.Group as={Row} controlId="slogans" className={'pt-3'}>

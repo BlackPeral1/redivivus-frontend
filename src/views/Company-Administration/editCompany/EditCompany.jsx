@@ -26,6 +26,7 @@ export default function EditEmployee() {
             const response = await fetch('http://localhost:3001/api/company/getcompany/' + id);
             const data = await response.json();
 
+            console.log(data.data)
             setName(data.data.name);
             setEmail(data.data.email);
             setAddress(data.data.address);

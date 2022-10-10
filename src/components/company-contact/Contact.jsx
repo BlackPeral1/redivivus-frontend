@@ -58,9 +58,9 @@ function Contact(props) {
   const [email, setEmail] = useState('')
   console.log(id)
 
-  useEffect(() => {
-    getCompanyProfile()
-  }, [id])
+  // useEffect(() => {
+  //   getCompanyProfile()
+  // }, [id])
 
   return (
     <div>
@@ -153,7 +153,7 @@ function Contact(props) {
 
                 </div>
                 <div className="socialmeadia-icon">
-                <FontAwesomeIcon icon="fa-solid fa-phone" />
+                <FontAwesomeIcon icon="fa-brands fa-facebook" />
 
                 </div>
     
