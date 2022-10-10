@@ -185,7 +185,7 @@ const PaymentMethods = () => {
     const result = filteredData.filter((dataItem) => {
       if (search === '') {
         return dataItem
-      } else if (dataItem.requestId.toLowerCase().includes(search.toLowerCase())) {
+      } else if (dataItem.cardNumber.toLowerCase().includes(search.toLowerCase())) {
         return dataItem
       }
     })

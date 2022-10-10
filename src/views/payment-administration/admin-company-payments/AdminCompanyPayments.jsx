@@ -10,7 +10,11 @@ function convertArrayOfObjectsToCSV(array) {
 
   const columnDelimiter = ','
   const lineDelimiter = '\n'
-  const keys = Object.keys(dumyRequestPayments[0])
+  let exportData
+  // BinRequestServices.getAllBinreuests().then((res) => {
+  //   exportData = res.data.data
+  // })
+  const keys = Object.keys(exportData)
 
   result = ''
   result += keys.join(columnDelimiter)
@@ -52,6 +56,30 @@ function downloadCSV(array) {
   link.setAttribute('download', filename)
   link.click()
 }
+const customStyles = {
+  table: {
+    style: {
+      height: '650px', // override the row height
+    },
+  },
+  rows: {
+    style: {
+      height: '72px', // override the row height
+    },
+  },
+  headCells: {
+    style: {
+      paddingLeft: '16px', // override the cell padding for head cells
+      paddingRight: '16px',
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: '16px', // override the cell padding for data cells
+      paddingRight: '16px',
+    },
+  },
+}
 const AdminCompanyPayments = () => {
   const navigate = useNavigate()
 
@@ -59,7 +87,9 @@ const AdminCompanyPayments = () => {
 
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
+
   const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
+
   useEffect(() => {
     BinRequestServices.getAllBinreuests()
       .then((resp) => {
@@ -137,7 +167,7 @@ const AdminCompanyPayments = () => {
     const result = filteredData.filter((dataItem) => {
       if (search === '') {
         return dataItem
-      } else if (dataItem.requestId.toLowerCase().includes(search.toLowerCase())) {
+      } else if (dataItem.payment.paymentId.toLowerCase().includes(search.toLowerCase())) {
         return dataItem
       }
     })
@@ -155,6 +185,7 @@ const AdminCompanyPayments = () => {
         // onRowClicked={onRowClicked}
         data-tag="allowRowEvents"
         subHeader
+        customStyles={customStyles}
         subHeaderComponent={
           <div className="w-100">
             {' '}

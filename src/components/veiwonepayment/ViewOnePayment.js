@@ -40,7 +40,7 @@ const ViewOnePayment = () => {
   return (
     <div
       className={`main bg-white w-100 view-payment shadow-lg mb-5 rounded-3 ${
-        decision == 'user' ? 'user-view' : ''
+        decision === 'user' ? 'user-view' : ''
       }`}
     >
       <div className="vstack gap-3">
