@@ -47,13 +47,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import TopNav from '../topnav/TopNav'
 import contactUsImg from '../../assets/images/company/contactUsImg.jpg'
+import { useParams } from 'react-router-dom'
 
 function Contact(props) {
-  const _id = '631b7cf1a68686de53c791a3'
+  // const _id = '631b7cf1a68686de53c791a3'
+  const { id } = useParams()
 
   const [telephone, setTelephone] = useState('')
   const [address, setAdderss] = useState('')
   const [email, setEmail] = useState('')
+  console.log(id)
+
+  useEffect(() => {
+    getCompanyProfile()
+  }, [id])
 
   return (
     <div>

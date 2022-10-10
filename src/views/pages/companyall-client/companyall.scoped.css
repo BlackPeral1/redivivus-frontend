@@ -1,3 +1,37 @@
+.companyall-heading{
+
+  
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 66px;
+line-height: 75px;
+/* or 114% */
+text-align: center;
+
+color: #333333;
+
+}
+
+.image-comapnyall{
+
+  width:100%;
+
+ height:100%
+}
+
+
+.card-item-container{
+
+  width:100%;
+	display: flex;
+	flex-wrap: nowrap;
+  padding:100px;
+  padding-top: 0px;
+ 
+}
+
+
 .container10{
     margin-left: auto;
   }
@@ -13,6 +47,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+ 
+ 
   }
   .header-container {
     margin-top: 20px;
@@ -62,7 +98,7 @@
   }
   
   .description {
-    margin: 0px 20px;
+    margin: 5px 20px;
     display: flex;
     align-items: center;
     justify-content: center;

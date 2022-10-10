@@ -42,7 +42,7 @@ function SingleCompany() {
 
   useEffect(() => {
     getCompanyProfile()
-  }, [])
+  }, [id])
   return (
     <div>
       <ButtonGroup size="lg" className="company-company-group">

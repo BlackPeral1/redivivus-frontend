@@ -26,6 +26,7 @@ const ContactUsPage = React.lazy(() => import('./views/common/contact-us/Contact
 
 // Pages
 const Singlecompany = React.lazy(() => import('./views/pages/company-single/singlecompany'))
+const Companyall = React.lazy(() => import('./views/pages/companyall-client/Companyall'))
 // const Login = React.lazy(() => import('./views/pages/login/Login'))
 // const Register = React.lazy(() => import('./views/pages/register/Register'))
 // const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
@@ -37,6 +38,7 @@ function App() {
       <Suspense fallback={loading}>
         <Routes>
           <Route exact path="/company/:id" name="company" element={<Singlecompany />} />
+          <Route exact path="/company/companyall" name="companyAll" element={<Companyall />} />
           <Route path="/login" name="Login" element={<Login />} />
           <Route path="/registration-intro" name="Reg-intro" element={<RegistrationIntro />} />
           {/* <Route path="/home" element={<Home/>}/> */}

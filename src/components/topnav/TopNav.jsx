@@ -18,7 +18,7 @@ function TopNav() {
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#about">About</Nav.Link>
-            <Nav.Link href="#buyers">Buyers</Nav.Link>
+            <Nav.Link href="/company/companyall">Buyers</Nav.Link>
             <Nav.Link href="/contact-us">Contact</Nav.Link>
           </Nav>
           <Nav>

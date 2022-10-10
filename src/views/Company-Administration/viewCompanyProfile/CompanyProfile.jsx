@@ -44,9 +44,7 @@ const CompanyProfile = () => {
   const [telephone, setTelephone] = useState('')
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState('')
-
   const [centers, setCenters] = useState('')
-
   const [openhour, setOpenhour] = useState('')
   const [closehour, setClosehour] = useState('')
   // const [opendays, setOpendays] = useState('')
