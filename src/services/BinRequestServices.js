@@ -11,7 +11,7 @@ class BinRequestService {
     return axios.get(BIN_REQUESTS_QUERY_URL)
   }
   getOneBinRequest(binRequestId) {
-    return axios.get(BIN_REQUESTS_QUERY_URL + '/getbinrequest/' + binRequestId)
+    return axios.get(BIN_REQUESTS_QUERY_URL + '/' + binRequestId)
   }
 }
 

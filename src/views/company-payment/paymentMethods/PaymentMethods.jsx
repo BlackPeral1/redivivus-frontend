@@ -170,9 +170,7 @@ const PaymentMethods = () => {
   }, [search])
   return (
     <>
-      <h4 className="content-title mt-5">All Payment Methods</h4>
-      <hr />
-      <div className="main shadow-lg mb-5 rounded-3 mt-5">
+      <div className="main shadow-lg mb-5 rounded-3 mt-3">
         <DataTable
           columns={columns}
           data={data}

@@ -87,8 +87,10 @@ const MakePayment = () => {
       .get('http://localhost:3001/api/paymentmethod/')
       .then(function (response) {
         console.log(response.data.data)
-
-        setPaymentMethods(response.data.data)
+        const validPaymentMethods = response.data.data.filter(
+          (onePaymentMethod) => onePaymentMethod.activeStatus == true,
+        )
+        setPaymentMethods(validPaymentMethods)
         const creditCardPaymentMethodS = response.data.data.filter(
           (onePaymentMethod) => onePaymentMethod.methodType == 'Credit Card',
         )
@@ -110,9 +112,7 @@ const MakePayment = () => {
 
   return (
     <>
-      <h4 className="content-title mt-5">Make Payment</h4>
-      <hr />
-      <div className="row">
+      <div className="row shadow-lg mb-5 rounded-3 mt-3">
         <div className="card p-4 form">
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row className="mb-4">

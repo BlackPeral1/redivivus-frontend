@@ -36,7 +36,7 @@ const routes = [
     permissions: 'isCompany',
   },
   {
-    path: '/company/viewonepayment/:id',
+    path: '/payment/viewonepayment/:id',
     name: 'ViewOnePayment',
     element: ViewOnePayment,
     permissions: 'isCompany',

@@ -64,7 +64,7 @@ const ViewCompanyPayments = () => {
   const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
 
   const viewMore = (requestId) => {
-    navigate(`/company/viewonepayment/${requestId}`)
+    navigate(`/user/payment/viewonepayment/${requestId}`)
   }
   useEffect(() => {
     BinRequestServices.getAllBinreuests()
@@ -126,7 +126,7 @@ const ViewCompanyPayments = () => {
     {
       cell: (row) => (
         <div>
-          <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
+          <button className="mx-auto btn" onClick={() => viewMore(row._id)}>
             <span className="material-icons">
               <img src={readMore} alt="" />
             </span>
@@ -153,9 +153,7 @@ const ViewCompanyPayments = () => {
   }, [search])
   return (
     <>
-      <h4 className="content-title mt-5">All Payments </h4>
-      <hr />
-      <div className="main shadow-lg mb-5 rounded-3 mt-5">
+      <div className="main shadow-lg mb-5 rounded-3 mt-3">
         <DataTable
           columns={columns}
           data={data}
