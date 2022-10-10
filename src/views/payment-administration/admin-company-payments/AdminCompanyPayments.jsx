@@ -65,7 +65,9 @@ const AdminCompanyPayments = () => {
       .then((resp) => {
         const actualData = resp.data.data.filter(
           (oneRequest) =>
-            oneRequest['requestReceivedBy'] != null && oneRequest['requestedBy'] != null,
+            oneRequest['requestReceivedBy'] != null &&
+            oneRequest['requestedBy'] != null &&
+            oneRequest['payment'],
         )
         setData(actualData)
         setFilteredData(actualData)
@@ -76,49 +78,49 @@ const AdminCompanyPayments = () => {
       })
   }, [])
   const viewMore = (requestId) => {
-    navigate(`/admin-company-payments/viewonepayment/${requestId}`)
+    navigate(`/admin/admin-company-payments/viewonepayment/${requestId}`)
   }
   const columns = [
     {
       name: 'PAYMENT ID',
-      selector: (row) => row.requestNo,
+      selector: (row) => row.payment.paymentId,
       sortable: true,
     },
     {
       name: 'COMPANY NAME',
-      selector: (row) => row.data.requestNo,
+      selector: (row) => row.requestReceivedBy.name,
       sortable: true,
     },
     {
       name: 'REQUEST ID',
-      selector: (row) => row.payment.companyPaid,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
     {
       name: 'PAID DATE',
-      selector: (row) => row.requestNo,
+      selector: (row) => row.payment.paidDate.split('T')[0],
       sortable: true,
     },
     {
       name: 'COMPANY PAID',
-      selector: (row) => row.requestNo,
+      selector: (row) => row.payment.companyPaid,
       sortable: true,
     },
 
     {
       name: "CUSTOMER'S CUT",
-      selector: (row) => row.requestNo,
+      selector: (row) => row.payment.customerEarned,
       sortable: true,
     },
 
     {
       name: 'PROFIT',
-      selector: (row) => row.requestNo,
+      selector: (row) => row.payment.profit,
       sortable: true,
     },
     {
       cell: (row) => (
-        <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
+        <button className="mx-auto btn" onClick={() => viewMore(row._id)}>
           <span className="material-icons">
             <img src={readMore} alt="" />
           </span>

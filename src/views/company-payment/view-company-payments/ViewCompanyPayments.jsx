@@ -32,6 +32,30 @@ function convertArrayOfObjectsToCSV(array) {
 
   return result
 }
+const customStyles = {
+  table: {
+    style: {
+      height: '320px', // override the row height
+    },
+  },
+  rows: {
+    style: {
+      height: '32px', // override the row height
+    },
+  },
+  headCells: {
+    style: {
+      paddingLeft: '8px', // override the cell padding for head cells
+      paddingRight: '8px',
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: '8px', // override the cell padding for data cells
+      paddingRight: '8px',
+    },
+  },
+}
 const Export = ({ onExport }) => (
   <button className="btn btn-secondary " onClick={(e) => onExport(e.target.value)}>
     <i class="fas fa-download fa-lg me-2" style={{ color: '#ffffff' }}></i>
@@ -158,12 +182,13 @@ const ViewCompanyPayments = () => {
           columns={columns}
           data={data}
           pagination
-          fixedHeaderScrollHeight="450px"
+          fixedHeaderScrollHeight="300px"
           selecttableRowsHighlighted
           highlightOnHover
           // onRowClicked={onRowClicked}
           data-tag="allowRowEvents"
           subHeader
+          customStyles={customStyles}
           subHeaderComponent={
             <div className="w-100">
               {' '}

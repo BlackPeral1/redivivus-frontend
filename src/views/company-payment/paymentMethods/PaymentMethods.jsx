@@ -17,7 +17,30 @@ const Export = ({ onExport }) => (
     Add Method
   </button>
 )
-
+const customStyles = {
+  table: {
+    style: {
+      height: '320px', // override the row height
+    },
+  },
+  rows: {
+    style: {
+      height: '32px', // override the row height
+    },
+  },
+  headCells: {
+    style: {
+      paddingLeft: '8px', // override the cell padding for head cells
+      paddingRight: '8px',
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: '8px', // override the cell padding for data cells
+      paddingRight: '8px',
+    },
+  },
+}
 const PaymentMethods = () => {
   const navigate = useNavigate()
 
@@ -181,6 +204,9 @@ const PaymentMethods = () => {
           // onRowClicked={onRowClicked}
           data-tag="allowRowEvents"
           subHeader
+          pageSizeOptions={[5, 10, 20, 25, 50, 100]}
+          defaultPageSize={2}
+          customStyles={customStyles}
           subHeaderComponent={
             <div className="w-100">
               {' '}
