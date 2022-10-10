@@ -12,9 +12,10 @@ export default function MapModal(props) {
     width: "700px"
   }
 
+
   function ChangeLocation(e) {
     console.log(e);
-    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat()},${e.latLng.lng()}&key=AIzaSyAePk9SYfZTMpAJZ7pOutFK_ixi72CzS2I`).then((res) => {
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat()},${e.latLng.lng()}&key=${process.env.REACT_APP_GOOGLE_CLIENT_ID}`).then((res) => {
       // console.log(res);
       props.setForm({
         ...props.form,
@@ -24,11 +25,11 @@ export default function MapModal(props) {
       .catch((error) => {         // handle error
         console.log(error);
       })
-    console.log(props.form.location);
+    // console.log(props.form.location);
   }
 
   const onLoad = marker => {
-    console.log('marker: ', marker)
+    // console.log('marker: ', marker)
   }
 
   return (
@@ -40,7 +41,7 @@ export default function MapModal(props) {
         <Modal.Body>
           <Row className='justify-content-center'>
             <LoadScript
-              googleMapsApiKey="AIzaSyAePk9SYfZTMpAJZ7pOutFK_ixi72CzS2I"
+              googleMapsApiKey={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             >
               <GoogleMap
                 id="marker-example"
