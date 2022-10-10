@@ -21,6 +21,9 @@ const AddPaymentMethod = React.lazy(() =>
 )
 const Payment = React.lazy(() => import('./views/company-payment/payment/Payment'))
 const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/ViewOnePayment'))
+
+const MyDetails= React.lazy(() => import('./views/customer-profile/MyDetails'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
 
@@ -59,6 +62,12 @@ const routes = [
     path: '/my-request',
     name: 'My Pickup Request',
     element: AllPickupReq,
+    permissions: 'isCustomer',
+  },
+  {
+    path: '/customer-details',
+    name: 'Your Details',
+    element: MyDetails,
     permissions: 'isCustomer',
   },
 
