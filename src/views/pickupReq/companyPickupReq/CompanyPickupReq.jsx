@@ -1,13 +1,16 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import Moment from 'moment';
 import ReactPaginate from 'react-paginate';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
-import { CusPickupReqModal } from '../../../components';
+import { CompanyReqModal } from '../../../components';
 import { axiosInstance, apiRequest } from "../../../services/core/axios";
-import './allPickReq.scoped.css';
+import './companyPickupReq.scoped.css';
 
-export default function AllPickupReq(props) {
+export default function CompanyPickupReq(props) {
   const [pickupReq, setPickupReq] = useState([]);
   const [allPickupReq, setAllPickupReq] = useState([]);
   const [requestStatus, setRequestStatus] = useState("All");
@@ -23,13 +26,14 @@ export default function AllPickupReq(props) {
     setShow(false)
   };
   const detilsModalShow = (d) => {
-    setViewDetils(d)
     setShow(true)
+    setViewDetils(d)
   }
 
   useEffect(() => {
     getPickupReq()
   }, []);
+
 
   const getPickupReq = () => {
     apiRequest(() => axiosInstance.get(`/api/pickupRequest`)).then((res) => {
@@ -63,15 +67,64 @@ export default function AllPickupReq(props) {
     setPickupReq(results);
   }, [requestStatus]);
 
+  const exportPDF = () => {
+    const unit = "pt";
+    const size = "A4"; // Use A1, A2, A3 or A4
+    const orientation = "landscape"; // portrait or landscape
+
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+
+    doc.setFontSize(15);
+
+    const title = "Accepted List";
+    const headers = [["Request No", "Customer Name", "Phone number", "email", "size", "Note", "Type", "Collect At", "Loaction "]];
+
+    const data = allPickupReq.filter((r) => r.requestStatus === 'Accepted').map(elt =>
+      [elt.requestNo,
+      elt.requestedBy.name.first_name + " " + elt.requestedBy.name.last_name,
+      elt.requestedBy.phone,
+      elt.requestedBy.email,
+      elt.size,
+      elt.note,
+      elt.wasteTypes,
+      elt.collectAt,
+      elt.location.formatted_address,
+      ]);
+
+    let content = {
+      startY: 50,
+      head: headers,
+      body: data
+    };
+
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    doc.save(`PendingList_${getFormattedTime()}.pdf`)
+  }
+
+  function getFormattedTime() {
+    var today = new Date();
+    var y = today.getFullYear();
+    // JavaScript months are 0-based.
+    var m = today.getMonth() + 1;
+    var d = today.getDate();
+    var h = today.getHours();
+    var mi = today.getMinutes();
+    var s = today.getSeconds();
+    return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s;
+  }
+
   return (
     <>
-      <div className="row">
+      <div className="row ">
         <div className="card p-3 d-flex flex-row header">
           <a className={'mx-3 ' + ((requestStatus === 'All') ? 'active' : '')} onClick={() => setRequestStatus("All")}>All</a>
           <a className={'mx-3 ' + ((requestStatus === 'Pending') ? 'active' : '')} onClick={() => setRequestStatus("Pending")}>Pending</a>
           <a className={'mx-3 ' + ((requestStatus === 'Accepted') ? 'active' : '')} onClick={() => setRequestStatus("Accepted")}>Accepted</a>
           <a className={'mx-3 ' + ((requestStatus === 'Rejected') ? 'active' : '')} onClick={() => setRequestStatus("Rejected")}>Rejected</a>
           <a className={'mx-3 ' + ((requestStatus === 'Completed') ? 'active' : '')} onClick={() => setRequestStatus("Completed")}>Completed</a>
+          <Button type="button" className='text-light ' onClick={exportPDF} variant="secondary" ><i class="fas fa-download text-light mr-2"></i> Get Accepted List</Button>
         </div>
       </div>
       <div className="row pt-3">
@@ -89,7 +142,7 @@ export default function AllPickupReq(props) {
                   </div>
                   <div className="card-body d-flex justify-content-between">
                     <div>
-                      <h5>{i.requestReceivedBy?.name}</h5>
+                      <h5>{i.requestedBy?.name.first_name} {i.requestedBy?.name.last_name}</h5>
                       <p>Size : {i.size}</p>
                       <p><i className="fas fa-thumbtack"></i>  Loaction : {i.location.formatted_address}</p>
                     </div>
@@ -131,7 +184,7 @@ export default function AllPickupReq(props) {
           renderOnZeroPageCount={null}
         />
       </div>
-      <CusPickupReqModal
+      <CompanyReqModal
         show={show}
         viewDetils={viewDetils}
         detilsModalShow={detilsModalShow}

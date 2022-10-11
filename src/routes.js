@@ -11,6 +11,8 @@ const AllPickupReq = React.lazy(() => import('./views/pickupReq/allPickupReq/All
 
 const Payment = React.lazy(() => import('./views/company-payment/Payment/Payment'))
 const AddPaymentMethod = React.lazy(() => import('./views/company-payment/addPaymentMethod/AddPaymentMethod'))
+const CompanyPickupReq = React.lazy(() => import('./views/pickupReq/companyPickupReq/CompanyPickupReq'))
+const BinList = React.lazy(() => import('./views/bin/BinList'))
 
 const ViewOnePayment = React.lazy(() => import('./components/veiwonepayment/ViewOnePayment'))
 const routes = [
@@ -20,6 +22,8 @@ const routes = [
   { path: '/company', name: 'Company', element: Dashboard, permissions: 'isCompany' },
   { path: '/payment', name: 'Payment', element: Payment, permissions: 'isCompany' },
   { path: '/payment/add-payment-method', name: 'Add Payment Method', element: AddPaymentMethod, permissions: 'isCompany', },
+  { path: '/requests', name: 'Requests', element: CompanyPickupReq, permissions: 'isCompany', },
+  { path: '/bins', name: 'Bin List', element: BinList, permissions: 'isCompany', },
 
   //Customer Route
   { path: '/new-pickup-request', name: 'New Pickup Request', element: NewPickupReq, permissions: 'isCustomer', },

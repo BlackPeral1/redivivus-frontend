@@ -12,7 +12,7 @@ import Swal from 'sweetalert2'
 
 import { axiosInstance, apiRequest } from "../../services/core/axios";
 
-import './CusPickupReqModal.scoped.css';
+import './companyReqModal.scoped.css';
 
 
 const mapContainerStyle = {
@@ -20,8 +20,9 @@ const mapContainerStyle = {
   width: "100%",
 }
 
-export default function CusPickupReqModal(props) {
+export default function CompanyReqModal(props) {
   const [form, setForm] = useState({})
+  const [collectAt, setCollectAt] = useState('');
   const [validated, setValidated] = useState(false);
   const [multiselectstyle, setMultiselectstyle] = useState({
     chips: {
@@ -109,10 +110,12 @@ export default function CusPickupReqModal(props) {
     if (inForm.checkValidity() === false || !form.location.lat || !form.location.lng || checkValidity()) {
       setValidated(true);
     } else {
-      await apiRequest(() => axiosInstance.patch(`/api/pickupRequest/${props.viewDetils._id}`, form)).then((res) => {
+      await apiRequest(() => axiosInstance.patch(`/api/pickupRequest/${props.viewDetils._id}`, {
+        collectAt, requestStatus: 'Accepted'
+      })).then((res) => {
         Swal.fire({
           icon: 'success',
-          title: 'Request successfully updated',
+          title: 'Request successfully accepted',
           showConfirmButton: false,
           timer: 2000
         })
@@ -126,21 +129,23 @@ export default function CusPickupReqModal(props) {
 
   };
 
-  const handleCancel = async (e) => {
+  const handleReject = async (e) => {
     Swal.fire({
-      title: 'Are you sure cancel?',
+      title: 'Are you sure reject?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, cansel it!'
+      confirmButtonText: 'Reject'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await apiRequest(() => axiosInstance.delete(`/api/pickupRequest/${props.viewDetils._id}`, form)).then((res) => {
+        await apiRequest(() => axiosInstance.patch(`/api/pickupRequest/${props.viewDetils._id}`, {
+          requestStatus: 'Rejected'
+        })).then((res) => {
           Swal.fire({
             icon: 'success',
-            title: 'Canceled!',
-            text: 'Your request has been canceled.',
+            title: 'Rejected!',
+            text: 'Your request has been rejected.',
             showConfirmButton: false,
             timer: 2000
           })
@@ -152,33 +157,93 @@ export default function CusPickupReqModal(props) {
 
       }
     })
+  };
 
+  const handleComplete = async (e) => {
+    Swal.fire({
+      title: 'Are you sure Complete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await apiRequest(() => axiosInstance.patch(`/api/pickupRequest/${props.viewDetils._id}`, {
+          requestStatus: 'Completed'
+        })).then((res) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Completed!',
+            text: 'Your request has been completed.',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          props.getPickupReq()
+          props.detilsModalClose()
+        }).catch((err) => {
+          console.log(err);
+        });
+
+      }
+    })
   };
 
   return (
     <>
       <Modal show={props.show} onHide={props.detilsModalClose} size="lg">
         <Modal.Header closeButton className='position-relative'>
-          <strong><h5>#{props.viewDetils.requestNo} - {props.viewDetils?.requestReceivedBy?.name}</h5></strong>
+          <strong><h5>#{props.viewDetils.requestNo} - {props.viewDetils.requestedBy?.name.first_name} {props.viewDetils.requestedBy?.name.last_name}</h5></strong>
           <p className='r-date'>{Moment(props.viewDetils.createdAt).format('DD-MM-YYYY hh:mm:ss')}</p>
         </Modal.Header>
         <Modal.Body>
           <Row>
-            <div className="col-md-4 text-center d-flex flex-column justify-content-center align-items-center">
+            {/* <div className="col-md-4 text-center d-flex flex-column justify-content-center align-items-center">
               <div className='logo-img'>
                 <img src={props.viewDetils?.requestReceivedBy?.logo} alt="" className="img-thumbnail rounded" />
               </div>
               <h5>{props.viewDetils?.requestReceivedBy?.name}</h5>
               <p>{props.viewDetils?.requestReceivedBy?.telephone}</p>
-            </div>
-            <div className="col-md-8">
-              <Form onSubmit={handleSubmit}>
+            </div> */}
+            <div className="col-md-12">
+              <div className="row d-flex flex-row justify-content-center ">
+
+                <Row >
+                  <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex mb-2'>
+                    <Col md="3">
+                      <Form.Label>Customer Name</Form.Label>
+                    </Col>
+                    <Col md="9">
+                      <Form.Label>{props.viewDetils.requestedBy?.name.first_name} {props.viewDetils.requestedBy?.name.last_name}</Form.Label>
+                    </Col>
+                  </Form.Group>
+                </Row>
+                <Row >
+                  <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex mb-2'>
+                    <Col md="3">
+                      <Form.Label>Phone number</Form.Label>
+                    </Col>
+                    <Col md="9">
+                      <Form.Label>{props.viewDetils.requestedBy?.phone}</Form.Label>
+                    </Col>
+                  </Form.Group>
+                </Row>
+                <Row >
+                  <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex mb-2'>
+                    <Col md="3">
+                      <Form.Label>Email</Form.Label>
+                    </Col>
+                    <Col md="9">
+                      <Form.Label>{props.viewDetils.requestedBy?.email}</Form.Label>
+                    </Col>
+                  </Form.Group>
+                </Row>
                 <Row >
                   <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex mb-3'>
-                    <Col md="2">
+                    <Col md="3">
                       <Form.Label>Location</Form.Label>
                     </Col>
-                    <Col md="10">
+                    <Col md="9">
                       <Form.Control
                         required
                         readOnly
@@ -192,26 +257,26 @@ export default function CusPickupReqModal(props) {
                     </Col>
 
                   </Form.Group>
-                  <Row className='justify-content-center mb-3'>
-                    <LoadScript
-                      googleMapsApiKey={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                </Row>
+                <Row className='justify-content-center mb-3'>
+                  <LoadScript
+                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  >
+                    <GoogleMap
+                      id="marker-example"
+                      mapContainerStyle={mapContainerStyle}
+                      zoom={15}
+                      center={form.location}
+                      onClick={ChangeLocation}
                     >
-                      <GoogleMap
-                        id="marker-example"
-                        mapContainerStyle={mapContainerStyle}
-                        zoom={15}
-                        center={form.location}
-                        onClick={ChangeLocation}
-                      >
-                        <Marker
-                          onDragEnd={ChangeLocation}
-                          draggable={true}
-                          clickable={true}
-                          position={form.location}
-                        />
-                      </GoogleMap>
-                    </LoadScript>
-                  </Row>
+                      <Marker
+                        // onDragEnd={ChangeLocation}
+                        // draggable={true}
+                        clickable={true}
+                        position={form.location}
+                      />
+                    </GoogleMap>
+                  </LoadScript>
                 </Row>
                 <Row className='mb-3'>
                   <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex'>
@@ -221,6 +286,7 @@ export default function CusPickupReqModal(props) {
                     <Col md="9">
                       <Multiselect
                         required
+                        disable
                         className='from-control'
                         isObject={false}
                         onSelect={changeWasteTypes} // Function will trigger on select event
@@ -246,7 +312,7 @@ export default function CusPickupReqModal(props) {
                       <Form.Label>Size</Form.Label>
                     </Col>
                     <Col md="9">
-                      <Form.Select required onChange={handleSelectChange} name="size" value={form.size} className="d-flex">
+                      <Form.Select disabled required onChange={handleSelectChange} name="size" value={form.size} className="d-flex">
                         <option value="">Select Size</option>
                         <option value="Small">Small</option>
                         <option value="Mediam">Mediam</option>
@@ -264,6 +330,7 @@ export default function CusPickupReqModal(props) {
                     <Col md="9">
                       <Form.Control
                         type="text"
+                        readOnly
                         placeholder="Note"
                         onChange={handleSelectChange}
                         name="note"
@@ -274,27 +341,52 @@ export default function CusPickupReqModal(props) {
                     </Col>
                   </Form.Group>
                 </Row>
-                {props.viewDetils?.requestStatus !== 'Rejected' || props.viewDetils?.requestStatus !== 'Pending' ? (
-                  <Row >
-                    <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex mb-2'>
-                      <Col md="3">
-                        <Form.Label>Collect At</Form.Label>
-                      </Col>
-                      <Col md="9">
-                        <Form.Label>{Moment(props.viewDetils.collectAt).format('DD-MM-YYYY hh:mm')}</Form.Label>
-                      </Col>
-                    </Form.Group>
-                  </Row>) : null
-                }
-                <Col md="12" className='d-flex justify-content-end'>
-                  {/* <Button>Reset</Button> */}
-                  {props.viewDetils?.requestStatus === 'Pending' &&
-                    <>
-                      <Button type="button" onClick={handleCancel} variant="danger" className='mx-2' >Cancel</Button>
-                      <Button type="submit" >Update</Button>
-                    </>}
-                </Col>
-              </Form>
+                <Form onSubmit={handleSubmit}>
+                  {props.viewDetils?.requestStatus === 'Pending' ? (
+                    <Row className="mb-3">
+                      <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex'>
+                        <Col md="3">
+                          <Form.Label>Collect At</Form.Label>
+                        </Col>
+                        <Col md="9">
+                          <Form.Control
+                            required
+                            type="datetime-local"
+                            placeholder="Note"
+                            onChange={(e) => setCollectAt(e.target.value)}
+                            name="note"
+                            value={collectAt}
+                            className="font-s"
+                          />
+                          {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
+                        </Col>
+                      </Form.Group>
+                    </Row>) : props.viewDetils?.requestStatus !== 'Rejected' ? (
+                      <Row >
+                        <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex mb-2'>
+                          <Col md="3">
+                            <Form.Label>Collect At</Form.Label>
+                          </Col>
+                          <Col md="9">
+                            <Form.Label>{Moment(props.viewDetils.collectAt).format('DD-MM-YYYY hh:mm')}</Form.Label>
+                          </Col>
+                        </Form.Group>
+                      </Row>) : null
+                  }
+                  <Col md="12" className='d-flex justify-content-end'>
+                    {/* <Button>Reset</Button> */}
+                    {props.viewDetils?.requestStatus === 'Pending' &&
+                      <>
+                        <Button type="button" onClick={handleReject} variant="danger" className='mx-2' >Reject</Button>
+                        <Button type="submit"  >Accept</Button>
+                      </>}
+                    {props.viewDetils?.requestStatus === 'Accepted' &&
+                      <>
+                        <Button type="button" onClick={handleComplete} >Complete</Button>
+                      </>}
+                  </Col>
+                </Form>
+              </div>
             </div>
           </Row>
         </Modal.Body>
