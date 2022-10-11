@@ -3,13 +3,13 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import Multiselect from 'multiselect-react-dropdown'
+
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const MakePayment = () => {
   const [validated, setValidated] = useState(false)
-  const [location, setLocation] = useState({})
+
   const [binRequests, setBinRequests] = useState([])
   const [paymentMethods, setPaymentMethods] = useState([])
   const [paymetMethodType, setPaymentMethodType] = useState('Credit Card')

@@ -5,58 +5,16 @@ import { useNavigate } from 'react-router-dom'
 import BinRequestServices from '../../../services/BinRequestServices'
 import React, { useState, useEffect } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
-// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-function convertArrayOfObjectsToCSV(array) {
-  let result
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
-  const columnDelimiter = ','
-  const lineDelimiter = '\n'
-  let exportData
-  // BinRequestServices.getAllBinreuests().then((res) => {
-  //   exportData = res.data.data
-  // })
-  const keys = Object.keys(exportData)
-
-  result = ''
-  result += keys.join(columnDelimiter)
-  result += lineDelimiter
-
-  array.forEach((item) => {
-    let ctr = 0
-    keys.forEach((key) => {
-      if (ctr > 0) result += columnDelimiter
-
-      result += item[key]
-
-      ctr++
-    })
-    result += lineDelimiter
-  })
-
-  return result
-}
 const Export = ({ onExport }) => (
-  <button className="btn btn-secondary " onClick={(e) => onExport(e.target.value)}>
-    <i className="fal fa-file-download"></i>
+  <button className="btn btn-secondary " onClick={onExport}>
+    <i class="fas fa-download fa-lg me-2" style={{ color: '#ffffff' }}></i>
     Generate Report
   </button>
 )
-// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-function downloadCSV(array) {
-  const link = document.createElement('a')
-  let csv = convertArrayOfObjectsToCSV(array)
-  if (csv == null) return
 
-  const filename = 'export.csv'
-
-  if (!csv.match(/^data:text\/csv/i)) {
-    csv = `data:text/csv;charset=utf-8,${csv}`
-  }
-
-  link.setAttribute('href', encodeURI(csv))
-  link.setAttribute('download', filename)
-  link.click()
-}
 const customStyles = {
   table: {
     style: {
@@ -87,7 +45,7 @@ const AdminCompanyPayments = () => {
   const [search, setSearch] = useState('')
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
-  const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
+  const actionsMemo = React.useMemo(() => <Export onExport={() => generatePdf()} />, [])
   useEffect(() => {
     BinRequestServices.getAllBinreuests()
       .then((resp) => {
@@ -176,6 +134,46 @@ const AdminCompanyPayments = () => {
     })
     setData(result)
   }, [search])
+  const generatePdf = () => {
+    console.log('87787')
+    const document = new jsPDF()
+    const tableColumn = [
+      'PAYMENT ID',
+      'CUSTOMER NAME',
+      'REQUEST ID',
+      'RECEIVED DATE',
+      'PAID DATE',
+      'COMPANY PAID',
+      "CUSTOMER'S CUT",
+      'PROFIT',
+    ]
+    const tableRows = []
+
+    data.map((item) => {
+      console.log('87787')
+      const value = [
+        item.payment.paymentId,
+        item.requestedBy.name.first_name,
+        item.requestNo,
+        item.payment.receivedDate.split('T')[0],
+        item.payment.paidDate.split('T')[0],
+
+        item.payment.companyPaid,
+        item.payment.customerEarned,
+        item.payment.profit,
+      ]
+      console.log(value)
+      tableRows.push(value)
+    })
+
+    document.autoTable(tableColumn, tableRows, { startY: 20 })
+
+    const date = Date().split(' ')
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4]
+
+    document.text(`Customer Payment Report`, 14, 15)
+    document.save(`customer_payment_${dateStr}.pdf`)
+  }
   return (
     <div className="main shadow-lg mb-5 rounded-3">
       <DataTable
