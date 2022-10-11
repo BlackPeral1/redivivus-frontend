@@ -34,8 +34,8 @@ const MakePayment = () => {
     if (inForm.checkValidity() === false) {
       setValidated(true)
     } else {
-      axios
-        .post('http://localhost:3001/api/makePayment', form)
+      PaymentService.makePayment(form)
+
         .then(function (response) {
           Swal.fire({
             icon: 'success',

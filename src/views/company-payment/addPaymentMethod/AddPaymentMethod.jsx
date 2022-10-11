@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row'
 import Multiselect from 'multiselect-react-dropdown'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import PaymentService from '../../../services/PaymentService'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 
 const AddPaymentMethod = () => {
@@ -50,8 +51,7 @@ const AddPaymentMethod = () => {
   })
   useEffect(() => {
     if (decision === 'update-payment') {
-      axios
-        .get(`http://localhost:3001/api/paymentmethod/${params.id}`)
+      PaymentService.getOnePaymentMethod(params.id)
         .then(function (response) {
           setForm(response.data.data)
           setAddress(response.data.data.paymentAddress)
@@ -119,8 +119,8 @@ const AddPaymentMethod = () => {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                axios
-                  .patch(`http://localhost:3001/api/paymentmethod/${params.id}`, form)
+                PaymentService.updatePaymentMethod(params.id, form)
+
                   .then(function (response) {
                     console.log(response.data.message)
                     swalWithBootstrapButtons.fire(
@@ -148,8 +148,7 @@ const AddPaymentMethod = () => {
               }
             })
         } else if (decision === 'add-payment-method') {
-          axios
-            .post(`http://localhost:3001/api/paymentmethod`, form)
+          PaymentService.addPaymentMethod(form)
             .then(function (response) {
               console.log(response.message)
               Swal.fire({

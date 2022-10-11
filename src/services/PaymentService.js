@@ -10,6 +10,15 @@ class PaymentService {
   getAllPaymentMethod() {
     return axios.get(PAYMENT_METHOD_BASED_URL)
   }
+  updatePaymentMethod(id, form) {
+    axios.patch(`http://localhost:3001/api/paymentmethod/${id}`, form)
+  }
+  addPaymentMethod(query) {
+    axios.post(`http://localhost:3001/api/paymentmethod`, query)
+  }
+  getOnePaymentMethod(id) {
+    axios.get(`http://localhost:3001/api/paymentmethod/${id}`)
+  }
 }
 
 export default new PaymentService()
