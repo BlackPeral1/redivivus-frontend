@@ -64,6 +64,18 @@ body {
   background: #17d193 !important;
 }
 
+.page-link {
+  color: #17d193;
+}
+
+.active > .page-link,
+.page-link.active {
+  z-index: 3;
+  color: var(--bs-pagination-active-color);
+  background-color: #17d193;
+  border-color: #17d193;
+}
+
 #wrapper {
   position: absolute;
   margin-top: 10px;

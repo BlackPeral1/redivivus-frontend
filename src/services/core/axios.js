@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASHAWAY_BE_URL,
+  baseURL: process.env.REACT_APP_BACKEND_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-export const apiRequest = async (request, showLoader = true) => {
+export const apiRequest = async (request) => {
   const response = await request()
     .then((res) => ({
       ...res.data,
@@ -23,10 +23,10 @@ export const apiRequest = async (request, showLoader = true) => {
       const message = error.response.data.message;
       if (error.response.status === 403) {
         if (localStorage.getItem("token")) {
-          toast.error(message);
+          alert(message);
         }
       } else {
-        toast.error(message);
+        alert(message);
       }
       return {
         success: false,

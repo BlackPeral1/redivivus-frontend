@@ -11,6 +11,10 @@ p {
   font-size: 14.35px;
 }
 
+.header {
+  width: auto;
+}
+
 .header a {
   cursor: pointer;
   text-decoration: none;
@@ -25,6 +29,13 @@ p {
   border-bottom: 3px solid #17d193;
 }
 
+.new-bin {
+  width: auto;
+}
+
+.r-button button {
+  margin: 0 10px;
+}
 .card-heder {
   border-bottom: 1px solid #6e768e;
   padding-bottom: 10px;
@@ -73,4 +84,3 @@ p {
   color: #1774d1;
   border-color: #1774d1;
 }
-

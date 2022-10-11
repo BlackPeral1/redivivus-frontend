@@ -14,7 +14,7 @@ import './newPickupReq.scoped.css';
 export default function NewPickupReq(props) {
   const [validated, setValidated] = useState(false);
   const [form, setForm] = useState({})
-  const [position, setPosition] = useState({});
+  const [mycompany, setMycompany] = useState([]);
   const [multiselectstyle, setMultiselectstyle] = useState({
     chips: {
       background: '#17d193'
@@ -26,8 +26,12 @@ export default function NewPickupReq(props) {
   const [mapModal, setMapModal] = useState(false);
   const mapModalClose = () => setMapModal(false);
   const mapModalShow = () => setMapModal(true);
-
   useEffect(() => {
+    geolocation()
+    getSubCompnay();
+  }, []);
+
+  const geolocation = () => {
     if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition((location) => {
 
@@ -37,7 +41,23 @@ export default function NewPickupReq(props) {
         })
       });
     };
-  }, []);
+  }
+
+  const config = {
+    headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
+  };
+
+  const getSubCompnay = () => {
+
+
+    axios.get('http://localhost:3001/api/company/allcompany', config)
+      .then((res) => {
+        setMycompany(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
   const checkValidity = (e) => {
     if (form.wasteTypes == undefined || form.wasteTypes.length == 0) {
@@ -72,33 +92,43 @@ export default function NewPickupReq(props) {
     checkValidity()
     if (inForm.checkValidity() === false || !form.location.lat || !form.location.lng || checkValidity()) {
       setValidated(true);
-      console.log(form);
     } else {
-
-      console.log(form);
-      axios.post('http://localhost:3001/api/pickupRequest', form)
+      axios.post('http://localhost:3001/api/pickupRequest', form, config)
         .then((res) => {
           console.log(res);
+          if (res.status == 200) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Request successfully sent!',
+              showConfirmButton: false,
+              timer: 2000
+            })
+            setForm({
+              company: '',
+              note: '',
+              size: '',
+              location: { ...form.location, formatted_address: '' },
+              wasteTypes: []
+            })
+            setValidated(false);
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              timer: 2000
+            })
+          }
         })
         .catch((error) => {         // handle error
-          console.log(error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            timer: 2000
+          })
         })
-        .then(() => {     // always executed
-        });
-      Swal.fire({
-        icon: 'success',
-        title: 'Request successfully sent!',
-        showConfirmButton: false,
-        timer: 2000
-      })
-      setForm({
-        ...form,
-        company: '',
-        note: '',
-        size: '',
-        wasteTypes: []
-      })
-      setValidated(false);
+
     }
 
   };
@@ -138,12 +168,11 @@ export default function NewPickupReq(props) {
                   <Form.Label>Company</Form.Label>
                 </Col>
                 <Col md="10">
-                  <Form.Select required value={form.company} name="company" onChange={handleSelectChange} className="font-s">
-                    <option value="">Select Company</option>
-                    <option value="ABC Inc">ABC Inc</option>
-                    <option value="Earthology Inc">Earthology Inc</option>
-                    <option value="Browning-Ferris Industries">Browning-Ferris Industries</option>
-                    <option value="Casella Waste Systems">Casella Waste Systems</option>
+                  <Form.Select required value={form.company} name="requestReceivedBy" onChange={handleSelectChange} className="font-s">
+                    <option value="" hidden>Select Company</option>
+                    {mycompany.map((company) => (
+                      <option key={company._id} value={company._id}>{company.name}</option>
+                    ))}
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -165,7 +194,6 @@ export default function NewPickupReq(props) {
                     name="location"
                     className='font-s'
                   />
-                  <span style={{ fontSize: '12px' }}>Live Location</span>
                 </Col>
               </Form.Group>
 
@@ -177,7 +205,6 @@ export default function NewPickupReq(props) {
                 </Col>
                 <Col md="10">
                   <Form.Control
-                    required
                     type="text"
                     placeholder="Note"
                     onChange={handleSelectChange}
