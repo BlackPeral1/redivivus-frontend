@@ -100,7 +100,7 @@ export default function CompanyPickupReq(props) {
 
     doc.text(title, marginLeft, 40);
     doc.autoTable(content);
-    doc.save(`PendingList_${getFormattedTime()}.pdf`)
+    doc.save(`Accepted_List_${getFormattedTime()}.pdf`)
   }
 
   function getFormattedTime() {
