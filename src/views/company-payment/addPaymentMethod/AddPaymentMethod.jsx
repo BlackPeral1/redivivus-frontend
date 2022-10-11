@@ -29,8 +29,8 @@ const AddPaymentMethod = () => {
       addressLine3: '',
     },
     cardNumber: '',
-    cvc: 0,
-    postalCode: 0,
+    cvc: '',
+    postalCode: '',
   })
 
   const params = useParams()
@@ -53,10 +53,8 @@ const AddPaymentMethod = () => {
       axios
         .get(`http://localhost:3001/api/paymentmethod/${params.id}`)
         .then(function (response) {
-    
           setForm(response.data.data)
           setAddress(response.data.data.paymentAddress)
-
         })
         .catch(function (error) {
           // handle error
@@ -71,19 +69,24 @@ const AddPaymentMethod = () => {
   }, [decision])
   //form validation function
   const validateForm = () => {
-    const {
-      cardNumber,
-      postalCode,
-      expirationDate,
-      cvc,
-      addressLine1,
-      addressLine2,
-      addressLine3,
-    } = form
+    const { cardNumber, postalCode, expirationDate, cvc, paymentAddress } = form
+    const { addressLine1, addressLine2, addressLine3 } = paymentAddress
     const newErrors = {}
+
     //carNumber regex
-    let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
-    if (regexCardNumber.test(cardNumber)) newErrors.cardNumber = 'Please enter valid  card number'
+
+    // let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
+    if (cardNumber.length == 0) newErrors.cardNumber = 'Please enter a  valid  card number'
+    else if (!/^\d+$/.test(cardNumber)) newErrors.cardNumber = 'Please enter a  valid  card number'
+    if (postalCode.toString().length == 0) newErrors.postalCode = 'Postal code cannot be empty'
+    else if (!/^\d+$/.test(postalCode)) newErrors.postalCode = 'Please enter a  valid  postal Code'
+    if (expirationDate.length == 0) newErrors.expirationDate = 'Exp Date cannot be empty'
+
+    if (cvc.toString().length == 0) newErrors.cvc = 'CVC code cannot be empty'
+    else if (!/^\d+$/.test(cvc)) newErrors.cvc = 'Please enter a  valid  CVC number'
+    if (addressLine1.length == 0) newErrors.addressLine1 = 'Addreline1 cannot be empty'
+
+    if (addressLine2.length == 0) newErrors.addressLine2 = 'Addreline2 cannot be empty'
 
     return newErrors
     //regex = "^4[0-9]{12}(?:[0-9]{3})?$";
@@ -163,7 +166,6 @@ const AddPaymentMethod = () => {
               // always executed
             })
         }
-
         setValidated(false)
       }
     }
@@ -278,7 +280,7 @@ const AddPaymentMethod = () => {
                     type="text"
                     maxLength="5"
                     minLength="5"
-                    placeholder="Expiration Date"
+                    placeholder="ex :- 08/22"
                     onChange={handleSelectChange}
                     value={form.expirationDate}
                     isInvalid={!!errors.expirationDate}
@@ -381,6 +383,7 @@ const AddPaymentMethod = () => {
                     isInvalid={!!errors.postalCode}
                     name="postalCode"
                   />
+                  <Form.Control.Feedback type="invalid">{errors.postalCode}</Form.Control.Feedback>
                 </Col>
               </Form.Group>
             </Row>
