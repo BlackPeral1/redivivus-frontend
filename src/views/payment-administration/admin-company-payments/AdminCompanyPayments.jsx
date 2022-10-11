@@ -144,7 +144,7 @@ const AdminCompanyPayments = () => {
     const tableRows = []
 
     data.map((item) => {
-      console.log('87787')
+    
       const value = [
         item.payment.paymentId,
         item.requestReceivedBy.name,

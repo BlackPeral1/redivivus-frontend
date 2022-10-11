@@ -76,8 +76,9 @@ const AddPaymentMethod = () => {
     //carNumber regex
 
     // let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
-    if (cardNumber.length == 0) newErrors.cardNumber = 'Please enter a  valid  card number'
-    else if (!/^\d+$/.test(cardNumber)) newErrors.cardNumber = 'Please enter a  valid  card number'
+    if (cardNumber.length < 12 || cardNumber.length > 16 || !/^\d+$/.test(cardNumber))
+      newErrors.cardNumber = 'Please enter a  valid  card number'
+
     if (postalCode.toString().length == 0) newErrors.postalCode = 'Postal code cannot be empty'
     else if (!/^\d+$/.test(postalCode)) newErrors.postalCode = 'Please enter a  valid  postal Code'
     if (expirationDate.length == 0) newErrors.expirationDate = 'Exp Date cannot be empty'
@@ -124,7 +125,7 @@ const AddPaymentMethod = () => {
                     console.log(response.data.message)
                     swalWithBootstrapButtons.fire(
                       'Updated!',
-                      'Your file has been updated.',
+                      'Your record has been updated.',
                       'success',
                     )
                   })
@@ -153,10 +154,11 @@ const AddPaymentMethod = () => {
               console.log(response.message)
               Swal.fire({
                 icon: 'success',
-                title: 'Request successfully sent!',
+                title: 'Payment method successfully added!',
                 showConfirmButton: false,
                 timer: 2000,
               })
+              setForm({})
             })
             .catch(function (error) {
               // handle error
