@@ -15,37 +15,38 @@ hr {
   color: black;
   font-weight: bold;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
 }
 .middle-font-styles h6 {
   font-family: 'Righteous', cursive;
   font-weight: 400;
   color: #6f6f84;
-  font-size: 20px;
+  font-size: 18px;
 }
 .middle-font-styles p {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   color: #222234;
-  font-size: 16px;
+  font-size: 14px;
 }
 .middle-font-styles small {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   color: #222234;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .view-payment h4 {
-  font-size: 18px;
+  font-size: 16px;
 }
 .view-payment .pill-containers span {
-  height: 30px;
+  height: 28px;
 
   align-items: center;
 }
 .waste-type span {
   display: flex;
   justify-content: center;
-  align-items:center;
+  align-items: center;
 }
+/* user onViewOfPayment */

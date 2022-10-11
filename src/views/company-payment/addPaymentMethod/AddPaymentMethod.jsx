@@ -5,18 +5,22 @@ import { useParams, Link, useLocation } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
-import Multiselect from 'multiselect-react-dropdown'
-import axios from 'axios'
+
 import Swal from 'sweetalert2'
+import PaymentService from '../../../services/PaymentService'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 
 const AddPaymentMethod = () => {
+  //
+  const [errors, setErrors] = useState({})
+
+  //
   const navigate = useNavigate()
   const [validated, setValidated] = useState(false)
   const [address, setAddress] = useState({ addressLine1: '', addressLine2: '', addressLine3: '' })
 
   const [form, setForm] = useState({
-    methodType: '',
+    methodType: 'Debit Card',
     expirationDate: '',
     activeStatus: true,
     paymentAddress: {
@@ -25,8 +29,8 @@ const AddPaymentMethod = () => {
       addressLine3: '',
     },
     cardNumber: '',
-    cvc: 0,
-    postalCode: 0,
+    cvc: '',
+    postalCode: '',
   })
 
   const params = useParams()
@@ -37,14 +41,19 @@ const AddPaymentMethod = () => {
     setDecision(location.pathname.toString().split('/')[3])
     console.log(decision)
   }, [])
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger',
+    },
+    buttonsStyling: false,
+  })
   useEffect(() => {
     if (decision === 'update-payment') {
-      axios
-        .get(`http://localhost:3001/api/paymentmethod/${params.id}`)
+      PaymentService.getOnePaymentMethod(params.id)
         .then(function (response) {
           setForm(response.data.data)
           setAddress(response.data.data.paymentAddress)
-          console.log(form.paymentAddress)
         })
         .catch(function (error) {
           // handle error
@@ -53,59 +62,113 @@ const AddPaymentMethod = () => {
         .then(function () {
           // always executed
         })
+
+      /* Read more about handling dismissals below */
     }
   }, [decision])
+  //form validation function
+  const validateForm = () => {
+    const { cardNumber, postalCode, expirationDate, cvc, paymentAddress } = form
+    const { addressLine1, addressLine2, addressLine3 } = paymentAddress
+    const newErrors = {}
 
+    //carNumber regex
+
+    // let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
+    if (cardNumber.length < 12 || cardNumber.length > 16 || !/^\d+$/.test(cardNumber))
+      newErrors.cardNumber = 'Please enter a  valid  card number'
+
+    if (postalCode.toString().length == 0) newErrors.postalCode = 'Postal code cannot be empty'
+    else if (!/^\d+$/.test(postalCode)) newErrors.postalCode = 'Please enter a  valid  postal Code'
+    if (expirationDate.length == 0) newErrors.expirationDate = 'Exp Date cannot be empty'
+
+    if (cvc.toString().length == 0) newErrors.cvc = 'CVC code cannot be empty'
+    else if (!/^\d+$/.test(cvc)) newErrors.cvc = 'Please enter a  valid  CVC number'
+    if (addressLine1.length == 0) newErrors.addressLine1 = 'Addreline1 cannot be empty'
+
+    if (addressLine2.length == 0) newErrors.addressLine2 = 'Addreline2 cannot be empty'
+
+    return newErrors
+    //regex = "^4[0-9]{12}(?:[0-9]{3})?$";
+  }
   const handleSubmit = (e) => {
     e.preventDefault()
 
     console.log(form)
 
-    const inForm = e.currentTarget
-    if (inForm.checkValidity() === false) {
-      setValidated(true)
+    const formErros = validateForm()
+    if (Object.keys(formErros).length > 0) {
+      console.log('errors')
+      setErrors(formErros)
     } else {
-      if (decision === 'update-payment') {
-        axios
-          .patch(`http://localhost:3001/api/paymentmethod/${params.id}`, form)
-          .then(function (response) {
-            console.log(response.data.message)
-            Swal.fire({
-              icon: 'success',
-              title: 'Request successfully updated!',
-              showConfirmButton: false,
-              timer: 2000,
+      const inForm = e.currentTarget
+      if (inForm.checkValidity() === false) {
+        setValidated(true)
+      } else {
+        if (decision === 'update-payment') {
+          swalWithBootstrapButtons
+            .fire({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, update it!',
+              cancelButtonText: 'No, cancel!',
+              reverseButtons: true,
             })
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error)
-          })
-          .then(function () {
-            // always executed
-          })
-      } else if (decision === 'add-payment-method') {
-        axios
-          .post(`http://localhost:3001/api/paymentmethod`, form)
-          .then(function (response) {
-            console.log(response.message)
-            Swal.fire({
-              icon: 'success',
-              title: 'Request successfully sent!',
-              showConfirmButton: false,
-              timer: 2000,
-            })
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error)
-          })
-          .then(function () {
-            // always executed
-          })
-      }
+            .then((result) => {
+              if (result.isConfirmed) {
+                PaymentService.updatePaymentMethod(params.id, form)
 
-      setValidated(false)
+                  .then(function (response) {
+                    console.log(response.data.message)
+                    swalWithBootstrapButtons.fire(
+                      'Updated!',
+                      'Your record has been updated.',
+                      'success',
+                    )
+                  })
+                  .catch(function (error) {
+                    // handle error
+                    console.log(error)
+                  })
+                  .then(function () {
+                    // always executed
+                  })
+              } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+              ) {
+                swalWithBootstrapButtons.fire(
+                  'Cancelled',
+                  'Your Payment method details are not updated :)',
+                  'warning',
+                )
+              }
+            })
+        } else if (decision === 'add-payment-method') {
+          PaymentService.addPaymentMethod(form)
+            .then(function (response) {
+              console.log(response.message)
+              Swal.fire({
+                icon: 'success',
+                title: 'Payment method successfully added!',
+                showConfirmButton: false,
+                timer: 2000,
+              })
+              setForm()
+              setAddress()
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error)
+            })
+            .then(function () {
+              // always executed
+            })
+        }
+        setValidated(false)
+      }
     }
   }
 
@@ -122,6 +185,7 @@ const AddPaymentMethod = () => {
       ...form,
       [name]: value,
     })
+    if (!errors[name]) setErrors({ ...errors, [name]: null })
 
     console.log(form)
   }
@@ -178,11 +242,13 @@ const AddPaymentMethod = () => {
                     value={form.methodType}
                     name="methodType"
                     placeholder=""
+                    defaultValue={'Debit Card'}
                     onChange={handleSelectChange}
                   >
-                    <option>Visa</option>
-                    <option>Master Card</option>
-                    <option>Credit Card</option>
+                    <option value={'Debit Card'} selected>
+                      Debit Card
+                    </option>
+                    <option value={'Credit Card'}>Credit Card</option>
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -197,8 +263,10 @@ const AddPaymentMethod = () => {
                     placeholder="Card Number"
                     onChange={handleSelectChange}
                     value={form.cardNumber}
+                    isInvalid={!!errors.cardNumber}
                     name="cardNumber"
                   />
+                  <Form.Control.Feedback type="invalid">{errors.cardNumber}</Form.Control.Feedback>
                 </Col>
               </Form.Group>
             </Row>
@@ -213,11 +281,15 @@ const AddPaymentMethod = () => {
                     type="text"
                     maxLength="5"
                     minLength="5"
-                    placeholder="Expiration Date"
+                    placeholder="ex :- 08/22"
                     onChange={handleSelectChange}
                     value={form.expirationDate}
+                    isInvalid={!!errors.expirationDate}
                     name="expirationDate"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.expirationDate}
+                  </Form.Control.Feedback>
                 </Col>
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom01" className="d-flex">
@@ -231,8 +303,10 @@ const AddPaymentMethod = () => {
                     placeholder="CVC"
                     onChange={handleSelectChange}
                     value={form.cvc}
+                    isInvalid={!!errors.cvc}
                     name="cvc"
                   />
+                  <Form.Control.Feedback type="invalid">{errors.cvc}</Form.Control.Feedback>
                 </Col>
               </Form.Group>
             </Row>
@@ -247,9 +321,13 @@ const AddPaymentMethod = () => {
                     type="text"
                     placeholder="Adress Line 1"
                     onChange={handleAddress}
+                    isInvalid={!!errors.addressLine1}
                     value={address.addressLine1}
                     name="addressLine1"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.addressLine1}
+                  </Form.Control.Feedback>
                 </Col>
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom01" className="d-flex">
@@ -263,8 +341,12 @@ const AddPaymentMethod = () => {
                     placeholder="Address Line 2"
                     onChange={handleAddress}
                     value={address.addressLine2}
+                    isInvalid={!!errors.addressLine2}
                     name="addressLine2"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.addressLine2}
+                  </Form.Control.Feedback>
                 </Col>
               </Form.Group>
             </Row>
@@ -280,8 +362,12 @@ const AddPaymentMethod = () => {
                     placeholder="Address Line 3"
                     onChange={handleAddress}
                     value={address.addressLine3}
+                    isInvalid={!!errors.addressLine3}
                     name="addressLine3"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.addressLine3}
+                  </Form.Control.Feedback>
                 </Col>
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom01" className="d-flex">
@@ -295,8 +381,10 @@ const AddPaymentMethod = () => {
                     placeholder="Postal Code"
                     onChange={handleSelectChange}
                     value={form.postalCode}
+                    isInvalid={!!errors.postalCode}
                     name="postalCode"
                   />
+                  <Form.Control.Feedback type="invalid">{errors.postalCode}</Form.Control.Feedback>
                 </Col>
               </Form.Group>
             </Row>
