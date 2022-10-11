@@ -41,14 +41,22 @@ const AddPaymentMethod = () => {
     setDecision(location.pathname.toString().split('/')[3])
     console.log(decision)
   }, [])
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger',
+    },
+    buttonsStyling: false,
+  })
   useEffect(() => {
     if (decision === 'update-payment') {
       axios
         .get(`http://localhost:3001/api/paymentmethod/${params.id}`)
         .then(function (response) {
+    
           setForm(response.data.data)
           setAddress(response.data.data.paymentAddress)
-          console.log(form.paymentAddress)
+
         })
         .catch(function (error) {
           // handle error
@@ -57,6 +65,8 @@ const AddPaymentMethod = () => {
         .then(function () {
           // always executed
         })
+
+      /* Read more about handling dismissals below */
     }
   }, [decision])
   //form validation function
@@ -74,7 +84,6 @@ const AddPaymentMethod = () => {
     //carNumber regex
     let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
     if (regexCardNumber.test(cardNumber)) newErrors.cardNumber = 'Please enter valid  card number'
-    
 
     return newErrors
     //regex = "^4[0-9]{12}(?:[0-9]{3})?$";
@@ -94,23 +103,45 @@ const AddPaymentMethod = () => {
         setValidated(true)
       } else {
         if (decision === 'update-payment') {
-          axios
-            .patch(`http://localhost:3001/api/paymentmethod/${params.id}`, form)
-            .then(function (response) {
-              console.log(response.data.message)
-              Swal.fire({
-                icon: 'success',
-                title: 'Request successfully updated!',
-                showConfirmButton: false,
-                timer: 2000,
-              })
+          swalWithBootstrapButtons
+            .fire({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, update it!',
+              cancelButtonText: 'No, cancel!',
+              reverseButtons: true,
             })
-            .catch(function (error) {
-              // handle error
-              console.log(error)
-            })
-            .then(function () {
-              // always executed
+            .then((result) => {
+              if (result.isConfirmed) {
+                axios
+                  .patch(`http://localhost:3001/api/paymentmethod/${params.id}`, form)
+                  .then(function (response) {
+                    console.log(response.data.message)
+                    swalWithBootstrapButtons.fire(
+                      'Updated!',
+                      'Your file has been updated.',
+                      'success',
+                    )
+                  })
+                  .catch(function (error) {
+                    // handle error
+                    console.log(error)
+                  })
+                  .then(function () {
+                    // always executed
+                  })
+              } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+              ) {
+                swalWithBootstrapButtons.fire(
+                  'Cancelled',
+                  'Your Payment method details are not updated :)',
+                  'warning',
+                )
+              }
             })
         } else if (decision === 'add-payment-method') {
           axios
