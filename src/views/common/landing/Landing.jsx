@@ -12,7 +12,9 @@ import Button from 'react-bootstrap/Button'
 import ContactUS from './contactuspic.png'
 import validator from 'validator'
 import BinRequestService from '../../../services/BinRequestServices'
+
 import { ToastContainer, toast, Zoom, Bounce } from 'react-toastify'
+import ContactUsServices from '../../../services/ContactUsServices'
 
 export default function Landing() {
   const [emailError, setEmailError] = useState('')
@@ -79,8 +81,7 @@ export default function Landing() {
   const sendQuery = (e) => {
     e.preventDefault()
     if (isValidMail && isValidMessage && isValidName) {
-      console.log('sent')
-      BinRequestService.setQueryDetails(query)
+      ContactUsServices.setQueryDetails(query)
         .then((res) => {
           toast.success('Query sent successfully.', { position: toast.POSITION.TOP_RIGHT })
           setEmailError('')

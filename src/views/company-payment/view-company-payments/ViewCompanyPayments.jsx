@@ -1,10 +1,10 @@
 import DataTable from 'react-data-table-component'
-import dumyRequestPayments from '../../../data/dumyData'
+
 import { useNavigate } from 'react-router-dom'
 import BinRequestServices from '../../../services/BinRequestServices'
 import React, { useState, useEffect } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
-import removeRecord from '../../../assets/images/table-icon/remove_record.png'
+
 import './viewCompanyPayments.scoped.css'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
