@@ -1,6 +1,6 @@
 import './admin-customer-payments.css'
 import DataTable from 'react-data-table-component'
-import dumyRequestPayments from '../../../data/dumyData'
+
 import { useNavigate } from 'react-router-dom'
 import BinRequestServices from '../../../services/BinRequestServices'
 import React, { useState, useEffect } from 'react'

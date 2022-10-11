@@ -19,6 +19,9 @@ class PaymentService {
   getOnePaymentMethod(id) {
     axios.get(`http://localhost:3001/api/paymentmethod/${id}`)
   }
+  deletePaymentMethod(id) {
+      axios.delete(`http://localhost:3001/api/paymentmethod/${id}`)
+  }
 }
 
 export default new PaymentService()

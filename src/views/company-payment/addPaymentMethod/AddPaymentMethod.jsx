@@ -5,8 +5,7 @@ import { useParams, Link, useLocation } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
-import Multiselect from 'multiselect-react-dropdown'
-import axios from 'axios'
+
 import Swal from 'sweetalert2'
 import PaymentService from '../../../services/PaymentService'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr

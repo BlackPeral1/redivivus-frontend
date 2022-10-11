@@ -9,6 +9,7 @@ import edit from '../../../assets/images/table-icon/table_edit _icon.png'
 import removeRecord from '../../../assets/images/table-icon/remove_record.png'
 import Swal from 'sweetalert2'
 import './paymentMethods.scoped.css'
+import PaymentService from '../../../services/PaymentService'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 
 const Export = ({ onExport }) => (
@@ -74,8 +75,7 @@ const PaymentMethods = () => {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          axios
-            .delete(`http://localhost:3001/api/paymentmethod/${id}`)
+          PaymentService.deletePaymentMethod(id)
             .then(function (response) {
               console.log(response.data.data)
               const result = filteredData.filter((dataItem) => {
@@ -169,8 +169,7 @@ const PaymentMethods = () => {
     },
   ]
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/api/paymentmethod`)
+    PaymentService.getAllPaymentMethod()
       .then(function (response) {
         console.log(response.data.data)
         setData(response.data.data)

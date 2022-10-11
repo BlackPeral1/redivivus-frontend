@@ -83,8 +83,7 @@ const MakePayment = () => {
       .then(function () {
         // always executed
       })
-    PaymentService()
-      .getAllPaymentMethod()
+    PaymentService.getAllPaymentMethod()
 
       .then(function (response) {
         console.log(response.data.data)
