@@ -81,8 +81,20 @@ const AddPaymentMethod = () => {
     } = form
     const newErrors = {}
     //carNumber regex
-    let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
-    if (regexCardNumber.test(cardNumber)) newErrors.cardNumber = 'Please enter valid  card number'
+
+
+    // let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
+    if (cardNumber.length == 0) newErrors.cardNumber = 'Please enter a  valid  card number'
+    else if (!/^\d+$/.test(cardNumber)) newErrors.cardNumber = 'Please enter a  valid  card number'
+    if (postalCode.toString().length == 0) newErrors.postalCode = 'Postal code cannot be empty'
+    else if (!/^\d+$/.test(postalCode)) newErrors.postalCode = 'Please enter a  valid  postal Code'
+    if (expirationDate.length == 0) newErrors.expirationDate = 'Exp Date cannot be empty'
+
+    if (cvc.toString().length == 0) newErrors.cvc = 'CVC code cannot be empty'
+    else if (!/^\d+$/.test(cvc)) newErrors.cvc = 'Please enter a  valid  CVC number'
+    if (addressLine1.length == 0) newErrors.addressLine1 = 'Addreline1 cannot be empty'
+
+    if (addressLine2.length == 0) newErrors.addressLine2 = 'Addreline2 cannot be empty'
 
     return newErrors
     //regex = "^4[0-9]{12}(?:[0-9]{3})?$";
