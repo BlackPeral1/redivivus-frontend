@@ -5,7 +5,7 @@ In latin redivivus means reborn. That's what we do via this web app. We give lif
 ### How to setup the repo in your machine
 
 ## Clone the repository
-```https://github.com/BlackPeral1/redivivus-frontend.git```
+```git clone https://github.com/BlackPeral1/redivivus-frontend.git```
 
 ## update yarn to the latest stable version
 
