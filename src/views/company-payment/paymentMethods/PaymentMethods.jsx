@@ -75,7 +75,9 @@ const PaymentMethods = () => {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          PaymentService.deletePaymentMethod(id)
+          axios
+            .delete(`http://localhost:3001/api/paymentmethod/${id}`)
+
             .then(function (response) {
               console.log(response.data.data)
               const result = filteredData.filter((dataItem) => {
@@ -169,16 +171,18 @@ const PaymentMethods = () => {
     },
   ]
   useEffect(() => {
-    PaymentService.getAllPaymentMethod()
-      .then(function (response) {
-        console.log(response.data.data)
-        setData(response.data.data)
-        setFilteredData(response.data.data)
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error)
-      })
+
+      axios
+        .get('http://localhost:3001/api/paymentmethod')
+        .then(function (response) {
+          console.log(response.data.data)
+          setData(response.data.data)
+          setFilteredData(response.data.data)
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error)
+        })
   }, [])
   useEffect(() => {
     const result = filteredData.filter((dataItem) => {

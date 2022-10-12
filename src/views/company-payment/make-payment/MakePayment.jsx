@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row'
 
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import PaymentService from '../../../services/PaymentService'
 
 const MakePayment = () => {
   const [validated, setValidated] = useState(false)
@@ -32,24 +33,26 @@ const MakePayment = () => {
     if (inForm.checkValidity() === false) {
       setValidated(true)
     } else {
-      PaymentService.makePayment(form)
+ 
 
-        .then(function (response) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Request successfully sent!',
-            showConfirmButton: false,
-            timer: 2000,
+        axios
+          .post('http://localhost:3001/api/makePayment',form)
+          .then(function (response) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Request successfully sent!',
+              showConfirmButton: false,
+              timer: 2000,
+            })
+            setForm({})
           })
-          setForm({})
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error)
-        })
-        .then(function () {
-          // always executed
-        })
+          .catch(function (error) {
+            // handle error
+            console.log(error)
+          })
+          .then(function () {
+            // always executed
+          })
 
       setValidated(false)
     }

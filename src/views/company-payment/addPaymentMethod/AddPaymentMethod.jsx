@@ -5,7 +5,7 @@ import { useParams, Link, useLocation } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
-
+import axios from 'axios'
 import Swal from 'sweetalert2'
 import PaymentService from '../../../services/PaymentService'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
@@ -50,39 +50,29 @@ const AddPaymentMethod = () => {
   })
   useEffect(() => {
     if (decision === 'update-payment') {
-      PaymentService.getOnePaymentMethod(params.id)
-        .then(function (response) {
-    
-          setForm(response.data.data)
-          setAddress(response.data.data.paymentAddress)
-
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error)
-        })
-        .then(function () {
-          // always executed
-        })
+       axios
+         .get(`http://localhost:3001/api/paymentmethod/${params.id}`)
+         .then(function (response) {
+           setForm(response.data.data)
+           setAddress(response.data.data.paymentAddress)
+         })
+         .catch(function (error) {
+           // handle error
+           console.log(error)
+         })
+         .then(function () {
+           // always executed
+         })
 
       /* Read more about handling dismissals below */
     }
   }, [decision])
   //form validation function
   const validateForm = () => {
-    const {
-      cardNumber,
-      postalCode,
-      expirationDate,
-      cvc,
-      addressLine1,
-      addressLine2,
-      addressLine3,
-    } = form
+    const { cardNumber, postalCode, expirationDate, cvc, paymentAddress } = form
     const newErrors = {}
     //carNumber regex
-
-
+    const { addressLine1, addressLine2, addressLine3 } = paymentAddress
     // let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
     if (cardNumber.length == 0) newErrors.cardNumber = 'Please enter a  valid  card number'
     else if (!/^\d+$/.test(cardNumber)) newErrors.cardNumber = 'Please enter a  valid  card number'
@@ -126,8 +116,8 @@ const AddPaymentMethod = () => {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                PaymentService.updatePaymentMethod(params.id, form)
-
+                axios
+                  .patch(`http://localhost:3001/api/paymentmethod/${params.id}`, form)
                   .then(function (response) {
                     console.log(response.data.message)
                     swalWithBootstrapButtons.fire(
@@ -155,7 +145,9 @@ const AddPaymentMethod = () => {
               }
             })
         } else if (decision === 'add-payment-method') {
-          PaymentService.addPaymentMethod(form)
+          axios
+            .post(`http://localhost:3001/api/paymentmethod`, form)
+
             .then(function (response) {
               console.log(response.message)
               Swal.fire({
