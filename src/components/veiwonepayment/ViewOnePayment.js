@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, Link, useLocation } from 'react-router-dom'
 import logo from '../../assets/images/logo/logo_w88_h95.png'
 import BinRequestServices from '../../services/BinRequestServices'
-import './viewonepayment.css'
+import './viewonepayment.scoped.css'
 const ViewOnePayment = () => {
   const [binData, setBinData] = useState({})
   const [payment, setPayment] = useState({})
@@ -13,11 +13,11 @@ const ViewOnePayment = () => {
   const [wasteTypes, setWasteTypes] = useState([])
   const [customerAddress, setCutomserAddress] = useState([])
   const [companyAddress, setCompanyAddress] = useState([])
-
+  const [decision2, setDecision2] = useState('')
   const params = useParams()
   const location = useLocation()
 
-  const [decision, setDecision] = useState([])
+  const [decision, setDecision] = useState('')
   useEffect(() => {
     console.log(params.id)
     BinRequestServices.getOneBinRequest(params.id)
@@ -30,20 +30,24 @@ const ViewOnePayment = () => {
         setCompanyAddress(resp.data.data.requestReceivedBy.address.split(','))
         setWasteTypes(resp.data.data.wasteTypes)
         setDecision(location.pathname.toString().split('/')[1])
+        setDecision2(location.pathname.toString().split('/')[2])
       })
       .catch((e) => {
         console.log(e.message)
       })
-    console.log(companyAddress)
-    console.log(customerAddress)
   }, [])
 
   return (
-    <div className="main bg-white w-100 view-payment shadow-lg mb-5 rounded-3">
+    <div
+      className={`main bg-white w-100 view-payment shadow-lg mb-5 rounded-3 ${
+        decision === 'user' ? 'user-view' : ''
+      }`}
+    >
       <div className="vstack gap-3">
         <div className="main w-80 mx-5 mt-5">
           <div className="">
-            {decision === 'admin-company-payments' ? (
+            {(decision === 'admin' && decision2 === 'admin-company-payments') ||
+            decision === 'user' ? (
               <h3>Company Payments - View Payment {payment.paymentId}</h3>
             ) : (
               <h3>Customer Payments - View Payment {payment.paymentId}</h3>
@@ -56,22 +60,24 @@ const ViewOnePayment = () => {
           {' '}
           <div className="main w-80 mx-5 ">
             <div className="navigate-payments d-flex justify-content-between mb-4">
-              {decision === 'admin-company-payments' ? (
-                <Link to={`/${decision}`}>{`< `}Company Payments </Link>
+              {decision === 'admin' && decision2 === 'admin-company-payments' ? (
+                <Link to={`/${decision}/admin-company-payments`}>{`< `}Company Payments </Link>
+              ) : decision === 'user' ? (
+                <Link to={`/${decision}/payment`}>{`< `} Company Payments </Link>
               ) : (
-                <Link to={`/${decision}`}>{`< `} Customer Payments </Link>
+                <Link to={`/${decision}/admin-company-payments`}>{`< `} Customer Payments </Link>
               )}
 
               <div>
                 {' '}
-                <h6>{params.id}</h6>
+                <h6>{binData.requestNo}</h6>
               </div>
             </div>
             <div className="d-flex justify-content-between middle-font-styles">
               <div className="w-25 h-25   vstack">
                 <h6>FROM :</h6>
                 <p> {requestReceivedBy.name}</p>
-                <small>{ }</small>
+                <small>{}</small>
                 <small>
                   {companyAddress[0] + `,  `} {companyAddress[1]}
                 </small>
@@ -130,26 +136,20 @@ const ViewOnePayment = () => {
               <div className="v-stack">
                 <h5 className="ms-5">Collected Bin Location</h5>
                 <span className="badge rounded-pill  bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75 ">
-                  {binData.binLocation}
-                </span>
-              </div>
-              <div className="v-stack">
-                <h5 className="ms-5">Collected By</h5>
-                <span className="badge rounded-pill  bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75 ">
-                  {binData.collectedBy}
-                </span>
-              </div>
-              <div className="v-stack">
-                <h5 className="ms-5">Confirmed Date</h5>
-                <span className="badge rounded-pill bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75  ">
-                  {binData.confirmedDate}
+                  {/* {binData.location} */}
                 </span>
               </div>
 
               <div className="v-stack me-5">
+                <h5 className="ms-5">Confirmed Date</h5>
+                <span className="badge rounded-pill bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75  ">
+                  {binData.updatedAt}
+                </span>
+              </div>
+              <div className="v-stack">
                 <h5 className="ms-5">Confirmed Time</h5>
                 <span className="badge rounded-pill bg-light text-dark ms-5 shadow-lg  mb-5 rounded-3 border w-75  ">
-                  {binData.confirmedTime}
+                  {binData.updatedAt}
                 </span>
               </div>
             </div>
