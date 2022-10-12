@@ -1,14 +1,17 @@
 import axios from 'axios'
-
-const PAYMENT_BASE_URL = 'http://localhost:3001/api/makePayment'
-const PAYMENT_METHOD_BASED_URL = 'http://localhost:3001/api/paymentmethod/'
-
-class PaymentService {
-  makePayment(query) {
-    return axios.post(PAYMENT_BASE_URL, query)
+//http://localhost:3001/api/paymentmethod/
+const QUERY_BASE_URL = 'http://localhost:3001/api/contactus'
+const BIN_REQUESTS_QUERY_URL = 'http://localhost:3001/api/binrequests'
+//http://localhost:3001/api/binrequests/getbinrequest/REQ09870
+class BinRequestService {
+  setQueryDetails(query) {
+    return axios.post(QUERY_BASE_URL, query)
   }
-  getAllPaymentMethod() {
-    return axios.get(PAYMENT_METHOD_BASED_URL)
+  getAllBinreuests() {
+    return axios.get(BIN_REQUESTS_QUERY_URL)
+  }
+  getOneBinRequest(binRequestId) {
+    return axios.get(BIN_REQUESTS_QUERY_URL + '/getbinrequest/' + binRequestId)
   }
   updatePaymentMethod(id, form) {
     axios.patch(`http://localhost:3001/api/paymentmethod/${id}`, form)
@@ -24,4 +27,4 @@ class PaymentService {
   }
 }
 
-export default new PaymentService()
+export default new BinRequestService()

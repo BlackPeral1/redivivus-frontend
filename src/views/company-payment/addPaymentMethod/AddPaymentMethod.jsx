@@ -156,8 +156,7 @@ const AddPaymentMethod = () => {
                 showConfirmButton: false,
                 timer: 2000,
               })
-              setForm()
-              setAddress()
+              setForm({})
             })
             .catch(function (error) {
               // handle error

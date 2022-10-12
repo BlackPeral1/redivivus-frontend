@@ -6,8 +6,6 @@ import Row from 'react-bootstrap/Row'
 
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import PaymentService from '../../../services/PaymentService'
-import BinRequestServices from '../../../services/BinRequestServices'
 
 const MakePayment = () => {
   const [validated, setValidated] = useState(false)
@@ -70,7 +68,8 @@ const MakePayment = () => {
     console.log(form)
   }
   useEffect(() => {
-    BinRequestServices.getAllBinreuests()
+    axios
+      .get('http://localhost:3001/api/pickupRequest/')
       .then(function (response) {
         const actualData = response.data.data.filter((oneRequest) => oneRequest['payment'] == null)
         setForm({ ...form, requestNo: actualData[0].requestNo })
@@ -83,8 +82,9 @@ const MakePayment = () => {
       .then(function () {
         // always executed
       })
-    PaymentService.getAllPaymentMethod()
 
+    axios
+      .get('http://localhost:3001/api/paymentmethod/')
       .then(function (response) {
         console.log(response.data.data)
         const validPaymentMethods = response.data.data.filter(
