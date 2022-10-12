@@ -2,31 +2,44 @@
 
 In latin redivivus means reborn. That's what we do via this web app. We give life to garbage which are just thrown away without taking any use from. We allow people to sell their household garbage to recyclers. Webapp was developed using MERN. This is the front end repo. Boostrap was used for front end styling.
 
+### How to setup the repo in your machine
 
-## Available Scripts
+## Clone the repository
+```https://github.com/BlackPeral1/redivivus-frontend.git```
 
-In the project directory, you can run:
+## update yarn to the latest stable version
 
-### `yarn start`
+``` yarn set version stable ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## install dependancies
+```yarn```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## add the env file
+    It will be sent to you personally. Don't share it with anyone else other than the ones with access to this repository.
 
-### `yarn test`
+## run the project in development mode
+``` yarn dev```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### if you want to contribute
 
-### `yarn build`
+1. create a new branch based on the staging branch following the branch naming conventions
+``` git checkout -b <branch name>```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Make the changes to the code
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Add the files.
+```git add .``` or ```git add <file names>```
+
+4. Commit with a suitable commit message following conventions
+```git commit -m "Commit message"```
+
+5. Set upstream branch and push if its the first time
+```git push --set-upstream origin <branch name>```
+    otherwise just,
+```git push```
+
+6. Add a pull request to the staging branch from your branch using github
+
 
 
 
