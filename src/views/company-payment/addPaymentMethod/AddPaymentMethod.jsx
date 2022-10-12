@@ -5,7 +5,7 @@ import { useParams, Link, useLocation } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
-
+import axios from 'axios'
 import Swal from 'sweetalert2'
 import PaymentService from '../../../services/PaymentService'
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
@@ -29,8 +29,8 @@ const AddPaymentMethod = () => {
       addressLine3: '',
     },
     cardNumber: '',
-    cvc: '',
-    postalCode: '',
+    cvc: 0,
+    postalCode: 0,
   })
 
   const params = useParams()
@@ -50,18 +50,19 @@ const AddPaymentMethod = () => {
   })
   useEffect(() => {
     if (decision === 'update-payment') {
-      PaymentService.getOnePaymentMethod(params.id)
-        .then(function (response) {
-          setForm(response.data.data)
-          setAddress(response.data.data.paymentAddress)
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error)
-        })
-        .then(function () {
-          // always executed
-        })
+       axios
+         .get(`http://localhost:3001/api/paymentmethod/${params.id}`)
+         .then(function (response) {
+           setForm(response.data.data)
+           setAddress(response.data.data.paymentAddress)
+         })
+         .catch(function (error) {
+           // handle error
+           console.log(error)
+         })
+         .then(function () {
+           // always executed
+         })
 
       /* Read more about handling dismissals below */
     }
@@ -69,15 +70,12 @@ const AddPaymentMethod = () => {
   //form validation function
   const validateForm = () => {
     const { cardNumber, postalCode, expirationDate, cvc, paymentAddress } = form
-    const { addressLine1, addressLine2, addressLine3 } = paymentAddress
     const newErrors = {}
-
     //carNumber regex
-
+    const { addressLine1, addressLine2, addressLine3 } = paymentAddress
     // let regexCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
-    if (cardNumber.length < 12 || cardNumber.length > 16 || !/^\d+$/.test(cardNumber))
-      newErrors.cardNumber = 'Please enter a  valid  card number'
-
+    if (cardNumber.length == 0) newErrors.cardNumber = 'Please enter a  valid  card number'
+    else if (!/^\d+$/.test(cardNumber)) newErrors.cardNumber = 'Please enter a  valid  card number'
     if (postalCode.toString().length == 0) newErrors.postalCode = 'Postal code cannot be empty'
     else if (!/^\d+$/.test(postalCode)) newErrors.postalCode = 'Please enter a  valid  postal Code'
     if (expirationDate.length == 0) newErrors.expirationDate = 'Exp Date cannot be empty'
@@ -118,13 +116,13 @@ const AddPaymentMethod = () => {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                PaymentService.updatePaymentMethod(params.id, form)
-
+                axios
+                  .patch(`http://localhost:3001/api/paymentmethod/${params.id}`, form)
                   .then(function (response) {
                     console.log(response.data.message)
                     swalWithBootstrapButtons.fire(
                       'Updated!',
-                      'Your record has been updated.',
+                      'Your file has been updated.',
                       'success',
                     )
                   })
@@ -147,17 +145,17 @@ const AddPaymentMethod = () => {
               }
             })
         } else if (decision === 'add-payment-method') {
-          PaymentService.addPaymentMethod(form)
+          axios
+            .post(`http://localhost:3001/api/paymentmethod`, form)
+
             .then(function (response) {
               console.log(response.message)
               Swal.fire({
                 icon: 'success',
-                title: 'Payment method successfully added!',
+                title: 'Request successfully sent!',
                 showConfirmButton: false,
                 timer: 2000,
               })
-              setForm()
-              setAddress()
             })
             .catch(function (error) {
               // handle error
@@ -167,6 +165,7 @@ const AddPaymentMethod = () => {
               // always executed
             })
         }
+
         setValidated(false)
       }
     }
@@ -281,7 +280,7 @@ const AddPaymentMethod = () => {
                     type="text"
                     maxLength="5"
                     minLength="5"
-                    placeholder="ex :- 08/22"
+                    placeholder="Expiration Date"
                     onChange={handleSelectChange}
                     value={form.expirationDate}
                     isInvalid={!!errors.expirationDate}
@@ -384,7 +383,6 @@ const AddPaymentMethod = () => {
                     isInvalid={!!errors.postalCode}
                     name="postalCode"
                   />
-                  <Form.Control.Feedback type="invalid">{errors.postalCode}</Form.Control.Feedback>
                 </Col>
               </Form.Group>
             </Row>

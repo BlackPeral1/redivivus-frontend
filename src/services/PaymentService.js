@@ -30,4 +30,4 @@ class PaymentService {
   }
 }
 
-export default new PaymentService()
+export default new BinRequestService()

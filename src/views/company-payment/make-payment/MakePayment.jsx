@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import PaymentService from '../../../services/PaymentService'
-import BinRequestServices from '../../../services/BinRequestServices'
 
 const MakePayment = () => {
   const [validated, setValidated] = useState(false)
@@ -34,24 +33,26 @@ const MakePayment = () => {
     if (inForm.checkValidity() === false) {
       setValidated(true)
     } else {
-      PaymentService.makePayment(form)
+ 
 
-        .then(function (response) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Request successfully sent!',
-            showConfirmButton: false,
-            timer: 2000,
+        axios
+          .post('http://localhost:3001/api/makePayment',form)
+          .then(function (response) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Request successfully sent!',
+              showConfirmButton: false,
+              timer: 2000,
+            })
+            setForm({})
           })
-          setForm({})
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error)
-        })
-        .then(function () {
-          // always executed
-        })
+          .catch(function (error) {
+            // handle error
+            console.log(error)
+          })
+          .then(function () {
+            // always executed
+          })
 
       setValidated(false)
     }
@@ -70,7 +71,8 @@ const MakePayment = () => {
     console.log(form)
   }
   useEffect(() => {
-    BinRequestServices.getAllBinreuests()
+    axios
+      .get('http://localhost:3001/api/pickupRequest/')
       .then(function (response) {
         const actualData = response.data.data.filter((oneRequest) => oneRequest['payment'] == null)
         setForm({ ...form, requestNo: actualData[0].requestNo })
@@ -83,8 +85,9 @@ const MakePayment = () => {
       .then(function () {
         // always executed
       })
-    PaymentService.getAllPaymentMethod()
 
+    axios
+      .get('http://localhost:3001/api/paymentmethod/')
       .then(function (response) {
         console.log(response.data.data)
         const validPaymentMethods = response.data.data.filter(
