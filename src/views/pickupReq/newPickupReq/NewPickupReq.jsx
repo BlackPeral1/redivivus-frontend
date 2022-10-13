@@ -254,6 +254,14 @@ export default function NewPickupReq(props) {
                     <option value="Large">Large</option>
                   </Form.Select>
                   {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
+                  <span>Small 0-10kg</span>
+                  <br />
+                  <span>Mediam 10kg-50kg</span>
+                  <br />
+
+                  <span>Mediam 50kg</span>
+                  <br />
+
                 </Col>
               </Form.Group>
             </Row>
