@@ -1,20 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Multiselect from 'multiselect-react-dropdown';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import './myDetails.scoped.css';
 
 export default function MyDetails(props) {
-    const [form, setForm] = useState()
-    const handleSubmit = (e) => {
+    const [form, setForm] = useState(
+
+    )
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+    };
+
+    // const [pageType , setPageType] = 
+
+    const user_id = (localStorage.getItem('_id'))
+    useEffect(() => {
+        axios.get(
+            `http://localhost:3001/api/user/my`,
+            config
+        ).then((response) => {
+            // setFormData(response)
+            console.log(response)
+        })
+    }, [])
+ 
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const inForm = e.currentTarget;
         console.log(form);
-        axios.put('http://localhost:3001/api/user/', form)
+        // const { data } = await async axios.post(
+        //     `/api/notes/create`,
+        //     { title, content, category },
+        //     config
+        // );
+        axios.put('http://localhost:3001/api/user/my', form)
             .then((res) => {
                 console.log(res);
             })
@@ -52,7 +78,7 @@ export default function MyDetails(props) {
             <div className="row">
                 <div className="card p-4 form">
                     <Form onSubmit={handleSubmit}>
-                    <Row className="mb-3">
+                        <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="validationCustom01" className='d-flex '>
                                 <Col md="6" className='mx-2'>
                                     <Form.Control
@@ -61,7 +87,7 @@ export default function MyDetails(props) {
                                         placeholder="First Name"
                                         onChange={handleSelectChange}
                                         name="note"
-                                        value={form.name}
+                                        // value={form.name}
                                         className="font-s"
                                     />
                                 </Col>
@@ -72,7 +98,7 @@ export default function MyDetails(props) {
                                         placeholder="Last Name"
                                         onChange={handleSelectChange}
                                         name="note"
-                                        value={form.name}
+                                        // value={form.name}
                                         className="font-s"
                                     />
                                 </Col>
@@ -87,7 +113,7 @@ export default function MyDetails(props) {
                                         placeholder="Phone number"
                                         onChange={handleSelectChange}
                                         name="note"
-                                        value={form.name}
+                                        // value={form.name}
                                         className="font-s"
                                     />
                                 </Col>
@@ -98,7 +124,7 @@ export default function MyDetails(props) {
                                         placeholder="Email"
                                         onChange={handleSelectChange}
                                         name="note"
-                                        value={form.name}
+                                        // value={form.name}
                                         className="font-s"
                                     />
                                 </Col>
@@ -113,7 +139,7 @@ export default function MyDetails(props) {
                                         placeholder="Address"
                                         onChange={handleSelectChange}
                                         name="note"
-                                        value={form.name}
+                                        // value={form.name}
                                         className="font-s"
                                     />
                                 </Col>
@@ -128,7 +154,7 @@ export default function MyDetails(props) {
                                         placeholder="Bank"
                                         onChange={handleSelectChange}
                                         name="note"
-                                        value={form.name}
+                                        // value={form.name}
                                         className="font-s"
                                     />
                                 </Col>
@@ -139,7 +165,7 @@ export default function MyDetails(props) {
                                         placeholder="Branch"
                                         onChange={handleSelectChange}
                                         name="note"
-                                        value={form.name}
+                                        // value={form.name}
                                         className="font-s"
                                     />
                                 </Col>
@@ -150,14 +176,14 @@ export default function MyDetails(props) {
                                         placeholder="Account Number"
                                         onChange={handleSelectChange}
                                         name="note"
-                                        value={form.name}
+                                        // value={form.name}
                                         className="font-s"
                                     />
                                 </Col>
                             </Form.Group>
                         </Row>
                         <Col md="12" className='d-flex justify-content-end'>
-                            <Button type="submit" >Submit</Button>
+                            <Button type="submit" >Save</Button>
                         </Col>
                     </Form>
                 </div>

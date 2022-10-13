@@ -9,6 +9,7 @@ import TopNav from "../../../components/topnav/TopNav";
 import { useState } from "react";
 import axios from "axios";
 import Swal from 'sweetalert2'
+import jwt_decode from 'jwt-decode'
 
 export default function Login() {
     const defaultOptions = {
@@ -22,7 +23,7 @@ export default function Login() {
 
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
-
+ 
     const handleSubmit = (e) => {
         e.preventDefault()
         axios
@@ -31,6 +32,7 @@ export default function Login() {
           if(res.status === 200){
             localStorage.setItem("role" , res.data.data.user.role)
             localStorage.setItem("token" , res.data.data.access_token)
+            localStorage.setItem('_id',jwt_decode(localStorage.getItem('token')).data._id)
             Swal.fire({
                 icon: 'success',
                 title: 'Logged in successfully!',

@@ -5,6 +5,7 @@ import Login from './views/common/login/LoginPage'
 import Spinner from 'react-bootstrap/Spinner'
 import Landing from './views/common/landing/Landing'
 import RegistrationIntro from './views/common/registration-intro/RegistrationIntro'
+import CustomerRegistration from './views/common/customer-registration/CustomerRegistration'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -37,6 +38,7 @@ function App() {
           <Route exact path="/company/:id" name="company" element={<Singlecompany />} />
           <Route path="/login" name="Login" element={<Login />} />
           <Route path="/registration-intro" name="Reg-intro" element={<RegistrationIntro />} />
+          <Route path="/customer-registration" name="customer-registration" element={<CustomerRegistration />} />
           {/* <Route path="/home" element={<Home/>}/> */}
 
           {/* <Route exact path="/login" name="Login Page" element={<Login />} />

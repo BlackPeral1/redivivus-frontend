@@ -1,0 +1,22 @@
+.registerBtn{
+    position: relative;
+    display: flex;
+    margin-left: 515px;
+}
+
+.formInputField{
+    text-align: center;
+}
+
+.title{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.formContainer{
+    margin-top: 35px;
+}
+
+.row{
+    margin-top: 20px;
+}
