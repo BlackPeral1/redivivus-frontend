@@ -2,9 +2,26 @@ import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 
-const AdminCompanyPayment = React.lazy(() => import('./views/payment-administration/admin-company-payments/AdminCompanyPayments'),)
-const AdminCustomerPayment = React.lazy(() => import('./views/payment-administration/admin-customer-payments/AdminCustomerPayments'),)
-const AdminCompany = React.lazy(() => import('./views/Company-Administration/addCompany/AddCompany'),)
+const AdminCompanyPayment = React.lazy(() =>
+  import('./views/payment-administration/admin-company-payments/AdminCompanyPayments'),
+)
+const AdminCustomerPayment = React.lazy(() =>
+  import('./views/payment-administration/admin-customer-payments/AdminCustomerPayments'),
+)
+const AdminCompany = React.lazy(() =>
+  import('./views/Company-Administration/addCompany/AddCompany'),
+)
+const AdminCompanyView = React.lazy(() =>
+  import('./views/Company-Administration/viewCompany/AllCompany'),
+)
+const CompanyViewProfile = React.lazy(() =>
+  import('./views/Company-Administration/viewCompanyProfile/CompanyProfile'),
+)
+const CompanyEditProfile = React.lazy(() =>
+  import('./views/Company-Administration/editCompany/EditCompany'),
+)
+
+
 const NewPickupReq = React.lazy(() => import('./views/pickupReq/newPickupReq/NewPickupReq'))
 
 const AllPickupReq = React.lazy(() => import('./views/pickupReq/allPickupReq/AllPickupReq'))
@@ -55,6 +72,9 @@ const routes = [
   { path: '/admin-customer-payments/viewonepayment/:id', name: 'ViewOnePayment', element: ViewOnePayment, permissions: 'isAdmin', },
   { path: '/admin-company-payments/viewonepayment/:id', name: 'ViewOnePayment', element: ViewOnePayment, permissions: 'isAdmin', },
   { path: '/admin-company', name: 'AdminCompany', element: AdminCompany, permissions: 'isAdmin' },
+  { path: '/admin-company/admin-companyall',name: 'AdminCompanyView',element: AdminCompanyView,permissions: 'isAdmin'},
+  { path: '/admin-company/companyprofile/:id',name: 'CompanyView',element: CompanyViewProfile,permissions: 'isAdmin'},
+  { path: '/admin-company/companyedit/:id',name: 'CompanyEdit',element: CompanyEditProfile,permissions: 'isAdmin'},
 ]
 
 export default routes

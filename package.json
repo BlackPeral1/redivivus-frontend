@@ -25,6 +25,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
     "moment": "^2.29.4",
+    "firebase": "^9.11.0",
     "multiselect-react-dropdown": "^2.0.25",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",

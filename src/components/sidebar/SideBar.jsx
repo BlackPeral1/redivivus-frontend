@@ -94,13 +94,13 @@ export default function SideBar(props) {
             </li>
             <li>
               <NavLink
-                to="./all-customer"
+                to="./admin-company/admin-companyall"
                 className={({ isActive }) =>
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
               >
                 <i className="fas fa-dot-circle"></i>
-                All Customers
+                All Company
               </NavLink>
             </li>
           </ul>
