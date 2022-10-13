@@ -44,7 +44,7 @@ const AdminCompanyPayments = () => {
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
 
-  const actionsMemo = React.useMemo(() => <Export onExport={() => generatePdf()} />, [])
+  const actionsMemo = React.useMemo(() => <Export onExport={() => exportPDF()} />, [])
 
   useEffect(() => {
     BinRequestServices.getAllBinreuests()
@@ -118,7 +118,49 @@ const AdminCompanyPayments = () => {
       button: true,
     },
   ]
+  const exportPDF = () => {
+    const unit = 'pt'
+    const size = 'A4' // Use A1, A2, A3 or A4
+    const orientation = 'portrait' // portrait or landscape
 
+    const marginLeft = 40
+    const doc = new jsPDF(orientation, unit, size)
+    const headers = [
+      [
+        'PAYMENT ID',
+        'COMPANY NAME',
+        'REQUEST ID',
+        'PAID DATE',
+        'COMPANY PAID',
+        "CUSTOMER'S CUT",
+        'PROFIT',
+      ],
+    ]
+    doc.setFontSize(15)
+    const title = 'Customer Payment Report'
+
+    const data = data.map((item) => [
+      item.payment.paymentId,
+      item.requestReceivedBy.name,
+      item.requestNo,
+      item.payment.paidDate.split('T')[0],
+      item.payment.companyPaid,
+      item.payment.customerEarned,
+      item.payment.profit,
+    ])
+    let content = {
+      startY: 50,
+      head: headers,
+      body: data,
+    }
+
+    const date = Date().split(' ')
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4]
+
+    doc.text(title, marginLeft, 40)
+    doc.autoTable(content)
+    doc.save(`customer_payment_${dateStr}.pdf`)
+  }
   useEffect(() => {
     const result = filteredData.filter((dataItem) => {
       if (search === '') {
@@ -129,43 +171,7 @@ const AdminCompanyPayments = () => {
     })
     setData(result)
   }, [search])
-  const generatePdf = () => {
-    console.log('87787')
-    const document = new jsPDF()
-    const tableColumn = [
-      'PAYMENT ID',
-      'COMPANY NAME',
-      'REQUEST ID',
-      'PAID DATE',
-      'COMPANY PAID',
-      "CUSTOMER'S CUT",
-      'PROFIT',
-    ]
-    const tableRows = []
 
-    data.map((item) => {
-      console.log('87787')
-      const value = [
-        item.payment.paymentId,
-        item.requestReceivedBy.name,
-        item.requestNo,
-        item.payment.paidDate.split('T')[0],
-        item.payment.companyPaid,
-        item.payment.customerEarned,
-        item.payment.profit,
-      ]
-      console.log(value)
-      tableRows.push(value)
-    })
-
-    document.autoTable(tableColumn, tableRows, { startY: 20 })
-
-    const date = Date().split(' ')
-    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4]
-
-    document.text(`Customer Payment Report`, 14, 15)
-    document.save(`customer_payment_${dateStr}.pdf`)
-  }
   return (
     <div className="main shadow-lg mb-5 rounded-3">
       <DataTable

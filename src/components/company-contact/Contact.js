@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, {  useState } from 'react'
+
 import './contact.css'
 
 function Contact(props) {
-  const _id = '631085b05e9006200d8f7c79'
 
-  const [telephone, setTelephone] = useState('')
+
+
   const [address, setAdderss] = useState('')
-  const [email, setEmail] = useState('')
+
 
   return (
     <div>
       {props.telephone}
-      {address}
+      {props.address}
       {/* {props.data}
       <contactcompo
           data={name}

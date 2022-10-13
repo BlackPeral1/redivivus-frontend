@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkredivivus=self.webpackChunkredivivus||[]).push([[258],{40258:function(e,s,n){n.r(s),n.d(s,{default:function(){return i}});var r=n(80184);function i(){return(0,r.jsx)(r.Fragment,{children:(0,r.jsx)("div",{className:"row",children:(0,r.jsxs)("div",{className:"card",children:[(0,r.jsx)("h2",{className:"content-title",children:"Test"}),(0,r.jsx)("p",{children:"Lorem ipsum..."})]})})})}}}]);
-//# sourceMappingURL=258.02cd1191.chunk.js.map

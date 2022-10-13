@@ -70,12 +70,20 @@ const MakePayment = () => {
     })
     console.log(form)
   }
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  }
+
   useEffect(() => {
     axios
-      .get('http://localhost:3001/api/pickupRequest/')
+      .get('http://localhost:3001/api/pickupRequest/',config)
       .then(function (response) {
         const actualData = response.data.data.filter((oneRequest) => oneRequest['payment'] == null)
         setForm({ ...form, requestNo: actualData[0].requestNo })
+        console.log(response.data.data,actualData)
         setBinRequests(actualData)
       })
       .catch(function (error) {

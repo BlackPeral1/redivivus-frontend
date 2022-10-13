@@ -38,14 +38,13 @@ width: 100px;
 
 .table-container{
 
-    align: center;
+    align-items: center;
 }
 
 
 .table-company-container {
 	/* max-width: 1000px; */
 	margin-right:auto;
-	margin-left:auto;
 	display:flex;
 	justify-content:center;
 	align-items:center;
@@ -72,7 +71,3 @@ width: 100px;
 
 }
 
-.table-container{
-
-   
-}

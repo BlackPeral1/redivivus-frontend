@@ -24,6 +24,7 @@ export default function Login() {
     const [password , setPassword] = useState("")
 
     const handleSubmit = (e) => {
+
         e.preventDefault()
         axios
         .post('http://localhost:3001/api/auth/login', {email,password})
