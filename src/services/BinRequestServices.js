@@ -3,7 +3,7 @@ import axios from 'axios'
 const QUERY_BASE_URL = 'http://localhost:3001/api/contactus'
 const BIN_REQUESTS_QUERY_URL = 'http://localhost:3001/api/binrequests'
 //http://localhost:3001/api/binrequests/getbinrequest/REQ09870
-class BinRequestService {
+class BinRequestServices {
   setQueryDetails(query) {
     return axios.post(QUERY_BASE_URL, query)
   }
@@ -15,4 +15,4 @@ class BinRequestService {
   }
 }
 
-export default new BinRequestService()
+export default new BinRequestServices()

@@ -122,7 +122,7 @@ const ViewCompanyPayments = () => {
     },
   ]
   useEffect(() => {
-   
+
   }, [])
   useEffect(() => {
     const result = filteredData.filter((dataItem) => {

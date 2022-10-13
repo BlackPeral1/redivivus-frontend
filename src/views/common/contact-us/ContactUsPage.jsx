@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './contactus.css'
 import ContactUS from './contactuspic.png'
 import validator from 'validator'
-import BinRequestService from '../../../services/BinRequestServices'
+import BinRequestServices from '../../../services/BinRequestServices'
 import { ToastContainer, toast, Zoom, Bounce } from 'react-toastify'
 const ContactUsPage = () => {
   const [emailError, setEmailError] = useState('')
@@ -70,12 +70,12 @@ const ContactUsPage = () => {
     e.preventDefault()
     if (isValidMail && isValidMessage && isValidName) {
       console.log('sent')
-      BinRequestService.setQueryDetails(query)
+      BinRequestServices.setQueryDetails(query)
         .then((res) => {
-          toast.success('Query sent successfully.', {position:toast.POSITION.TOP_RIGHT})
+          toast.success('Query sent successfully.', { position: toast.POSITION.TOP_RIGHT })
           setEmailError('')
           setMessageError('')
-           setNameError('')
+          setNameError('')
           setQuery((query) => {
             return { name: '', email: '', message: '' }
           })

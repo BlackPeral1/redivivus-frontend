@@ -15,4 +15,4 @@ class BinRequestService {
   }
 }
 
-export default new BinRequestService()
+export default BinRequestService;
