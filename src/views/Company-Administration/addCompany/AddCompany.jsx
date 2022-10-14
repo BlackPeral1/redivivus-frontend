@@ -33,7 +33,18 @@ export default function AddCompany() {
 
   const createData = (e) => {
     e.preventDefault()
+<<<<<<< HEAD
     const fileName = new Date().getTime().toString() + logo.name
+=======
+
+    const isValid = formValidation()
+    if (isValid) {
+      //send this data to your back
+      setName('')
+      setTelephone('')
+      setEmail('')
+    }
+>>>>>>> origin/staging
 
     const storage = getStorage(app)
     const storageRef = ref(storage, fileName)
@@ -320,7 +331,11 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Company Name
                     </Form.Label>
+<<<<<<< HEAD
                     <Col sm={7}>
+=======
+                    <Col sm={5} className="company-input-layer">
+>>>>>>> origin/staging
                       <Form.Control
                         required
                         type="text"

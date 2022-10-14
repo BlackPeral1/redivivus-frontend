@@ -1,14 +1,12 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-
 import Login from './views/common/login/LoginPage'
 import Spinner from 'react-bootstrap/Spinner'
 import Landing from './views/common/landing/Landing'
 import RegistrationIntro from './views/common/registration-intro/RegistrationIntro'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 
+import 'react-toastify/dist/ReactToastify.css'
 
 const loading = (
   <Spinner animation="border" role="status">
@@ -22,7 +20,6 @@ const AdminLayout = React.lazy(() => import('./layout/AdminLayout'))
 const UserLayout = React.lazy(() => import('./layout/UserLayout'))
 
 
-const ContactUsPage = React.lazy(() => import('./views/common/contact-us/ContactUsPage'))
 
 // Pages
 const Singlecompany = React.lazy(() => import('./views/pages/company-single/singlecompany'))
@@ -37,6 +34,7 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={loading}>
         <Routes>
+          <Route path="/" name="Landing" element={<Landing />} />
           <Route exact path="/company/:id" name="company" element={<Singlecompany />} />
           <Route exact path="/company/companyall" name="companyAll" element={<Companyall />} />
           <Route path="/login" name="Login" element={<Login />} />
@@ -50,9 +48,7 @@ function App() {
           <Route path="admin/*" name="Home" element={<AdminLayout />} />
           <Route path="user/*" name="UserLayout" element={<UserLayout />} />
 
-          <Route path="/landing" name="Landing" element={<Landing />} />
 
-          <Route path="/contact-us" name="contact-us" element={<ContactUsPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
