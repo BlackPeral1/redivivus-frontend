@@ -1,7 +1,10 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import './addcompany.css'
+// import './addcompany.css'
+import './addcompany.scoped.css'
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+import app from '../../../firebase'
 
 export default function AddCompany() {
   const [name, setName] = useState('')
@@ -21,8 +24,18 @@ export default function AddCompany() {
   const [emailErr, setemailErr] = useState({})
   const [isShow, setIsShow] = useState(false)
 
-  function createData(e) {
+  const [firstname, setFirstName] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [buyeremail, setBuyerEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [buyertelephone, setBuyerTelephone] = useState('')
+  const [buyeraddress, setBuyerAddress] = useState('')
+
+  const createData = (e) => {
     e.preventDefault()
+<<<<<<< HEAD
+    const fileName = new Date().getTime().toString() + logo.name
+=======
 
     const isValid = formValidation()
     if (isValid) {
@@ -31,70 +44,132 @@ export default function AddCompany() {
       setTelephone('')
       setEmail('')
     }
+>>>>>>> origin/staging
 
+    const storage = getStorage(app)
+    const storageRef = ref(storage, fileName)
 
+    const uploadTask = uploadBytesResumable(storageRef, logo)
 
-    const company = {
-      name,
-      email,
-      address,
-      telephone,
-      customers,
-      centers,
-      logo,
-      openhour,
-      closehour,
-      opendays,
-      slogan,
-      about,
-    }
+    //Upload the file to Firebase Storage
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        console.log('Upload is ' + progress + ' % done')
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused')
+            break
+          case 'running':
+            console.log('Upload is running')
+            break
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((logo) => {
+          console.log('File available at :', logo)
 
-    console.log(company)
+          // const data = {
+          //   name,
+          //   email,
+          //   address,
+          //   telephone,
+          //   customers,
+          //   centers,
+          //   logo,
+          //   openhour,
+          //   closehour,
+          //   opendays,
+          //   slogan,
+          //   about,
+          // }
+          const user = {
+            role: 'COMPANY',
+            name: {
+              first_name: firstname,
+              last_name: lastname,
+            },
+            email: buyeremail,
+            password: password,
+            phone: buyertelephone,
+            address: buyeraddress,
+          }
 
-    axios
-      .post('http://localhost:3001/api/company/addcompany', company)
-      .then(() => {
-        console.log('CREATE PROCEED!')
+          const specificData = {
+            name,
+            email,
+            address,
+            telephone,
+            customers,
+            centers,
+            logo,
+            openhour,
+            closehour,
+            opendays,
+            slogan,
+            about,
+          }
 
-        onReset()
-        alert('Successfully Created!')
-      })
-      .catch((err) => {
-        alert(err)
-      })
+          axios
+            .post('http://localhost:3001/api/auth/register', { user, specificData })
+            .then((res) => {
+              console.log(res)
+              alert('Company Added Successfully!')
+            })
+            .catch((res) => {
+              console.log('Failed')
+            })
+        })
+      },
+    )
   }
 
-  const formValidation = () => {
-    const nameErr = {}
-
-    let isValid = true
-
-    if (name.trim().length < 3) {
-      nameErr.nameShort = 'Company Name is too short'
-      isValid = false
+  const handleShow = () => {
+    if (name === '') {
+      setnameErr({ name: 'Name is required' })
+      alert('Name is required')
+    } else if (telephone === '' || telephone.length < 10) {
+      settelephoneErr({ telephone: 'Telephone is required' })
+      alert('Telephone is required')
+    } else if (email === '' || !email.includes('@')) {
+      setemailErr({ email: 'Please insert valid email' })
+      alert('Please insert valid email')
+    } else {
+      setIsShow(true)
     }
-
-    if (name.trim().length > 10) {
-      nameErr.nameLong = 'Company Name is too long'
-      isValid = false
-    }
-
-    if (telephone.trim().length == 10) {
-      telephoneErr.telephoneLength = 'Must have 10 numbers for field'
-      isValid = false
-    }
-
-    // if (!email.include('@')) {
-    //   emailErr.emailInvalid = 'Email must have @ sign '
-    //   isValid = false
-    // }
-
-    setnameErr(nameErr)
-    settelephoneErr(telephoneErr)
-    setemailErr(emailErr)
-
-    return isValid
   }
+  // const formValidation = () => {
+  //   const nameErr = {}
+  //   const telephoneErr = {}
+  //   const emailErr = {}
+  //   let isValid = true
+
+  //   if (name.trim().length < 3) {
+  //     nameErr.nameShort = 'Name is too short'
+  //     isValid = false
+  //   }
+
+  //   if (telephone.trim().length < 10) {
+  //     telephoneErr.telephoneShort = 'Telephone is too short'
+  //     isValid = false
+  //   }
+
+  //   if (email.trim().length < 5) {
+  //     emailErr.emailShort = 'Email is too short'
+  //     isValid = false
+  //   }
+
+  //   setnameErr(nameErr)
+  //   settelephoneErr(telephoneErr)
+  //   setemailErr(emailErr)
+  //   return isValid
+  // }
 
   function onReset() {
     console.log('RESET PROCEED!')
@@ -115,18 +190,152 @@ export default function AddCompany() {
   return (
     <div className="row">
       <div className="card">
-        <h2>ADD COMPANY</h2>
+        <h2 className="main-title">ADD COMPANY</h2>
         <div className="container3">
-          <div className="container1">
+          <div className="container2">
             <Form onSubmit={createData} onReset={onReset}>
               {/* <div className="container2"> */}
+
               <div hidden={isShow}>
                 <div className="company-registartion-container-part">
-                  <Form.Group as={Row} controlId="name" className="companylabel">
-                    <Form.Label column sm={2}>
+                  <Form.Group as={Row} controlId="firstname" className={'pt-4'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      First Name
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="text"
+                        name="firstname"
+                        value={firstname}
+                        onChange={(e) => {
+                          setFirstName(e.target.value)
+                        }}
+                        placeholder="First Name"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+                  {/* {Object.keys(nameErr).map((key) => {
+                    return <div style={{ color: 'red' }}>{nameErr[key]}</div>
+                  })} */}
+
+                  <Form.Group as={Row} controlId="lastname" className={'pt-4'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Last Name
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="text"
+                        name="lastname"
+                        value={lastname}
+                        onChange={(e) => {
+                          setLastName(e.target.value)
+                        }}
+                        placeholder="Last Name"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} controlId="email" className={'pt-3'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Email
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="email"
+                        name="email"
+                        value={buyeremail}
+                        onChange={(e) => {
+                          setBuyerEmail(e.target.value)
+                        }}
+                        placeholder="Email"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} controlId="password" className={'pt-3'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Password
+                    </Form.Label>
+
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="text"
+                        name="Password"
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value)
+                        }}
+                        placeholder="Enter Password"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} controlId="phone" className={'pt-3'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Telephone
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="Number"
+                        name="telephone"
+                        value={buyertelephone}
+                        onChange={(e) => {
+                          setBuyerTelephone(e.target.value)
+                        }}
+                        placeholder="Telephone Number"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} controlId="address" className={'pt-3'}>
+                    <Form.Label column sm={2} className="companylabel">
+                      Address
+                    </Form.Label>
+                    <Col sm={7}>
+                      <Form.Control
+                        required
+                        type="text"
+                        name="address"
+                        value={buyeraddress}
+                        onChange={(e) => {
+                          setBuyerAddress(e.target.value)
+                        }}
+                        placeholder="Address"
+                      ></Form.Control>
+                    </Col>
+                  </Form.Group>
+                </div>
+
+                <div className="next-btn-add">
+                  <Button
+                    type="button"
+                    className="next-btn-add"
+                    variant="secondary"
+                    onClick={() => setIsShow(true)}
+                    // onClick={handleShow}
+                  >
+                    NEXT
+                  </Button>
+                </div>
+              </div>
+
+              <div hidden={!isShow}>
+                {/* <div hidden={isShow}> */}
+                <div className="company-registartion-container-part">
+                  <Form.Group as={Row} controlId="name" className={'pt-4'}>
+                    <Form.Label column sm={2} className="companylabel">
                       Company Name
                     </Form.Label>
+<<<<<<< HEAD
+                    <Col sm={7}>
+=======
                     <Col sm={5} className="company-input-layer">
+>>>>>>> origin/staging
                       <Form.Control
                         required
                         type="text"
@@ -143,11 +352,11 @@ export default function AddCompany() {
                     return <div style={{ color: 'red' }}>{nameErr[key]}</div>
                   })}
 
-                  <Form.Group as={Row} controlId="Email" className={'pt-3'}>
+                  <Form.Group as={Row} controlId="Email" className={'pt-4'}>
                     <Form.Label column sm={2} className="companylabel">
                       E-mail
                     </Form.Label>
-                    <Col sm={5} class>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type=""
@@ -168,7 +377,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Address
                     </Form.Label>
-                    <Col sm={5} class>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="text"
@@ -187,7 +396,7 @@ export default function AddCompany() {
                       Telephone
                     </Form.Label>
 
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="Number"
@@ -196,7 +405,7 @@ export default function AddCompany() {
                         onChange={(e) => {
                           setTelephone(e.target.value)
                         }}
-                        placeholder="No Of Centers"
+                        placeholder="Enter Telephone Number"
                       ></Form.Control>
                     </Col>
                   </Form.Group>
@@ -208,7 +417,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       No of Centers
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="Number"
@@ -228,14 +437,13 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Company Logo
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
-                        type="text"
+                        type="file"
                         name="logo"
-                        value={logo}
                         onChange={(e) => {
-                          setLogo(e.target.value)
+                          setLogo(e.target.files[0])
                         }}
                         placeholder="company Logo Url"
                       ></Form.Control>
@@ -246,7 +454,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Opening Hour
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="Time"
@@ -264,7 +472,7 @@ export default function AddCompany() {
                     <Form.Label column sm={2} className="companylabel">
                       Closing Hour
                     </Form.Label>
-                    <Col sm={5}>
+                    <Col sm={7}>
                       <Form.Control
                         required
                         type="Time"
@@ -295,19 +503,29 @@ export default function AddCompany() {
                 </Form.Group> */}
                 </div>
 
-                <div>
-                  <Button type="button" variant="secondary" onClick={() => setIsShow(true)}>
-                    Next
+                <div className="next-btn-add">
+                  <Button
+                    type="button"
+                    className="next-btn-add"
+                    variant="secondary"
+                    // onClick={() => setIsShow(true)}
+                    onClick={handleShow}
+                  >
+                    NEXT
                   </Button>
                 </div>
               </div>
+
+              <br />
+              <br />
+              <br />
 
               <div hidden={!isShow}>
                 <Form.Group as={Row} controlId="slogans" className={'pt-3'}>
                   <Form.Label column sm={2} className="companylabel">
                     Company Slogan
                   </Form.Label>
-                  <Col sm={5}>
+                  <Col sm={7}>
                     <Form.Control
                       required
                       type="text"
@@ -325,10 +543,11 @@ export default function AddCompany() {
                   <Form.Label column sm={2} className="companylabel">
                     About Company
                   </Form.Label>
-                  <Col sm={5}>
+                  <Col sm={7}>
                     <Form.Control
                       required
-                      type="text"
+                      as="textarea"
+                      rows={3}
                       name="about"
                       value={about}
                       onChange={(e) => {
@@ -338,19 +557,29 @@ export default function AddCompany() {
                     ></Form.Control>
                   </Col>
                 </Form.Group>
-                <button type="button" variant="secondary" onClick={() => setIsShow(false)}>
-                  Previous
-                </button>
-                <Form.Group as={Row} className={'pt-2'}>
-                  <Col sm={{ span: 10, offset: 2 }}>
-                    <Button type="submit">CREATE</Button>
-                    {'\u00A0'}
-                    <Button type="reset" className="btn-danger">
-                      RESET
-                    </Button>
-                    {'\u00A0'}
-                  </Col>
-                </Form.Group>
+                <div className="add-bottom-buttons">
+                  <button
+                    type="button"
+                    className="secondary-butn-previous"
+                    onClick={() => setIsShow(false)}
+                  >
+                    PREVIOUS
+                  </button>
+                  <Form.Group as={Row} className={'pt-2'}>
+                    <Col sm={{ span: 10, offset: 2 }}>
+                      <div className="create-btn-company-group">
+                        <Button type="submit" className="create-btn-company">
+                          CREATE
+                        </Button>
+                        {'\u00A0'}
+                        <Button type="reset" className="btn-danger">
+                          RESET
+                        </Button>
+                        {'\u00A0'}
+                      </div>
+                    </Col>
+                  </Form.Group>
+                </div>
               </div>
             </Form>
           </div>
