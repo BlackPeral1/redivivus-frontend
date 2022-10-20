@@ -30,7 +30,8 @@ export default function Login() {
       .then(function (res) {
         if (res.status === 200) {
           localStorage.setItem("role", res.data.data.user.role)
-          localStorage.setItem("token", res.data.data.access_token)
+            localStorage.setItem("token", res.data.data.access_token)
+            localStorage.setItem("name",res.data.data.user.name.first_name)
           Swal.fire({
             icon: 'success',
             title: 'Logged in successfully!',

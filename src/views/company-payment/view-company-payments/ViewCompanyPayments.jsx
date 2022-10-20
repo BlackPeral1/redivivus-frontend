@@ -56,7 +56,7 @@ const ViewCompanyPayments = () => {
   useEffect(() => {
     BinRequestServices.getAllBinreuests()
       .then((resp) => {
-        console.log(resp.data.data[0].payment)
+        console.log(resp.data.data)
 
         const actualData = resp.data.data.filter((oneRequest) => oneRequest['payment'] != null)
         setData(actualData)

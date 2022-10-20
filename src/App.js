@@ -5,7 +5,7 @@ import Login from './views/common/login/LoginPage'
 import Spinner from 'react-bootstrap/Spinner'
 import Landing from './views/common/landing/Landing'
 import RegistrationIntro from './views/common/registration-intro/RegistrationIntro'
-import { toast } from 'react-toastify'
+
 import 'react-toastify/dist/ReactToastify.css'
 
 const loading = (
