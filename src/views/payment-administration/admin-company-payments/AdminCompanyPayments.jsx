@@ -4,65 +4,67 @@ import { useNavigate } from 'react-router-dom'
 import BinRequestServices from '../../../services/BinRequestServices'
 import React, { useState, useEffect } from 'react'
 import readMore from '../../../assets/images/table-icon/read-more.png'
-// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-function convertArrayOfObjectsToCSV(array) {
-  let result
-
-  const columnDelimiter = ','
-  const lineDelimiter = '\n'
-  const keys = Object.keys(dumyRequestPayments[0])
-
-  result = ''
-  result += keys.join(columnDelimiter)
-  result += lineDelimiter
-
-  array.forEach((item) => {
-    let ctr = 0
-    keys.forEach((key) => {
-      if (ctr > 0) result += columnDelimiter
-
-      result += item[key]
-
-      ctr++
-    })
-    result += lineDelimiter
-  })
-
-  return result
-}
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
 const Export = ({ onExport }) => (
-  <button className="btn btn-secondary " onClick={(e) => onExport(e.target.value)}>
-    <i class="fal fa-file-download"></i>
+  <button className="btn btn-secondary " onClick={onExport}>
+    <i class="fas fa-download fa-lg me-2" style={{ color: '#ffffff' }}></i>
     Generate Report
   </button>
 )
-// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-function downloadCSV(array) {
-  const link = document.createElement('a')
-  let csv = convertArrayOfObjectsToCSV(array)
-  if (csv == null) return
-
-  const filename = 'export.csv'
-
-  if (!csv.match(/^data:text\/csv/i)) {
-    csv = `data:text/csv;charset=utf-8,${csv}`
-  }
-
-  link.setAttribute('href', encodeURI(csv))
-  link.setAttribute('download', filename)
-  link.click()
+const customStyles = {
+  table: {
+    style: {
+      height: '650px', // override the row height
+    },
+  },
+  rows: {
+    style: {
+      height: '72px', // override the row height
+    },
+  },
+  headCells: {
+    style: {
+      paddingLeft: '16px', // override the cell padding for head cells
+      paddingRight: '16px',
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: '16px', // override the cell padding for data cells
+      paddingRight: '16px',
+    },
+  },
 }
 const AdminCompanyPayments = () => {
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
-  const [paymentIdS, setPaymentIds] = useState([])
+
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
-  const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [])
 
+  const actionsMemo = React.useMemo(() => <Export onExport={() => exportPDF()} />, [])
+
+  useEffect(() => {
+    BinRequestServices.getAllBinreuests()
+      .then((resp) => {
+        const actualData = resp.data.data.filter(
+          (oneRequest) =>
+            oneRequest['requestReceivedBy'] != null &&
+            oneRequest['requestedBy'] != null &&
+            oneRequest['payment'],
+        )
+        setData(actualData)
+        setFilteredData(actualData)
+        console.log(actualData)
+      })
+      .catch((e) => {
+        console.log(e.meesage)
+      })
+  }, [])
   const viewMore = (requestId) => {
-    navigate(`/admin-company-payments/viewonepayment/${requestId}`)
+    navigate(`/admin/admin-company-payments/viewonepayment/${requestId}`)
   }
   const columns = [
     {
@@ -72,17 +74,17 @@ const AdminCompanyPayments = () => {
     },
     {
       name: 'COMPANY NAME',
-      selector: (row) => row.requestedBy.customerName,
+      selector: (row) => row.requestReceivedBy.name,
       sortable: true,
     },
     {
       name: 'REQUEST ID',
-      selector: (row) => row.requestId,
+      selector: (row) => row.requestNo,
       sortable: true,
     },
     {
       name: 'PAID DATE',
-      selector: (row) => row.payment.paidDate,
+      selector: (row) => row.payment.paidDate.split('T')[0],
       sortable: true,
     },
     {
@@ -104,8 +106,8 @@ const AdminCompanyPayments = () => {
     },
     {
       cell: (row) => (
-        <button className="mx-auto btn" onClick={() => viewMore(row.requestId)}>
-          <span class="material-icons">
+        <button className="mx-auto btn" onClick={() => viewMore(row._id)}>
+          <span className="material-icons">
             <img src={readMore} alt="" />
           </span>
         </button>
@@ -116,30 +118,60 @@ const AdminCompanyPayments = () => {
       button: true,
     },
   ]
+  const exportPDF = () => {
+    const unit = 'pt'
+    const size = 'A4' // Use A1, A2, A3 or A4
+    const orientation = 'portrait' // portrait or landscape
+
+    const marginLeft = 40
+    const doc = new jsPDF(orientation, unit, size)
+    const headers = [
+      [
+        'PAYMENT ID',
+        'COMPANY NAME',
+        'REQUEST ID',
+        'PAID DATE',
+        'COMPANY PAID',
+        "CUSTOMER'S CUT",
+        'PROFIT',
+      ],
+    ]
+    doc.setFontSize(15)
+    const title = 'Customer Payment Report'
+
+    const data = data.map((item) => [
+      item.payment.paymentId,
+      item.requestReceivedBy.name,
+      item.requestNo,
+      item.payment.paidDate.split('T')[0],
+      item.payment.companyPaid,
+      item.payment.customerEarned,
+      item.payment.profit,
+    ])
+    let content = {
+      startY: 50,
+      head: headers,
+      body: data,
+    }
+
+    const date = Date().split(' ')
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4]
+
+    doc.text(title, marginLeft, 40)
+    doc.autoTable(content)
+    doc.save(`customer_payment_${dateStr}.pdf`)
+  }
   useEffect(() => {
-    BinRequestServices.getAllBinreuests()
-      .then((resp) => {
-        setData(resp.data.data)
-        setFilteredData(resp.data.data)
-        resp.data.data.map((oneRequest) => {
-          setPaymentIds((paymentIdS) => [...paymentIdS, oneRequest.payment.paymentId])
-        })
-      })
-      .catch((e) => {
-        console.log(e.meesage)
-      })
-    console.log(paymentIdS)
-  }, [])
-  useEffect(() => {
-    const result= filteredData.filter((dataItem) => {
+    const result = filteredData.filter((dataItem) => {
       if (search === '') {
         return dataItem
-      } else if (dataItem.requestId.toLowerCase().includes(search.toLowerCase())) {
+      } else if (dataItem.payment.paymentId.toLowerCase().includes(search.toLowerCase())) {
         return dataItem
       }
     })
     setData(result)
   }, [search])
+
   return (
     <div className="main shadow-lg mb-5 rounded-3">
       <DataTable
@@ -152,6 +184,7 @@ const AdminCompanyPayments = () => {
         // onRowClicked={onRowClicked}
         data-tag="allowRowEvents"
         subHeader
+        customStyles={customStyles}
         subHeaderComponent={
           <div className="w-100">
             {' '}

@@ -1,25 +1,31 @@
+
+import { NavLink } from "react-router-dom";
+import "./sidebar.scoped.css";
 import axios from 'axios'
 import { useEffect, useState, useRef } from 'react'
-import { NavLink } from 'react-router-dom'
 import RImage from './R.png'
 import RImageTittle from './Redivivus.png'
-import './sidebar.css'
+
+
 
 export default function SideBar(props) {
   const ref = useRef(null)
   return (
-    <nav id="sidebar" ref={ref} className={props.isActive ? 'active' : null}>
+
+    <nav id="sidebar" ref={ref} className={(props.isActive ? 'active ' : '') + 'sidebar'}>
+
+
       <ul className="list-unstyled components font-color">
         <li className="text-center font-weight-bold">
           {!props.isActive ? (
-            <img alt="bit-logo" src={RImageTittle}></img>
+            <img id='rimage-title' alt="bit-logo" src={RImageTittle}></img>
           ) : (
             <img alt="mini-logo" src={RImage}></img>
           )}
         </li>
         <li>
           <NavLink
-            to="/dashboard"
+            to="/admin/dashboard"
             className={({ isActive }) =>
               isActive ? 'font-color side-link selected' : 'font-color side-link '
             }
@@ -46,7 +52,7 @@ export default function SideBar(props) {
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
               >
-                <i class="fas fa-user"></i>
+                <i className="fas fa-user"></i>
                 {!props.isActive ? <small> New Customer</small> : <small> </small>}
               </NavLink>
             </li>
@@ -64,15 +70,40 @@ export default function SideBar(props) {
           </ul>
         </li>
         <li>
-          <NavLink
-            to="/company"
-            className={({ isActive }) =>
-              isActive ? 'font-color side-link selected' : 'font-color side-link '
-            }
+          <a
+            href="#company"
+            className="font-color dropdown-toggle side-link"
+            data-toggle="collapse"
+            aria-expanded="false"
           >
-            <i class="fas fa-building"></i>
-            {!props.isActive ? <small> Company</small> : <small> </small>}
-          </NavLink>
+
+            <i className="fas fa-glasses"></i>
+            Company
+          </a>
+          <ul className="collapse list-unstyled font-color" id="company">
+            <li>
+              <NavLink
+                to="/admin/admin-company"
+                className={({ isActive }) =>
+                  isActive ? 'font-color side-link selected' : 'font-color side-link '
+                }
+              >
+                <i className="fa fa-users" aria-hidden="true"></i>
+                New Company
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="./admin-company/admin-companyall"
+                className={({ isActive }) =>
+                  isActive ? 'font-color side-link selected' : 'font-color side-link '
+                }
+              >
+                <i className="fas fa-dot-circle"></i>
+                All Company
+              </NavLink>
+            </li>
+          </ul>
         </li>
         <li>
           <a
@@ -81,13 +112,13 @@ export default function SideBar(props) {
             data-toggle="collapse"
             aria-expanded="false"
           >
-            <i class="fas fa-money-bill-alt"></i>
+            <i className="fas fa-money-bill-alt"></i>
             {!props.isActive ? <small> Payments</small> : <small> </small>}
           </a>
           <ul className="collapse list-unstyled font-color" id="payments">
             <li>
               <NavLink
-                to="/admin-customer-payments"
+                to="./admin-customer-payments"
                 className={({ isActive }) =>
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
@@ -98,12 +129,12 @@ export default function SideBar(props) {
             </li>
             <li>
               <NavLink
-                to="/admin-company-payments"
+                to="./admin-company-payments"
                 className={({ isActive }) =>
                   isActive ? 'font-color side-link selected' : 'font-color side-link '
                 }
               >
-                <i class="fas fa-building"></i>
+                <i className="fas fa-building"></i>
                 {!props.isActive ? <small> Company</small> : <small> </small>}
               </NavLink>
             </li>
@@ -116,7 +147,7 @@ export default function SideBar(props) {
               isActive ? 'font-color side-link selected' : 'font-color side-link '
             }
           >
-            <i class="fas fa-wrench"></i>
+            <i className="fas fa-wrench"></i>
             {!props.isActive ? <small> Settings</small> : <small> </small>}
           </NavLink>
         </li>
@@ -132,7 +163,7 @@ export default function SideBar(props) {
               isActive ? 'font-color side-link selected' : 'font-color side-link '
             }
           >
-            <i class="fas fa-sign-out-alt"></i>
+            <i className="fas fa-sign-out-alt"></i>
             {!props.isActive ? <small> Sign out</small> : <small> </small>}
           </NavLink>
         </li>
